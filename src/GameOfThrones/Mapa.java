@@ -93,7 +93,10 @@ public class Mapa {
         comb(lista, 0, aux);
         return aux;
     }
-
+    
+    /**
+     * Muestra el mapa por pantalla
+     */
     public void mostrarMapa(){
         System.out.println("Salida: " + salaPuerta);
         if(p.estaAbierta())

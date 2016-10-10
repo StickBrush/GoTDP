@@ -1,8 +1,5 @@
 package GameOfThrones;
 
-import java.util.Objects;
-import javax.xml.bind.DatatypeConverter;
-
 /**
  * Implementación de la llave
  * @version 1.0
