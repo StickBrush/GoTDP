@@ -7,6 +7,7 @@ import DP.ED.Arbol;
  *
  * @version 1.0
  * @author Juan Luis Herrera González
+ * Curso: 2º (Grupo Grande A)
  */
 public class Puerta {
 
