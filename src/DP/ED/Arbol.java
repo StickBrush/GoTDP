@@ -148,9 +148,9 @@ public class Arbol<tipoDato extends Comparable<tipoDato>> {
 	 */
 	public void borrar(tipoDato dato) {
 		if (!vacio()) {
-			if (dato.compareTo(this.datoRaiz) < 0) { // dato<datoRaiz
+			if (dato.compareTo(this.datoRaiz) < 0 && hIzq!=null) { // dato<datoRaiz
 				hIzq = hIzq.borrarOrden(dato);
-			} else if (dato.compareTo(this.datoRaiz) > 0) { // dato>datoRaiz
+			} else if (dato.compareTo(this.datoRaiz) > 0 && hDer!=null) { // dato>datoRaiz
 				hDer = hDer.borrarOrden(dato);
 			} else // En este caso el dato es datoRaiz
 			{
@@ -176,9 +176,9 @@ public class Arbol<tipoDato extends Comparable<tipoDato>> {
 		Arbol<tipoDato> aborrar, candidato, antecesor;
 
 		if (!vacio()) {
-			if (dato.compareTo(this.datoRaiz) < 0) { // dato<datoRaiz
+			if (dato.compareTo(this.datoRaiz) < 0 && hIzq!=null) { // dato<datoRaiz
 				hIzq = hIzq.borrarOrden(dato);
-			} else if (dato.compareTo(this.datoRaiz) > 0) { // dato>datoRaiz
+			} else if (dato.compareTo(this.datoRaiz) > 0 && hDer!=null) { // dato>datoRaiz
 				hDer = hDer.borrarOrden(dato);
 			} else {
 				aborrar = this;
@@ -246,4 +246,61 @@ public class Arbol<tipoDato extends Comparable<tipoDato>> {
 			}
 		}
 	}
+        /**
+         * Calcula la profundiad del árbol
+         * @return Profundidad del árbol
+         */
+        public Integer profundidad(){
+            Integer prof=1;
+            Integer prof2=1;
+            Arbol<tipoDato> aux, aux2;
+            if(!vacio()){
+                aux=getHijoIzq();
+                aux2=getHijoDer();
+                if(aux!=null)
+                    prof=1+aux.profundidad();
+                if(aux2!=null)
+                    prof2=1+aux.profundidad();
+                if(prof2.compareTo(prof)>0)
+                    prof=prof2;
+            }
+            return prof;
+        }
+        
+        /**
+         * Cuenta los nodos por tipos
+         * @param nodos Nodos contados. Nodos[0] contiene las hojas, Nodos[1] los internos
+         */
+        public void tiposNodos(Integer[] nodos){
+            if(!vacio()){
+                boolean sumado=false;
+                if(hIzq==null && hDer==null)
+                    nodos[0]++;
+                else{
+                    if(hIzq!=null){
+                        nodos[1]++;
+                        sumado=true;
+                        hIzq.tiposNodos(nodos);
+                    }
+                    if(hDer!=null){
+                        if(!sumado)
+                            nodos[1]++;
+                        hDer.tiposNodos(nodos);
+                    }
+                }
+            }
+        }
+        public Integer nodos(){
+            Integer count=0;
+            if(!vacio()){
+                count++;
+                if(hIzq!=null)
+                    count+=hIzq.nodos();
+                if(hDer!=null)
+                    count+=hDer.nodos();
+            }
+            return count;
+        }
+        
+        
 }
