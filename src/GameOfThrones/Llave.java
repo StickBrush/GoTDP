@@ -36,8 +36,12 @@ public class Llave implements Comparable<Llave> {
         return (ID.compareTo(t.ID));
     }
 
-    public boolean equals(Llave t) {
-        return (this.compareTo(t) == 0);
+    @Override
+    public boolean equals(Object t) {
+        if(!(t instanceof Llave))
+            return false;
+        else
+            return (this.compareTo((Llave) t) == 0);
     }
 
     @Override

@@ -164,7 +164,7 @@ public class Mapa {
         //Probando con valores aleatorios
         int pruebaAleatoria = 500; //Veces que se hará la prueba con llaves al azar
         Random RNG = new Random(); //Generador de números aleatorios (RNG)
-        Llave testkey = null; //Llave para asignar valores aleatorios
+        Llave testkey; //Llave para asignar valores aleatorios
         for (int i = 0; i < pruebaAleatoria; i++) {
             testkey = new Llave(RNG.nextInt());
             p.abrir(testkey);

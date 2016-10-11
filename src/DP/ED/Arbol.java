@@ -98,7 +98,7 @@ public class Arbol<tipoDato extends Comparable<tipoDato>> {
 			datoRaiz = dato;
 			esVacio = false;
 		} else {
-			if ((this.datoRaiz.compareTo(dato))!=0) {
+			if (!(this.datoRaiz.equals(dato))) {
 				Arbol<tipoDato> aux;
 				if (dato.compareTo(this.datoRaiz) < 0) { // dato < datoRaiz
 					if ((aux = getHijoIzq()) == null)
@@ -126,7 +126,7 @@ public class Arbol<tipoDato extends Comparable<tipoDato>> {
 		Arbol<tipoDato> aux = null;
 		boolean encontrado = false;
 		if (!vacio()) {
-			if (datoRaiz.compareTo(dato) == 0)
+			if (this.datoRaiz.equals(dato))
 				encontrado = true;
 			else {
 				if (dato.compareTo(this.datoRaiz) < 0) // dato < datoRaiz
