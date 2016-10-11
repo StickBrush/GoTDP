@@ -2,11 +2,11 @@ package GameOfThrones;
 
 /**
  * Implementación de la llave
+ *
  * @version 1.0
- * @author Juan Luis Herrera González
- * Curso: 2º (Grupo Grande A)
+ * @author Juan Luis Herrera González Curso: 2º (Grupo Grande A)
  */
-public class Llave implements Comparable <Llave> {
+public class Llave implements Comparable<Llave> {
 
     /**
      * Identificador de la llave
@@ -33,16 +33,16 @@ public class Llave implements Comparable <Llave> {
 
     @Override
     public int compareTo(Llave t) {
-         return (this.identificar().compareTo(t.identificar()));
+        return (ID.compareTo(t.ID));
     }
-    
-    public boolean equals(Llave t){
-        return (this.identificar().equals(t.identificar()));
+
+    public boolean equals(Llave t) {
+        return (this.compareTo(t) == 0);
     }
-    
+
     @Override
-    public String toString(){
+    public String toString() {
         return (String.valueOf(ID));
     }
-    
+
 }

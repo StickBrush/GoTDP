@@ -6,19 +6,18 @@ import DP.ED.Arbol;
  * Implementación de la puerta
  *
  * @version 1.0
- * @author Juan Luis Herrera González
- * Curso: 2º (Grupo Grande A)
+ * @author Juan Luis Herrera González Curso: 2º (Grupo Grande A)
  */
 public class Puerta {
 
     /**
      * Combinación de llaves
      */
-    private Arbol <Llave> comb;
+    private Arbol<Llave> comb;
     /**
      * Llaves probadas
      */
-    private Arbol <Llave> probadas;
+    private Arbol<Llave> probadas;
     /**
      * Indica si la puerta está abierta o cerrada
      */
@@ -104,6 +103,7 @@ public class Puerta {
     public boolean estaAbierta() {
         return abierta;
     }
+
     /**
      * Muestra el estado de la cerradura
      */
@@ -117,6 +117,7 @@ public class Puerta {
 
     /**
      * Devuelve el número de llaves en la cerradura
+     *
      * @return Llaves en la cerradura
      */
     public int llavesCerr() {
@@ -125,6 +126,7 @@ public class Puerta {
 
     /**
      * Devuelve el número de llaves probadas
+     *
      * @return Llaves probadas
      */
     public int llavesProb() {

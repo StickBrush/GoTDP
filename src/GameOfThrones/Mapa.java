@@ -1,10 +1,12 @@
 package GameOfThrones;
 
+import java.util.Random;
+
 /**
  * Implementación del mapa
+ *
  * @version 1.0
- * @author Juan Luis Herrera González
- * Curso: 2º (Grupo Grande A)
+ * @author Juan Luis Herrera González Curso: 2º (Grupo Grande A)
  */
 public class Mapa {
 
@@ -94,19 +96,20 @@ public class Mapa {
         comb(lista, 0, aux);
         return aux;
     }
-    
+
     /**
      * Muestra el mapa por pantalla
      */
-    public void mostrarMapa(){
+    public void mostrarMapa() {
         System.out.println("Salida: " + salaPuerta);
-        if(p.estaAbierta())
+        if (p.estaAbierta()) {
             System.out.println("Puerta: Abierta. Altura: " + profComb);
-        else
+        } else {
             System.out.println("Puera: Cerrada. Altura: " + profComb);
-        System.out.println("Llaves en cerradura: " + p.llavesCerr() +". Llaves probadas: " + p.llavesProb());
+        }
+        System.out.println("Llaves en cerradura: " + p.llavesCerr() + ". Llaves probadas: " + p.llavesProb());
     }
-    
+
     /**
      * Programa principal - EC1
      *
@@ -130,20 +133,43 @@ public class Mapa {
         //Reordenación de la lista de identificadores
         listaLlaves = m.nuevaCombinacion(listaLlaves);
         //Paso de identificadores a llaves
-        Llave[] combLlaves=new Llave[numLlaves];
+        Llave[] combLlaves = new Llave[numLlaves];
         for (int i = 0; i < listaLlaves.length; i++) {
-            combLlaves[i]=new Llave(listaLlaves[i]);
+            combLlaves[i] = new Llave(listaLlaves[i]);
         }
         //Creación, configuración e inserción de la puerta
-        Puerta p=new Puerta();
+        Puerta p = new Puerta();
         p.configurar(combLlaves);
         m.insertarPuerta(p);
-        Llave[] test={new Llave(3), new Llave(15), new Llave(2), new Llave(29), new Llave(1), new Llave(3), new Llave(7)};
-        for(int i=0;i<test.length;i++){
-            p.abrir(test[i]);
+        //Se prueba la secuencia dada como ejemplo en la documentación
+        Llave[] test = {new Llave(1), new Llave(5), new Llave(4), new Llave(9), new Llave(6), new Llave(17), new Llave(13), new Llave(20), new Llave(21), new Llave(2), new Llave(8), new Llave(27), new Llave(25), new Llave(29)};
+        for (Llave testkey : test) {
+            p.abrir(testkey);
             p.mostrarCerradura();
         }
         m.mostrarMapa();
+        p.cerrar();
+        //Probando llaves que no coinciden en la puerta. Números pares, altos, cero y negativos
+        Llave[] testFail = {new Llave(2), new Llave(315), new Llave(0), new Llave(-46)};
+        for (Llave testkey : testFail) {
+            p.abrir(testkey);
+        }
+        p.cerrar();
+        //Probando llaves repetidas
+        Llave[] testRepeat = {new Llave(3), new Llave(3)};
+        for (Llave testkey : testRepeat) {
+            p.abrir(testkey);
+        }
+        p.cerrar();
+        //Probando con valores aleatorios
+        int pruebaAleatoria = 500; //Veces que se hará la prueba con llaves al azar
+        Random RNG = new Random(); //Generador de números aleatorios (RNG)
+        Llave testkey = null; //Llave para asignar valores aleatorios
+        for (int i = 0; i < pruebaAleatoria; i++) {
+            testkey = new Llave(RNG.nextInt());
+            p.abrir(testkey);
+        }
+        p.cerrar();
     }
 
 }
