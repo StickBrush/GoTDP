@@ -290,6 +290,10 @@ public class Arbol<tipoDato extends Comparable<tipoDato>> {
                 }
             }
         }
+        /**
+         * Cuenta los nodos
+         * @return Número de nodos del árbol
+         */
         public Integer nodos(){
             Integer count=0;
             if(!vacio()){
