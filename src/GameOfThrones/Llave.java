@@ -38,10 +38,11 @@ public class Llave implements Comparable<Llave> {
 
     @Override
     public boolean equals(Object t) {
-        if(!(t instanceof Llave))
+        if (!(t instanceof Llave)) {
             return false;
-        else
+        } else {
             return (this.compareTo((Llave) t) == 0);
+        }
     }
 
     @Override
