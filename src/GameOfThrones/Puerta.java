@@ -35,8 +35,8 @@ public class Puerta {
      * Constructor parametrizado de Puerta
      */
     public Puerta() {
-        comb = new Arbol();
-        probadas = new Arbol();
+        comb = new Arbol<Llave>();
+        probadas = new Arbol<Llave>();
         abierta = false;
     }
 
@@ -66,8 +66,8 @@ public class Puerta {
      */
     public void cerrar() {
         abierta = false;
-        comb = new Arbol();
-        probadas = new Arbol();
+        comb = new Arbol<Llave>();
+        probadas = new Arbol<Llave>();
         this.configurar(combinacion);
     }
 
