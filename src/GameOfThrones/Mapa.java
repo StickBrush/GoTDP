@@ -101,6 +101,7 @@ public class Mapa {
      * Muestra el mapa por pantalla
      */
     public void mostrarMapa() {
+        System.out.println("Mapa de tamaño " + tamX + "x" + tamY);
         System.out.println("Salida: " + salaPuerta);
         if (p.estaAbierta()) {
             System.out.println("Puerta: Abierta. Altura: " + profComb);
