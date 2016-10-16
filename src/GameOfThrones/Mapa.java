@@ -7,6 +7,7 @@ import java.util.Random;
  *
  * @version 1.0
  * @author Juan Luis Herrera González Curso: 2º (Grupo Grande A)
+ * EC1
  */
 public class Mapa {
 
