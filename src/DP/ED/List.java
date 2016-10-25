@@ -1,4 +1,5 @@
 package DP.ED;
+
 /**
 * Implementation of the method for the List class.
 *
@@ -10,10 +11,10 @@ package DP.ED;
 */
 public class List <tipoDato> {
 	/** Reference to the first element in the list*/
-	private Node first;
+	protected Node first;
 	
 	/** Reference to the last element in the list*/
-	private Node last;
+	protected Node last;
 	
 	/** List size*/
 	Integer size=0;
@@ -59,6 +60,13 @@ public class List <tipoDato> {
         public tipoDato get() {
         		return Data;
         }
+        
+        public void setPrev(Node prev){
+            this.prev=prev;
+        }
+        public void setNext(Node next){
+            this.next=next;
+        }
     }//class Node
 
 		
@@ -77,7 +85,11 @@ public class List <tipoDato> {
 	 * @param data the data that the List will store
 	 */
 	public List(tipoDato data) {
-		addLast(data);
+            try {
+                addLast(data);
+            } catch (OrderViolationException ex) {
+                System.err.println("Esta parte del código no debería ser alcanzada jamás.");
+            }
 	}
 	
 	/**
@@ -185,7 +197,7 @@ public class List <tipoDato> {
 	 *
 	 * @param Data value that is going to be added to the list
 	 */
-	public void addLast(tipoDato Data) {
+	public void addLast(tipoDato Data) throws OrderViolationException {
         Node l = last;
         Node nodo = new Node(l, Data, null);
         last = nodo;

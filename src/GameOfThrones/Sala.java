@@ -1,39 +1,42 @@
 package GameOfThrones;
 
-import DP.ED.Stack;
+import DP.ED.ListaOrdenada;
 import DP.ED.Cola;
+
+class NotKingsLandingException extends Exception{}
+
 public class Sala {
-	private Stack<Llave> pila;
-	private Cola<Personaje> cola;
+	private ListaOrdenada<Llave> llaves;
+	private Cola<Personaje> personajes;
 	public Sala(){
-		pila=new Stack<Llave>();
-		cola=new Cola<Personaje>();
+		llaves=new ListaOrdenada<Llave>();
+		personajes=new Cola<Personaje>();
 	}
-	public void stackear(Llave l){
-		pila.addData(l);
+	public void nuevaLlave(Llave l){
+		llaves.add(l);
 	}
-	public void encolar(Personaje p){
-		cola.encolar(p);
+	public void nuevoPersonaje(Personaje p){
+		personajes.encolar(p);
 	}
-	public boolean tieneGente(){
-		return (!cola.vacia());
+	public boolean tienePersonaje(){
+		return (!personajes.vacia());
 	}
-	public Llave cima(){
-		return pila.getTop();
+	public Llave getLlave(int pos){
+		return llaves.get(pos);
 	}
 	public Personaje primero(){
-		return cola.primero();
+		return personajes.primero();
 	}
-	public void destackear(){
-		pila.removeData();
+	public void eliminarLlave(Llave l){
+		llaves.searchAndDelete(l);
 	}
 	public void desencolar(){
-		cola.desencolar();
+		personajes.desencolar();
 	}
-	public void insertarPuerta(Puerta p){
-		//HAAAAAAAAAAAAAAAAAAAAAAAAAAAAX
+	public void insertarPuerta(Puerta p) throws NotKingsLandingException{
+		throw new NotKingsLandingException();
 	}
-	public Puerta getPuerta(){
-		return null;
+	public Puerta getPuerta() throws NotKingsLandingException{
+		throw new NotKingsLandingException();
 	}
 }

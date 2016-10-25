@@ -6,9 +6,12 @@ public class SalaPuerta extends Sala {
 	public SalaPuerta(){
 		super();
 	}
-	public void insertarPuerta(Puerta p){
+        @Override
+	public void insertarPuerta(Puerta p) throws NotKingsLandingException{
 		this.p=p;
 	}
+        
+        @Override
 	public Puerta getPuerta(){
 		return p;
 	}
