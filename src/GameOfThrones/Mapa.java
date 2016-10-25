@@ -1,6 +1,7 @@
 package GameOfThrones;
 
 import java.util.Random;
+import DP.ED.*;
 
 /**
  * Implementación del mapa
@@ -32,7 +33,11 @@ public class Mapa {
      * Puerta del trono
      */
     private Puerta p;
-
+    
+    private List<Llave> llaves;
+    
+    private Sala[][] salas;
+    
     /**
      * Constructor parametrizado de Mapa
      *
@@ -46,6 +51,8 @@ public class Mapa {
         tamY = Y;
         this.salaPuerta = salaPuerta;
         this.profComb = profComb;
+        llaves=new List<Llave>();
+        salas=new Sala[tamX][tamY];
     }
 
     /**
