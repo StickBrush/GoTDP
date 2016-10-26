@@ -46,7 +46,7 @@ public class Cola <tipoDato> {
 		return (primero == null);
 	}
 	
-	public void desencolar(){
+	public void desencolar() throws RotatingViolationException{
 		if(!vacia()){
 			primero=primero.siguiente();
 			if(primero==null)

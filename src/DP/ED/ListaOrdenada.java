@@ -13,7 +13,7 @@ class OrderViolationException extends Exception {
  * @author Solaire
  * @param <tipoDato> Tipo de los datos de la lista
  */
-public class ListaOrdenada<tipoDato extends Comparable<tipoDato>> extends List<tipoDato> {
+public class ListaOrdenada<tipoDato extends Comparable<tipoDato>> extends List <tipoDato> {
 
     public ListaOrdenada() {
         super();
