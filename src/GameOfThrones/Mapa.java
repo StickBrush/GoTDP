@@ -38,6 +38,8 @@ public class Mapa {
     
     private Sala[][] salas;
     
+    private Sala trono;
+    
     /**
      * Constructor parametrizado de Mapa
      *
@@ -47,12 +49,33 @@ public class Mapa {
      * @param profComb Profundidad de la combinación
      */
     public Mapa(int salaPuerta, int X, int Y, int profComb) {
+        int numLlavesGenerar=45;
+        Llave[] llavesGen=new Llave[numLlavesGenerar];
+        int idLlave=0;
+        for(int i=0;i<numLlavesGenerar;i++){
+            llavesGen[i]=new Llave(idLlave);
+            if(idLlave%2==1){
+                i++;
+                llavesGen[i]=new Llave(idLlave);
+            }
+            idLlave++;
+        }
         tamX = X;
         tamY = Y;
         this.salaPuerta = salaPuerta;
         this.profComb = profComb;
         llaves=new List<Llave>();
         salas=new Sala[tamX][tamY];
+        for(int i=0;i<tamX;i++){
+            for(int j=0;j<tamY;j++){
+                if(i!=tamX-1 || j!=tamY-1)
+                    salas[i][j]=new Sala(i+(j*tamX));
+                else
+                    salas[i][j]=new SalaPuerta(i+(j*tamX));
+            }
+        }
+        trono=new Sala(1111);
+        //TODO Insertar llaves en salas
     }
 
     /**
