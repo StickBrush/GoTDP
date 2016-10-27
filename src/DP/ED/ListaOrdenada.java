@@ -5,9 +5,6 @@
  */
 package DP.ED;
 
-class OrderViolationException extends Exception {
-}
-
 /**
  *
  * @author Solaire

@@ -8,9 +8,11 @@ class NotKingsLandingException extends Exception{}
 public class Sala {
 	private ListaOrdenada<Llave> llaves;
 	private Cola<Personaje> personajes;
-	public Sala(){
+	private Integer ID;
+	public Sala(Integer ID){
 		llaves=new ListaOrdenada<Llave>();
 		personajes=new Cola<Personaje>();
+		this.ID=ID;
 	}
 	public void nuevaLlave(Llave l){
 		llaves.add(l);
@@ -31,12 +33,15 @@ public class Sala {
 		llaves.searchAndDelete(l);
 	}
 	public void desencolar(){
-		personajes.desencolar();
+            personajes.desencolar();
 	}
 	public void insertarPuerta(Puerta p) throws NotKingsLandingException{
 		throw new NotKingsLandingException();
 	}
 	public Puerta getPuerta() throws NotKingsLandingException{
 		throw new NotKingsLandingException();
+	}
+	public Integer getID(){
+		return ID;
 	}
 }
