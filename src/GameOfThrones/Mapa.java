@@ -49,6 +49,7 @@ public class Mapa {
      * @param profComb Profundidad de la combinación
      */
     public Mapa(int salaPuerta, int X, int Y, int profComb) {
+        //¿Ineficiente? Revisar
         int numLlavesGenerar=45;
         Llave[] llavesGen=new Llave[numLlavesGenerar];
         int idLlave=0;
@@ -75,7 +76,20 @@ public class Mapa {
             }
         }
         trono=new Sala(1111);
-        //TODO Insertar llaves en salas
+        Integer[] SalasLlaves={3, 4, 6, 8, 9, 10, 11, 12, 13};
+        Integer k=0;
+        for(Integer i : SalasLlaves){
+            Integer aux=i;
+            Integer j=0;
+            while(aux>tamX){
+                aux-=tamX;
+                j++;
+            }
+            for(int l=0;l<5;l++){
+                salas[aux][j].nuevaLlave(llavesGen[k]);
+                k++;
+            }
+        }
     }
 
     /**
