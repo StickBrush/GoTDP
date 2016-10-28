@@ -15,7 +15,7 @@ public class Lannister extends Defensor {
             }
             idLlave++;
         }
-        for(int i=0;i<numLlavesGenerar;i++){
+        for(int i=numLlavesGenerar-1;i>=0;i--){
             this.llaves.addData(llavesGen[i]);
         }
     }

@@ -28,17 +28,16 @@ public class Mapa {
      * Profundidad de la combinación
      */
     private int profComb;
-
-    /**
-     * Puerta del trono
-     */
-    private Puerta p;
     
     private List<Llave> llaves;
     
     private Sala[][] salas;
     
     private Sala trono;
+    
+    private Integer iPuerta;
+    
+    private Integer jPuerta;
     
     /**
      * Constructor parametrizado de Mapa
@@ -49,7 +48,6 @@ public class Mapa {
      * @param profComb Profundidad de la combinación
      */
     public Mapa(int salaPuerta, int X, int Y, int profComb) {
-        //¿Ineficiente? Revisar
         int numLlavesGenerar=45;
         Llave[] llavesGen=new Llave[numLlavesGenerar];
         int idLlave=0;
@@ -70,11 +68,12 @@ public class Mapa {
         for(int i=0;i<tamX;i++){
             for(int j=0;j<tamY;j++){
                 if(i!=tamX-1 || j!=tamY-1)
-                    salas[i][j]=new Sala(i+(j*tamX));
-                else
-                    salas[i][j]=new SalaPuerta(i+(j*tamX));
+                    salas[i][j]=new Sala(i*tamX+j);
             }
         }
+        salas[tamX-1][tamY-1]=new SalaPuerta((tamX*tamY)-1);
+        iPuerta=tamX-1;
+        jPuerta=tamY-1;
         trono=new Sala(1111);
         Integer[] SalasLlaves={3, 4, 6, 8, 9, 10, 11, 12, 13};
         Integer k=0;
@@ -98,8 +97,12 @@ public class Mapa {
      * @param p Puerta a insertar
      */
     public void insertarPuerta(Puerta p) {
-        this.p = p;
         p.setAltura(profComb);
+        try {
+            salas[iPuerta][jPuerta].insertarPuerta(p);
+        } catch (NotKingsLandingException ex) {
+            System.err.println("La sala de la puerta está mal configurada");
+        }
     }
 
     /**
@@ -146,16 +149,89 @@ public class Mapa {
      * Muestra el mapa por pantalla
      */
     public void mostrarMapa() {
-        System.out.println("Mapa de tamaño " + tamX + "x" + tamY);
-        System.out.println("Salida: " + salaPuerta);
-        if (p.estaAbierta()) {
-            System.out.println("Puerta: Abierta. Altura: " + profComb);
-        } else {
-            System.out.println("Puera: Cerrada. Altura: " + profComb);
-        }
-        System.out.println("Llaves en cerradura: " + p.llavesCerr() + ". Llaves probadas: " + p.llavesProb());
+        //TO BE CONTINUED
     }
-
+    
+    public void simularTurno(){
+        Cola<Personaje> colaSolicitudes= new Cola<Personaje>();
+        Sala salaAux=null;
+        Arbol<Character> personajesMovidos=new Arbol<Character>(); //Evita mover varias veces el mismo personaje.
+        for(int i=0;i<tamX;i++){
+            for(int j=0;j<tamY;j++){
+                salaAux=salas[i][j];
+                while(salaAux.tienePersonaje()){
+                    colaSolicitudes.encolar(salaAux.primero());
+                    salaAux.desencolar();
+                }
+                if(salaAux instanceof SalaPuerta){
+                    Cola<Personaje> colaAux=new Cola<Personaje>();
+                    while(!colaSolicitudes.vacia()){
+                        try{
+                            colaSolicitudes.primero().interactuarPuerta(salaAux.getPuerta());
+                        }
+                        catch(NotKingsLandingException ex){
+                            System.err.println("Interactuada puerta que no existe");
+                        }
+                        finally{
+                            colaAux.encolar(colaSolicitudes.primero());
+                            colaSolicitudes.desencolar();
+                        }
+                    }
+                    while(!colaAux.vacia()){
+                        colaSolicitudes.encolar(colaAux.primero());
+                        colaAux.desencolar();
+                    }
+                }
+                else{
+                    while(!colaSolicitudes.vacia()){
+                    try{
+                        switch(colaSolicitudes.primero().nextMove()){
+                            case N:
+                                if(!personajesMovidos.pertenece(colaSolicitudes.primero().getID())){
+                                salas[i][j-1].nuevoPersonaje(colaSolicitudes.primero());
+                                personajesMovidos.insertar(colaSolicitudes.primero().getID());
+                                }
+                                colaSolicitudes.desencolar();
+                                break;
+                            case S:
+                                if(!personajesMovidos.pertenece(colaSolicitudes.primero().getID())){
+                                salas[i][j+1].nuevoPersonaje(colaSolicitudes.primero());
+                                personajesMovidos.insertar(colaSolicitudes.primero().getID());
+                                }
+                                colaSolicitudes.desencolar();
+                                break;
+                            case E:
+                                if(!personajesMovidos.pertenece(colaSolicitudes.primero().getID())){
+                                salas[i+1][j].nuevoPersonaje(colaSolicitudes.primero());
+                                personajesMovidos.insertar(colaSolicitudes.primero().getID());
+                                }
+                                colaSolicitudes.desencolar();
+                                break;
+                            case O:
+                                if(!personajesMovidos.pertenece(colaSolicitudes.primero().getID())){
+                                salas[i-1][j].nuevoPersonaje(colaSolicitudes.primero());
+                                personajesMovidos.insertar(colaSolicitudes.primero().getID());
+                                }
+                                colaSolicitudes.desencolar();
+                                break;
+                        }
+                    }
+                    catch(NoMovesLeftException ex){
+                        System.err.println("A ese personaje no le quedan movimientos");
+                        salaAux.nuevoPersonaje(colaSolicitudes.primero());
+                        colaSolicitudes.desencolar();
+                    }
+                    catch(ArrayIndexOutOfBoundsException ex){
+                        System.err.println("Te has salido de los límites");
+                        salaAux.nuevoPersonaje(colaSolicitudes.primero());
+                        colaSolicitudes.desencolar();
+                    }
+                }
+                }
+            }
+        }
+    }
+    
     /**
      * Programa principal - EC1
      *

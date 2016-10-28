@@ -18,7 +18,18 @@ public class Sala {
 		llaves.add(l);
 	}
 	public void nuevoPersonaje(Personaje p){
+            if(p instanceof CaminanteBlanco && this.tienePersonaje()){
+                ((CaminanteBlanco) p).kill(primero());
+                personajes.desencolar();
+            }
 		personajes.encolar(p);
+                if(p instanceof Atacante){
+                    ((Atacante) p).cogerLlave(getLlave(0));
+                    eliminarLlave(getLlave(0));
+                }
+                else
+                    if(p instanceof Defensor && !(p instanceof CaminanteBlanco))
+                        this.nuevaLlave(((Defensor) p).dejarLlave());
 	}
 	public boolean tienePersonaje(){
 		return (!personajes.vacia());
