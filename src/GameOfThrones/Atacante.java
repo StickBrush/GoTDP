@@ -12,9 +12,8 @@ public class Atacante extends Personaje {
 
 	}
 
-	@Override
-	public void interactuarLlave() {
-		//TO BE CONTINUED
+	public void cogerLlave(Llave l) {
+            this.llaves.addData(l);
 	}
 
 }

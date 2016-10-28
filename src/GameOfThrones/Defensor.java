@@ -12,9 +12,10 @@ public class Defensor extends Personaje {
 
 	}
 
-	@Override
-	public void interactuarLlave() {
-		arbol.borrar(arbol.getRaiz());
+	public Llave dejarLlave() {
+		Llave aux=this.llaves.getTop();
+                this.llaves.removeData();
+                return aux;
 	}
 
 }
