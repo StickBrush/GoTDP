@@ -7,9 +7,11 @@ public class Atacante extends Personaje {
 	}
 
 	@Override
-	public void interactuarPuerta() {
-		System.out.println("Personaje "+nombre+" de tipo "+tipo+" cerrando puerta");
-
+	public void interactuarPuerta(Puerta p) {
+            if(!this.llaves.isEmpty()){
+		p.abrir(this.llaves.getTop());
+                this.llaves.removeData();
+            }
 	}
 
 	public void cogerLlave(Llave l) {

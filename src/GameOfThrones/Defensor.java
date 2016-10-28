@@ -7,9 +7,8 @@ public class Defensor extends Personaje {
 	}
 
 	@Override
-	public void interactuarPuerta() {
-		System.out.println("Personaje "+nombre+" de tipo "+tipo+" cerrando puerta");
-
+	public void interactuarPuerta(Puerta p) {
+		p.cerrar(); //Totalmente balanceado, nada que nerfear aquí
 	}
 
 	public Llave dejarLlave() {

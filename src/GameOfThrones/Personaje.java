@@ -46,5 +46,5 @@ public abstract class Personaje {
                 throw new NoMovesLeftException();
         }
         
-	public abstract void interactuarPuerta();
+	public abstract void interactuarPuerta(Puerta p);
 }
