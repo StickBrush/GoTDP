@@ -85,7 +85,7 @@ public class Mapa {
                 j++;
             }
             for(int l=0;l<5;l++){
-                salas[aux][j].nuevaLlave(llavesGen[k]);
+                salas[j][aux].nuevaLlave(llavesGen[k]); //FIXME
                 k++;
             }
         }
@@ -232,6 +232,17 @@ public class Mapa {
         }
     }
     
+    public void insertarPersonaje(Personaje p){
+        if(p instanceof Stark || p instanceof Targaryen)
+            salas[0][0].nuevoPersonaje(p);
+        else{
+            if(p instanceof CaminanteBlanco)
+                salas[tamY-1][0].nuevoPersonaje(p);
+            else
+                salas[tamY-1][tamX-1].nuevoPersonaje(p);
+        }
+    }
+    
     /**
      * Programa principal - EC1
      *
@@ -263,35 +274,50 @@ public class Mapa {
         Puerta p = new Puerta();
         p.configurar(combLlaves);
         m.insertarPuerta(p);
-        //Se prueba la secuencia dada como ejemplo en la documentación
-        Llave[] test = {new Llave(1), new Llave(5), new Llave(4), new Llave(9), new Llave(6), new Llave(17), new Llave(13), new Llave(20), new Llave(21), new Llave(2), new Llave(8), new Llave(27), new Llave(25), new Llave(29)};
-        for (Llave testkey : test) {
-            p.abrir(testkey);
-            p.mostrarCerradura();
-        }
-        m.mostrarMapa();
-        p.cerrar();
-        //Probando llaves que no coinciden en la puerta. Números pares, altos, cero y negativos
-        Llave[] testFail = {new Llave(2), new Llave(315), new Llave(0), new Llave(-46)};
-        for (Llave testkey : testFail) {
-            p.abrir(testkey);
-        }
-        p.cerrar();
-        //Probando llaves repetidas
-        Llave[] testRepeat = {new Llave(3), new Llave(3)};
-        for (Llave testkey : testRepeat) {
-            p.abrir(testkey);
-        }
-        p.cerrar();
-        //Probando con valores aleatorios
-        int pruebaAleatoria = 500; //Veces que se hará la prueba con llaves al azar
+        
+        //Creación de personajes
+        //Dado que no conozco personajes de Juego de Tronos, los nombres son de JoJo's Bizarre Adventure
+        Personaje[] personajes=new Personaje[8];
+        personajes[0]=new Stark("Jonathan", 'J');
+        personajes[1]=new Stark("Joseph", 'O');
+        personajes[2]=new Targaryen("Speedwagon", 'S');
+        personajes[3]=new Targaryen("Zeppeli", 'Z');
+        personajes[4]=new Lannister("Santana", 'A');
+        personajes[5]=new Lannister("Kars", 'K');
+        personajes[6]=new CaminanteBlanco("Dio Brando", 'B');
+        personajes[7]=new CaminanteBlanco("DIO", 'D');
+        
+        //Sistema de generación de rutas
         Random RNG = new Random(); //Generador de números aleatorios (RNG)
-        Llave testkey; //Llave para asignar valores aleatorios
-        for (int i = 0; i < pruebaAleatoria; i++) {
-            testkey = new Llave(RNG.nextInt());
-            p.abrir(testkey);
+        Orientacion[] ruta=new Orientacion[30];
+        for(int pi=0;pi<8;pi++){
+            for(int i=0;i<30;i++){
+                switch(RNG.nextInt(4)){
+                    case 0:
+                        ruta[i]=Orientacion.N;
+                        break;
+                    case 1:
+                        ruta[i]=Orientacion.S;
+                        break;
+                    case 2:
+                        ruta[i]=Orientacion.E;
+                        break;
+                    case 3:
+                        ruta[i]=Orientacion.O;
+                        break;
+                }
+            }
+            personajes[pi].setRuta(ruta);
         }
-        p.cerrar();
+        //Inserción de personajes
+        for(int i=0;i<8;i++){
+            m.insertarPersonaje(personajes[i]);
+        }
+        
+        //Simulación
+        for(int i=0;i<50;i++){
+            m.simularTurno();
+        }
     }
 
 }

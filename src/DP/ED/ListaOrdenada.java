@@ -39,6 +39,7 @@ public class ListaOrdenada<tipoDato extends Comparable<tipoDato>> extends List <
             iterador.setPrev(nuevo);
         } else {
             Node nuevo = new Node(last, data, null);
+            if(last!=null)
             last.setNext(nuevo);
             last = nuevo;
         }
