@@ -65,10 +65,12 @@ public class Mapa {
         this.profComb = profComb;
         llaves=new List<Llave>();
         salas=new Sala[tamX][tamY];
-        for(int i=0;i<tamX;i++){
-            for(int j=0;j<tamY;j++){
+        int contador=0;
+        for(int i=0;i<tamY;i++){
+            for(int j=0;j<tamX;j++){
                 if(i!=tamX-1 || j!=tamY-1)
-                    salas[i][j]=new Sala(i*tamX+j);
+                    salas[i][j]=new Sala(contador);
+                contador++;
             }
         }
         salas[tamX-1][tamY-1]=new SalaPuerta((tamX*tamY)-1);
@@ -77,16 +79,19 @@ public class Mapa {
         trono=new Sala(1111);
         Integer[] SalasLlaves={3, 4, 6, 8, 9, 10, 11, 12, 13};
         Integer k=0;
+        boolean found=false;
         for(Integer i : SalasLlaves){
-            Integer aux=i;
-            Integer j=0;
-            while(aux>tamX){
-                aux-=tamX;
-                j++;
-            }
-            for(int l=0;l<5;l++){
-                salas[j][aux].nuevaLlave(llavesGen[k]); //FIXME
-                k++;
+            found=false;
+            for(int im=0;im<tamY && !found;im++){
+                for(int jm=0;jm<tamX && !found;jm++){
+                    if(salas[im][jm].getID()==i){
+                        found=true;
+                        for(int contadorl=0;contadorl<5;contadorl++){
+                            salas[im][jm].nuevaLlave(llavesGen[k]);
+                            k++;
+                        }
+                    }
+                }
             }
         }
     }
