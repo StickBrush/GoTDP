@@ -9,6 +9,7 @@ public abstract class Personaje {
 	protected char ID;
 	protected Stack<Llave> llaves;
         private Cola<Orientacion> ruta;
+        protected int numLlaves;
         
 	public Personaje(String nombre, String tipo, char ID){
 		this.nombre=nombre;
@@ -16,6 +17,7 @@ public abstract class Personaje {
 		this.ID=ID;
 		llaves=new Stack<Llave>();
                 ruta=new Cola<Orientacion>();
+                numLlaves=0;
 	}
         
         public String getNombre(){

@@ -15,4 +15,12 @@ public class SalaPuerta extends Sala {
 	public Puerta getPuerta(){
 		return p;
 	}
+        
+        @Override
+        public boolean nuevoPersonaje(Personaje pe){
+            if(!p.estaAbierta())
+                return super.nuevoPersonaje(pe);
+            else
+                return !super.nuevoPersonaje(pe);
+        }
 }

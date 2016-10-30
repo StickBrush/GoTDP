@@ -16,6 +16,7 @@ public class Atacante extends Personaje {
 
 	public void cogerLlave(Llave l) {
             this.llaves.addData(l);
+            numLlaves++;
 	}
 
 }

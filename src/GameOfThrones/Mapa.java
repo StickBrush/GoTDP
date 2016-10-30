@@ -39,6 +39,8 @@ public class Mapa {
     
     private Integer jPuerta;
     
+    private int turno;
+    
     /**
      * Constructor parametrizado de Mapa
      *
@@ -61,6 +63,7 @@ public class Mapa {
         }
         tamX = X;
         tamY = Y;
+        turno=0;
         this.salaPuerta = salaPuerta;
         this.profComb = profComb;
         llaves=new List<Llave>();
@@ -154,15 +157,32 @@ public class Mapa {
      * Muestra el mapa por pantalla
      */
     public void mostrarMapa() {
-        //TO BE CONTINUED
+        System.out.println("turno:"+turno);
+        System.out.println("mapa:"+salaPuerta);
+        try{
+            if(puertaAbierta())
+                System.out.println("puerta:abierta:"+profComb+":"+((salas[iPuerta][jPuerta]).getPuerta().llavesCerr())+":"+((salas[iPuerta][jPuerta]).getPuerta().llavesProb()));
+            else
+                System.out.println("puerta:cerrada:"+profComb+":"+((salas[iPuerta][jPuerta]).getPuerta().llavesCerr())+":"+((salas[iPuerta][jPuerta]).getPuerta().llavesProb()));
+        }
+        catch(NotKingsLandingException ex){
+            System.err.println("¿Mapa no configurado?");
+        }
+        for(int i=0;i<tamY;i++){
+            for(int j=0;j<tamX;j++){
+                if(salas[i][j].tieneLlave()){
+                    System.out.println("sala:"+salas[i][j].getID()); //¿Cómo se hace print sin salto de línea?
+                }
+            }
+        }
     }
     
     public void simularTurno(){
         Cola<Personaje> colaSolicitudes= new Cola<Personaje>();
         Sala salaAux=null;
         Arbol<Character> personajesMovidos=new Arbol<Character>(); //Evita mover varias veces el mismo personaje.
-        for(int i=0;i<tamX;i++){
-            for(int j=0;j<tamY;j++){
+        for(int i=0;i<tamY;i++){
+            for(int j=0;j<tamX;j++){
                 salaAux=salas[i][j];
                 while(salaAux.tienePersonaje()){
                     colaSolicitudes.encolar(salaAux.primero());
@@ -189,32 +209,33 @@ public class Mapa {
                 }
                 else{
                     while(!colaSolicitudes.vacia()){
+                        boolean trono=false;
                     try{
                         switch(colaSolicitudes.primero().nextMove()){
                             case N:
                                 if(!personajesMovidos.pertenece(colaSolicitudes.primero().getID())){
-                                salas[i][j-1].nuevoPersonaje(colaSolicitudes.primero());
+                                trono=salas[i][j-1].nuevoPersonaje(colaSolicitudes.primero());
                                 personajesMovidos.insertar(colaSolicitudes.primero().getID());
                                 }
                                 colaSolicitudes.desencolar();
                                 break;
                             case S:
                                 if(!personajesMovidos.pertenece(colaSolicitudes.primero().getID())){
-                                salas[i][j+1].nuevoPersonaje(colaSolicitudes.primero());
+                                trono=salas[i][j+1].nuevoPersonaje(colaSolicitudes.primero());
                                 personajesMovidos.insertar(colaSolicitudes.primero().getID());
                                 }
                                 colaSolicitudes.desencolar();
                                 break;
                             case E:
                                 if(!personajesMovidos.pertenece(colaSolicitudes.primero().getID())){
-                                salas[i+1][j].nuevoPersonaje(colaSolicitudes.primero());
+                                trono=salas[i+1][j].nuevoPersonaje(colaSolicitudes.primero());
                                 personajesMovidos.insertar(colaSolicitudes.primero().getID());
                                 }
                                 colaSolicitudes.desencolar();
                                 break;
                             case O:
                                 if(!personajesMovidos.pertenece(colaSolicitudes.primero().getID())){
-                                salas[i-1][j].nuevoPersonaje(colaSolicitudes.primero());
+                                trono=salas[i-1][j].nuevoPersonaje(colaSolicitudes.primero());
                                 personajesMovidos.insertar(colaSolicitudes.primero().getID());
                                 }
                                 colaSolicitudes.desencolar();
@@ -231,10 +252,23 @@ public class Mapa {
                         salaAux.nuevoPersonaje(colaSolicitudes.primero());
                         colaSolicitudes.desencolar();
                     }
+                    finally{
+                        if(trono){
+                            while(salas[iPuerta][jPuerta].tienePersonaje()){
+                                this.trono.nuevoPersonaje(salas[iPuerta][jPuerta].primero());
+                                salas[iPuerta][jPuerta].desencolar();
+                            }
+                        }
+                    }
                 }
                 }
             }
         }
+        turno++;
+    }
+    
+    public boolean puertaAbierta() throws NotKingsLandingException{
+        return salas[iPuerta][jPuerta].getPuerta().estaAbierta();
     }
     
     public void insertarPersonaje(Personaje p){
@@ -320,9 +354,17 @@ public class Mapa {
         }
         
         //Simulación
-        for(int i=0;i<50;i++){
+        boolean abierta=false;
+        for(int i=0;i<50 && !abierta;i++){
             m.simularTurno();
+            try{
+                abierta=m.puertaAbierta();
+            }
+            catch(NotKingsLandingException ex){
+                System.err.println("¿El mapa no fue inicializado?");
+            }
         }
+        m.mostrarMapa();
     }
 
 }

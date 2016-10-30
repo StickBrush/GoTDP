@@ -14,6 +14,7 @@ public class Defensor extends Personaje {
 	public Llave dejarLlave() {
 		Llave aux=this.llaves.getTop();
                 this.llaves.removeData();
+                numLlaves--;
                 return aux;
 	}
 
