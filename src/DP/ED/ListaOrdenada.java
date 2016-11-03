@@ -6,25 +6,46 @@
 package DP.ED;
 
 /**
+ * Implementación de la Lista Ordenada
  *
- * @author Solaire
- * @param <tipoDato> Tipo de los datos de la lista
+ * @version 2.0
+ * @author Juan Luis Herrera González Curso: 2º (Grupo Grande A) EC1
+ * @param <tipoDato> Tipo de dato de la lista ordenada. Debe ser comparable.
  */
-public class ListaOrdenada<tipoDato extends Comparable<tipoDato>> extends List <tipoDato> {
+public class ListaOrdenada<tipoDato extends Comparable<tipoDato>> extends List<tipoDato> {
 
+    /**
+     * Constructor por defecto de la lista ordenada
+     */
     public ListaOrdenada() {
         super();
     }
 
+    /**
+     * Constructor parametrizado de la Lista Ordenada
+     *
+     * @param data Dato con el que crear la lista
+     */
     public ListaOrdenada(tipoDato data) {
         super(data);
     }
 
+    /**
+     * Lanza una OrderViolationException
+     *
+     * @param data Será ignorado
+     * @throws OrderViolationException
+     */
     @Override
     public void addLast(tipoDato data) throws OrderViolationException {
         throw new OrderViolationException();
     }
 
+    /**
+     * Añade un dato en orden
+     *
+     * @param data Dato a añadir
+     */
     public void add(tipoDato data) {
         boolean encontrado = false;
         Node iterador;
@@ -39,23 +60,30 @@ public class ListaOrdenada<tipoDato extends Comparable<tipoDato>> extends List <
             iterador.setPrev(nuevo);
         } else {
             Node nuevo = new Node(last, data, null);
-            if(last!=null)
-            last.setNext(nuevo);
+            if (last != null) {
+                last.setNext(nuevo);
+            }
             last = nuevo;
         }
     }
-    
-    public boolean searchAndDelete(tipoDato d){
+
+    /**
+     * Busca y elimina un dato en la lista
+     *
+     * @param d Dato a borrar
+     * @return True si lo borró, false si no.
+     */
+    public boolean searchAndDelete(tipoDato d) {
         Node iterador;
-        boolean encontrado=false;
-        int i=0;
-        for(iterador=first;(iterador!=null)&&(!encontrado);iterador=iterador.next()){
-            if(iterador.get().equals(d)){
-                encontrado=true;
+        boolean encontrado = false;
+        int i = 0;
+        for (iterador = first; (iterador != null) && (!encontrado); iterador = iterador.next()) {
+            if (iterador.get().equals(d)) {
+                encontrado = true;
                 super.delete(i);
-            }
-            else
+            } else {
                 i++;
+            }
         }
         return encontrado;
     }

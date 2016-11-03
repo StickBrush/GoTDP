@@ -3,9 +3,8 @@ package GameOfThrones;
 /**
  * Implementación de la llave
  *
- * @version 1.0
- * @author Juan Luis Herrera González Curso: 2º (Grupo Grande A)
- * EC1
+ * @version 2.0
+ * @author Juan Luis Herrera González Curso: 2º (Grupo Grande A) EC1
  */
 public class Llave implements Comparable<Llave> {
 
@@ -32,11 +31,23 @@ public class Llave implements Comparable<Llave> {
         return ID;
     }
 
+    /**
+     * Método compareTo de la llave
+     *
+     * @param t Llave con la que comparar
+     * @return -1 si la llave es menor, 1 si es mayor, 0 si son iguales.
+     */
     @Override
     public int compareTo(Llave t) {
         return (ID.compareTo(t.ID));
     }
 
+    /**
+     * Método equals
+     *
+     * @param t Llave con la que comparar
+     * @return True si son iguales, false si no.
+     */
     @Override
     public boolean equals(Object t) {
         if (!(t instanceof Llave)) {
@@ -46,6 +57,11 @@ public class Llave implements Comparable<Llave> {
         }
     }
 
+    /**
+     * Método toString de la Llave
+     *
+     * @return Llave casteada a String
+     */
     @Override
     public String toString() {
         return (String.valueOf(ID));

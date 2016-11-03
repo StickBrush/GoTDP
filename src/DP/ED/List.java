@@ -196,6 +196,7 @@ public class List <tipoDato> {
 	 * Method to add a data by the end of the list
 	 *
 	 * @param Data value that is going to be added to the list
+         * @throws DP.ED.OrderViolationException
 	 */
 	public void addLast(tipoDato Data) throws OrderViolationException {
         Node l = last;

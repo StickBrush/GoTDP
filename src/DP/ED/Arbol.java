@@ -3,7 +3,7 @@ package DP.ED;
 /**
  * Implementacion de arbol binario de busqueda.
  *
- * @version 1.0
+ * @version 2.0
  * @author <br>Asignatura Desarrollo de Programas
  * <b> Profesores DP </b><br>
  * Curso 14/15

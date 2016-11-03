@@ -3,50 +3,113 @@ package GameOfThrones;
 import DP.ED.Stack;
 import DP.ED.Cola;
 
+/**
+ * Implementación de la clase Personaje
+ *
+ * @version 2.0
+ * @author Juan Luis Herrera González Curso: 2º (Grupo Grande A) EC1
+ */
 public abstract class Personaje {
-	protected String nombre;
-	protected String tipo;
-	protected char ID;
-	protected Stack<Llave> llaves;
-        private Cola<Orientacion> ruta;
-        protected int numLlaves;
-        
-	public Personaje(String nombre, String tipo, char ID){
-		this.nombre=nombre;
-		this.tipo=tipo;
-		this.ID=ID;
-		llaves=new Stack<Llave>();
-                ruta=new Cola<Orientacion>();
-                numLlaves=0;
-	}
-        
-        public String getNombre(){
-            return nombre;
+
+    /**
+     * Nombre del personaje
+     */
+    protected String nombre;
+    /**
+     * Tipo de personaje
+     */
+    protected String tipo;
+    /**
+     * Marca identificativa
+     */
+    protected char ID;
+    /**
+     * Llaves del personaje
+     */
+    protected Stack<Llave> llaves;
+    /**
+     * Ruta a seguir por el personaje
+     */
+    private Cola<Orientacion> ruta;
+    /**
+     * Número de llaves del personaje
+     */
+    protected int numLlaves;
+
+    /**
+     * Constructor parametrizado de Personaje
+     *
+     * @param nombre Nombre del personaje
+     * @param tipo Tipo de personaje
+     * @param ID Marca identificativa
+     */
+    public Personaje(String nombre, String tipo, char ID) {
+        this.nombre = nombre;
+        this.tipo = tipo;
+        this.ID = ID;
+        llaves = new Stack<Llave>();
+        ruta = new Cola<Orientacion>();
+        numLlaves = 0;
+    }
+
+    /**
+     * Devuelve el nombre del personaje
+     *
+     * @return Nombre del personaje
+     */
+    public String getNombre() {
+        return nombre;
+    }
+
+    /**
+     * Devuelve el tipo del personaje
+     *
+     * @return Tipo de personaje
+     */
+    public String getTipo() {
+        return tipo;
+    }
+
+    /**
+     * Devuelve la marca identificativa del personaje
+     *
+     * @return Marca identificativa
+     */
+    public char getID() {
+        return ID;
+    }
+
+    /**
+     * Setea la ruta del personaje
+     *
+     * @param vRuta Ruta a seguir por el personaje
+     */
+    public void setRuta(Orientacion[] vRuta) {
+        for (int i = 0; i < vRuta.length; i++) {
+            ruta.encolar(vRuta[i]);
         }
-        
-        public String getTipo(){
-            return tipo;
+    }
+
+    /**
+     * Devuelve el siguiente movimiento del personaje
+     *
+     * @return Siguiente movimiento del personaje
+     * @throws NoMovesLeftException
+     */
+    public Orientacion nextMove() throws NoMovesLeftException {
+        if (!ruta.vacia()) {
+            Orientacion o = ruta.primero();
+            ruta.desencolar();
+            return o;
+        } else {
+            throw new NoMovesLeftException();
         }
-        
-        public char getID(){
-            return ID;
-        }
-        
-        public void setRuta(Orientacion[] vRuta){
-            for(int i=0;i<vRuta.length;i++){
-                ruta.encolar(vRuta[i]);
-            }
-        }
-        
-        public Orientacion nextMove() throws NoMovesLeftException{
-            if(!ruta.vacia()){
-                Orientacion o=ruta.primero();
-                ruta.desencolar();
-                return o;
-            }
-            else
-                throw new NoMovesLeftException();
-        }
-        
-	public abstract void interactuarPuerta(Puerta p);
+    }
+
+    /**
+     * Interactúa con la puerta
+     *
+     * @param p Puerta con la que interactuar
+     */
+    public abstract void interactuarPuerta(Puerta p);
 }

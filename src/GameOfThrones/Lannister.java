@@ -1,11 +1,23 @@
 package GameOfThrones;
 
+/**
+ * Implementación de la clase Lannister
+ *
+ * @version 2.0
+ * @author Juan Luis Herrera González Curso: 2º (Grupo Grande A) EC1
+ */
 public class Lannister extends Defensor {
 
+    /**
+     * Constructor parametrizado de Lannister
+     *
+     * @param nombre Nombre del Lannister
+     * @param ID Marca identificativa
+     */
     public Lannister(String nombre, char ID) {
         super(nombre, "Lannister", ID);
         int numLlavesGenerar = 45;
-        numLlaves=numLlavesGenerar;
+        numLlaves = numLlavesGenerar;
         Llave[] llavesGen = new Llave[numLlavesGenerar];
         int idLlave = 0;
         for (int i = 0; i < numLlavesGenerar; i++) {
@@ -16,7 +28,7 @@ public class Lannister extends Defensor {
             }
             idLlave++;
         }
-        for(int i=numLlavesGenerar-1;i>=0;i--){
+        for (int i = numLlavesGenerar - 1; i >= 0; i--) {
             this.llaves.addData(llavesGen[i]);
         }
     }

@@ -1,13 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package DP.ED;
 
 /**
- *
- * @author Solaire
+ * Implementación de la OrderViolationException
+ *@version 2.0
+ * @author Juan Luis Herrera González Curso: 2º (Grupo Grande A)
+ * EC1
  */
 public class OrderViolationException extends Exception {
     
