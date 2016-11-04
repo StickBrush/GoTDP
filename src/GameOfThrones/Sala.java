@@ -66,8 +66,10 @@ public class Sala {
         }
         personajes.encolar(p);
         if (p instanceof Atacante) {
+            if(tieneLlave()){
             ((Atacante) p).cogerLlave(getLlave(0));
             eliminarLlave(getLlave(0));
+            }
         } else if (p instanceof Defensor && !(p instanceof CaminanteBlanco)) {
             this.nuevaLlave(((Defensor) p).dejarLlave());
         }
@@ -174,5 +176,23 @@ public class Sala {
             llaves.add(aux);
         }
         return saux;
+    }
+
+    /**
+     * Muestra a todos los personajes de la sala
+     *
+     * @param turno Turno actual
+     */
+    public void showPersonajes(int turno) {
+        if (this.tienePersonaje()) {
+            Cola<Personaje> caux = new Cola<Personaje>();
+            while (this.tienePersonaje()) {
+                if (!(personajes.primero() instanceof CaminanteBlanco)) {
+                    System.out.println(personajes.primero().getTipo() + ":" + personajes.primero().getID() + ":" + ID + ":" + turno + ":" + personajes.primero().getLlaves());
+                } else {
+                    System.out.println(personajes.primero().getTipo() + ":" + personajes.primero().getID() + ":" + ID + ":" + turno + ":" + ((CaminanteBlanco) personajes.primero()).getCapturados());
+                }
+            }
+        }
     }
 }

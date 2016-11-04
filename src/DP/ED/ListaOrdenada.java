@@ -47,23 +47,24 @@ public class ListaOrdenada<tipoDato extends Comparable<tipoDato>> extends List<t
      * @param data Dato a añadir
      */
     public void add(tipoDato data) {
-        boolean encontrado = false;
-        Node iterador;
-        for (iterador = first; (iterador != null) && (!encontrado); iterador = iterador.next()) {
-            if ((iterador.get()).compareTo(data) > 0) {
-                encontrado = true;
+        if (!l.isEmpty()) {
+            tipoDato it = l.getFirst();
+            int i = 1;
+            boolean encontrado = false;
+            while (i < l.size() && !encontrado) {
+                if (l.get(i).compareTo(it) > 0) {
+                    encontrado = true;
+                } else {
+                    i++;
+                }
+                if (!encontrado) {
+                    l.addLast(data);
+                } else {
+                    l.add(i, data);
+                }
             }
-        }
-        if (iterador != null) {
-            Node nuevo = new Node(iterador.prev(), data, iterador);
-            (iterador.prev()).setNext(nuevo);
-            iterador.setPrev(nuevo);
         } else {
-            Node nuevo = new Node(last, data, null);
-            if (last != null) {
-                last.setNext(nuevo);
-            }
-            last = nuevo;
+            l.add(data);
         }
     }
 
@@ -71,20 +72,8 @@ public class ListaOrdenada<tipoDato extends Comparable<tipoDato>> extends List<t
      * Busca y elimina un dato en la lista
      *
      * @param d Dato a borrar
-     * @return True si lo borró, false si no.
      */
-    public boolean searchAndDelete(tipoDato d) {
-        Node iterador;
-        boolean encontrado = false;
-        int i = 0;
-        for (iterador = first; (iterador != null) && (!encontrado); iterador = iterador.next()) {
-            if (iterador.get().equals(d)) {
-                encontrado = true;
-                super.delete(i);
-            } else {
-                i++;
-            }
-        }
-        return encontrado;
+    public void searchAndDelete(tipoDato d) {
+        l.removeFirstOccurrence(d);
     }
 }

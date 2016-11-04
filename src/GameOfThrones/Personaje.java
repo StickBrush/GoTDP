@@ -112,26 +112,32 @@ public abstract class Personaje {
      * @param p Puerta con la que interactuar
      */
     public abstract void interactuarPuerta(Puerta p);
-    
+
     /**
      * Devuelve concatenadas todas las llaves
+     *
      * @return Todas las llaves concatenadas
      */
-    public String getLlaves(){
-        return getAllLlaves("");
+    public String getLlaves() {
+        if (llaves != null) {
+            return getAllLlaves("");
+        } else {
+            return "";
+        }
     }
-    
+
     /**
      * Devuelve todas las llaves concatenadas, recursivamente
+     *
      * @param aux String a modificar recursivamente
      * @return Todas las llaves concatenadas
      */
-    private String getAllLlaves(String aux){
-        if(!llaves.isEmpty()){
-            Llave laux=llaves.getTop();
+    private String getAllLlaves(String aux) {
+        if (!llaves.isEmpty()) {
+            Llave laux = llaves.getTop();
             llaves.removeData();
-            aux=aux+laux.toString()+" ";
-            aux=getAllLlaves(aux);
+            aux = aux + laux.toString() + " ";
+            aux = getAllLlaves(aux);
             llaves.addData(laux);
         }
         return aux;

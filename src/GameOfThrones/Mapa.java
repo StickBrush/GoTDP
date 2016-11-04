@@ -27,17 +27,17 @@ public class Mapa {
      * Profundidad de la combinación
      */
     private int profComb;
-
+    
     private List<Llave> llaves;
-
+    
     private Sala[][] salas;
-
+    
     private Sala trono;
-
+    
     private Integer iPuerta;
-
+    
     private Integer jPuerta;
-
+    
     private int turno;
 
     /**
@@ -171,12 +171,20 @@ public class Mapa {
         for (int i = 0; i < tamY; i++) {
             for (int j = 0; j < tamX; j++) {
                 if (salas[i][j].tieneLlave()) {
-                    System.out.println("sala:" + salas[i][j].getID()); //¿Cómo se hace print sin salto de línea?
+                    System.out.println("sala:" + salas[i][j].getID() + ":" + salas[i][j].getLlaves()); //¿Cómo se hace print sin salto de línea?
                 }
             }
         }
+        for (int i = 0; i < tamY; i++) {
+            for (int j = 0; j < tamX; j++) {
+                salas[i][j].showPersonajes(turno);
+            }
+        }
+        System.out.println("(miembrostrono)");
+        System.out.println("nuevorey:");
+        trono.showPersonajes(turno);
     }
-
+    
     public void simularTurno() {
         Cola<Personaje> colaSolicitudes = new Cola<Personaje>();
         Sala salaAux = null;
@@ -263,11 +271,11 @@ public class Mapa {
         }
         turno++;
     }
-
+    
     public boolean puertaAbierta() throws NotKingsLandingException {
         return salas[iPuerta][jPuerta].getPuerta().estaAbierta();
     }
-
+    
     public void insertarPersonaje(Personaje p) {
         if (p instanceof Stark || p instanceof Targaryen) {
             salas[0][0].nuevoPersonaje(p);
@@ -361,5 +369,5 @@ public class Mapa {
         }
         m.mostrarMapa();
     }
-
+    
 }

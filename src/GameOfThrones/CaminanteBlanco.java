@@ -33,7 +33,6 @@ public class CaminanteBlanco extends Defensor {
      * @param p Personaje a capturar
      */
     public void kill(Personaje p) {
-        System.out.println("El personaje " + p.getNombre() + " ha sido eliminado");
         capturados.addData(p.getID());
     }
 
