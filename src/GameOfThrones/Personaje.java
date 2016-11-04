@@ -7,7 +7,7 @@ import DP.ED.Cola;
  * Implementación de la clase Personaje
  *
  * @version 2.0
- * @author Juan Luis Herrera González Curso: 2º (Grupo Grande A) EC1
+ * @author Juan Luis Herrera González Curso: 2º (Grupo Grande A) EC2
  */
 public abstract class Personaje {
 

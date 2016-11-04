@@ -4,7 +4,7 @@ package GameOfThrones;
  * Implementación de la clase Targaryen
  *
  * @version 2.0
- * @author Juan Luis Herrera González Curso: 2º (Grupo Grande A) EC1
+ * @author Juan Luis Herrera González Curso: 2º (Grupo Grande A) EC2
  */
 public class Targaryen extends Atacante {
 

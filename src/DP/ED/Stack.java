@@ -5,8 +5,8 @@ package DP.ED;
  *
  * @version 2.0
  * @author
- * <b> Profesores DP </b><br>
- * Program Development<br/>
+ * <br> Profesores DP <b>
+ * Program Development</b><br>
  * 16/17 Course
  */
 public class Stack<tipoDato> {

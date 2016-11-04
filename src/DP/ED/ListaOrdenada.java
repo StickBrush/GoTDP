@@ -1,46 +1,56 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package DP.ED;
 
 import java.util.Queue;
 import java.util.PriorityQueue;
+
 /**
  * Implementación de la Lista Ordenada
  *
  * @version 2.0
- * @author Juan Luis Herrera González Curso: 2º (Grupo Grande A) EC1
+ * @author Juan Luis Herrera González Curso: 2º (Grupo Grande A) EC2
  * @param <tipoDato> Tipo de dato de la lista ordenada. Debe ser comparable.
  */
-public class ListaOrdenada<tipoDato>{
-    
+public class ListaOrdenada<tipoDato> {
+
+    /**
+     * Cola de prioridad usada como lista ordenada
+     */
     private Queue<tipoDato> l;
+
     /**
      * Constructor por defecto de la lista ordenada
      */
     public ListaOrdenada() {
-        l=new PriorityQueue<tipoDato>();
+        l = new PriorityQueue<tipoDato>();
     }
-    
-    public boolean estaVacia(){
+
+    /**
+     * Devuelve si la lista está vacía
+     *
+     * @return True si está vacía, false si no
+     */
+    public boolean estaVacia() {
         return l.isEmpty();
     }
-    
-    public tipoDato getFirst(){
+
+    /**
+     * Devuelve el primer elemento
+     *
+     * @return Primer elemento de la lista
+     */
+    public tipoDato getFirst() {
         return l.element();
     }
+
     /**
      * Constructor parametrizado de la Lista Ordenada
      *
      * @param data Dato con el que crear la lista
      */
     public ListaOrdenada(tipoDato data) {
-        l=new PriorityQueue<tipoDato>();
+        l = new PriorityQueue<tipoDato>();
         l.add(data);
     }
-
 
     /**
      * Añade un dato en orden
@@ -48,7 +58,7 @@ public class ListaOrdenada<tipoDato>{
      * @param data Dato a añadir
      */
     public void add(tipoDato data) {
-       l.add(data);
+        l.add(data);
     }
 
     /**
@@ -59,8 +69,11 @@ public class ListaOrdenada<tipoDato>{
     public void searchAndDelete(tipoDato d) {
         l.remove(d);
     }
-    
-    public void deleteFirst(){
+
+    /**
+     * Elimina el primer dato de la lista
+     */
+    public void deleteFirst() {
         l.remove();
     }
 }

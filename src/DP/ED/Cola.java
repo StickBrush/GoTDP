@@ -7,13 +7,19 @@ import java.util.LinkedList;
  * Implementación de la cola
  *
  * @version 2.0
- * @author Juan Luis Herrera González Curso: 2º (Grupo Grande A) EC1
+ * @author Juan Luis Herrera González Curso: 2º (Grupo Grande A) EC2
  * @param <tipoDato> Tipo genérico de dato para la cola
  */
 public class Cola<tipoDato> {
 
+    /**
+     * Cola usada
+     */
     private Queue<tipoDato> q;
 
+    /**
+     * Constructor por defecto de cola
+     */
     public Cola() {
         q = new LinkedList<tipoDato>();
     }

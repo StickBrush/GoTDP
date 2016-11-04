@@ -4,7 +4,7 @@ package GameOfThrones;
  * Implementación de los Defensores
  *
  * @version 2.0
- * @author Juan Luis Herrera González Curso: 2º (Grupo Grande A) EC1
+ * @author Juan Luis Herrera González Curso: 2º (Grupo Grande A) EC2
  */
 public class Defensor extends Personaje {
 
@@ -26,7 +26,7 @@ public class Defensor extends Personaje {
      */
     @Override
     public void interactuarPuerta(Puerta p) {
-        p.cerrar(); //Totalmente balanceado, nada que nerfear aquí
+        p.cerrar();
     }
 
     /**

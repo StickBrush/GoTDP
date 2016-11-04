@@ -3,93 +3,101 @@ package DP.ED;
 import java.util.LinkedList;
 
 /**
- * Implementation of the method for the List class.
+ * Implementación de la Lista
  *
  * @version 2.0
- * @author
- * <b> Profesores DP </b><br>
- * Program Development<br/>
- * 16/17 Course
+ * @author Juan Luis Herrera González Curso: 2º (Grupo Grande A) EC2
  */
 public class List<tipoDato> {
 
+    /**
+     * Lista usada
+     */
     private LinkedList<tipoDato> l;
 
     /**
-     * Default Constructor for the List class
+     * Constructor por defecto de lista
      */
     public List() {
         l = new LinkedList<tipoDato>();
     }
 
     /**
-     * Parametrized method for the List class
+     * Constructor parametrizado de lista
      *
-     * @param data the data that the List will store
+     * @param data Dato con el que crear la lista
      */
     public List(tipoDato data) {
+        l = new LinkedList<tipoDato>();
         addLast(data);
     }
 
     /**
-     * Method that returns the element that is stored at the beginning of the
-     * list
+     * Retorna el primer elemento de la lista
      *
-     * @return the first element
+     * @return Primer elemento de la lista
      */
     public tipoDato getFirst() {
         return l.getFirst();
     }
 
     /**
-     * Method that returns the data that is stored at the end of the list
+     * Devuelve el último deato de la lista
      *
-     * @return the last data
+     * @return Último dato de la lista
      */
     public tipoDato getLast() {
         return l.getLast();
     }
 
+    /**
+     * Devuelve si la lista está vacía
+     *
+     * @return True si está vacía, false si no
+     */
     public boolean estaVacia() {
         return l.isEmpty();
     }
 
     /**
-     * Method that returns the size of the list
+     * Devuelve el tamaño de la lista
      *
-     * @return the size of the list
+     * @return Tamaño de la lista
      */
     public Integer size() {
         return l.size();
     }
 
     /**
-     * Method that returns the data contained in the position passed as
-     * parameter
+     * Retorna el elemento de la posición pos
      *
-     * @param pos the position of the element to be returned
-     * @return the data contained in the position passed as parameter
+     * @param pos Posición del elemento a retornar
+     * @return Elemento de la posición pos
      */
     public tipoDato get(Integer pos) {
         return l.get(pos);
     }
 
+    /**
+     * Elimina el dato de la posición pos
+     *
+     * @param pos Dato a eliminar
+     */
     public void delete(Integer pos) {
         l.remove(pos);
     }
 
     /**
-     * Method to add a data by the end of the list
+     * Método que añade un dato al final
      *
-     * @param Data value that is going to be added to the list
-     * @throws DP.ED.OrderViolationException
+     * @param Data Dato a añadir al final
      */
-    public void addLast(tipoDato Data){
+    public void addLast(tipoDato Data) {
         l.addLast(Data);
     }
 
     /**
-     * It removes the last data in the list
+     * Elimina el último elemento de la lista
      *
      */
     public void removeLast() {

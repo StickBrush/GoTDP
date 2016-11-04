@@ -4,8 +4,7 @@ package GameOfThrones;
  * Implementación de los atacantes
  *
  * @version 2.0
- * @author Juan Luis Herrera González Curso: 2º (Grupo Grande A)
- * EC1
+ * @author Juan Luis Herrera González Curso: 2º (Grupo Grande A) EC2
  */
 public class Atacante extends Personaje {
 

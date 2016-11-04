@@ -6,7 +6,7 @@ import DP.ED.Stack;
  * Implementación del Caminante Blanco
  *
  * @version 2.0
- * @author Juan Luis Herrera González Curso: 2º (Grupo Grande A) EC1
+ * @author Juan Luis Herrera González Curso: 2º (Grupo Grande A) EC2
  */
 public class CaminanteBlanco extends Defensor {
 
@@ -23,7 +23,7 @@ public class CaminanteBlanco extends Defensor {
      */
     public CaminanteBlanco(String nombre, char ID) {
         super(nombre, "Caminante Blanco", ID);
-        llaves = null; //Y que el Garbage Collector elimine la pila
+        llaves = null;
         capturados = new Stack<Character>();
     }
 

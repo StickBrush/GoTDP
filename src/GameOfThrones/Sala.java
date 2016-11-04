@@ -7,7 +7,7 @@ import DP.ED.Cola;
  * Implementación de la NotKingsLandingException
  *
  * @version 2.0
- * @author Juan Luis Herrera González Curso: 2º (Grupo Grande A) EC1
+ * @author Juan Luis Herrera González Curso: 2º (Grupo Grande A) EC2
  */
 class NotKingsLandingException extends Exception {
 }
@@ -16,7 +16,7 @@ class NotKingsLandingException extends Exception {
  * Implementación de la Sala
  *
  * @version 2.0
- * @author Juan Luis Herrera González Curso: 2º (Grupo Grande A) EC1
+ * @author Juan Luis Herrera González Curso: 2º (Grupo Grande A) EC2
  */
 public class Sala {
 
