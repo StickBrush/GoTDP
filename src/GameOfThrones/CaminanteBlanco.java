@@ -1,5 +1,7 @@
 package GameOfThrones;
 
+import DP.ED.Stack;
+
 /**
  * Implementación del Caminante Blanco
  *
@@ -9,9 +11,9 @@ package GameOfThrones;
 public class CaminanteBlanco extends Defensor {
 
     /**
-     * Número de personajes capturados
+     * Identificadores de los personajes capturados;
      */
-    private int capturados;
+    private Stack<Character> capturados;
 
     /**
      * Constructor parametrizado de Caminante Blanco
@@ -22,7 +24,7 @@ public class CaminanteBlanco extends Defensor {
     public CaminanteBlanco(String nombre, char ID) {
         super(nombre, "Caminante Blanco", ID);
         llaves = null; //Y que el Garbage Collector elimine la pila
-        capturados = 0;
+        capturados = new Stack<Character>();
     }
 
     /**
@@ -32,16 +34,33 @@ public class CaminanteBlanco extends Defensor {
      */
     public void kill(Personaje p) {
         System.out.println("El personaje " + p.getNombre() + " ha sido eliminado");
-        capturados++;
+        capturados.addData(p.getID());
     }
 
     /**
-     * Devuelve el número de personajes capturados
+     * Devuelve un string con los identificadores de los personajes capturados
      *
      * @return Peronajes capturados
      */
-    public int getCapturados() {
-        return capturados;
+    public String getCapturados() {
+        return capturados("");
+    }
+
+    /**
+     * Método privado que devuelve todos los capturados concatenados
+     *
+     * @param aux Parámetro para recursividad
+     * @return Capturados concatenados
+     */
+    private String capturados(String aux) {
+        if (!capturados.isEmpty()) {
+            aux = aux + capturados.getTop() + " ";
+            Character reinsert = capturados.getTop();
+            capturados.removeData();
+            aux = capturados(aux);
+            capturados.addData(reinsert);
+        }
+        return aux;
     }
 
 }

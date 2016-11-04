@@ -155,4 +155,24 @@ public class Sala {
     public Integer getID() {
         return ID;
     }
+
+    /**
+     * Devuelve concatenadas todos los ID de las llaves
+     *
+     * @return ID de las llaves concatenados
+     */
+    public String getLlaves() {
+        Cola<Llave> caux = new Cola<Llave>();
+        String saux = "";
+        for (Llave aux = null; !llaves.estaVacia(); llaves.delete(0)) {
+            aux = llaves.getFirst();
+            caux.encolar(aux);
+            saux = saux + aux.toString() + " ";
+        }
+        for (Llave aux = null; !caux.vacia(); caux.desencolar()) {
+            aux = caux.primero();
+            llaves.add(aux);
+        }
+        return saux;
+    }
 }
