@@ -27,17 +27,17 @@ public class Mapa {
      * Profundidad de la combinación
      */
     private int profComb;
-    
+
     private List<Llave> llaves;
-    
+
     private Sala[][] salas;
-    
+
     private Sala trono;
-    
+
     private Integer iPuerta;
-    
+
     private Integer jPuerta;
-    
+
     private int turno;
 
     /**
@@ -184,7 +184,7 @@ public class Mapa {
         System.out.println("nuevorey:");
         trono.showPersonajes(turno);
     }
-    
+
     public void simularTurno() {
         Cola<Personaje> colaSolicitudes = new Cola<Personaje>();
         Sala salaAux = null;
@@ -200,7 +200,9 @@ public class Mapa {
                     Cola<Personaje> colaAux = new Cola<Personaje>();
                     while (!colaSolicitudes.vacia()) {
                         try {
-                            colaSolicitudes.primero().interactuarPuerta(salaAux.getPuerta());
+                            if (!personajesMovidos.pertenece(colaSolicitudes.primero().getID())) {
+                                colaSolicitudes.primero().interactuarPuerta(salaAux.getPuerta());
+                            }
                         } catch (NotKingsLandingException ex) {
                             System.err.println("Interactuada puerta que no existe");
                         } finally {
@@ -209,8 +211,70 @@ public class Mapa {
                         }
                     }
                     while (!colaAux.vacia()) {
-                        colaSolicitudes.encolar(colaAux.primero());
-                        colaAux.desencolar();
+                        if(colaAux.primero() instanceof Lannister){
+                            try{
+                                switch (colaAux.primero().nextMove()){
+                                case N:
+                                    if (!personajesMovidos.pertenece(colaAux.primero().getID())) {
+                                        personajesMovidos.insertar(colaAux.primero().getID());
+                                        if (j - 1 >= 0) {
+                                            salas[i][j - 1].nuevoPersonaje(colaAux.primero(), false);
+                                        } else {
+                                            salaAux.nuevoPersonaje(colaAux.primero(), true);
+                                        }
+                                    } else {
+                                        salaAux.nuevoPersonaje(colaAux.primero(), true);
+                                    }
+                                    colaAux.desencolar();
+                                    break;
+                                case S:
+                                    if (!personajesMovidos.pertenece(colaAux.primero().getID())) {
+                                        personajesMovidos.insertar(colaAux.primero().getID());
+                                        if (j + 1 < tamX) {
+                                            salas[i][j + 1].nuevoPersonaje(colaAux.primero(), false);
+                                        } else {
+                                            salaAux.nuevoPersonaje(colaAux.primero(), true);
+                                        }
+                                    } else {
+                                        salaAux.nuevoPersonaje(colaAux.primero(), true);
+                                    }
+                                    colaAux.desencolar();
+                                    break;
+                                case E:
+                                    if (!personajesMovidos.pertenece(colaAux.primero().getID())) {
+                                        personajesMovidos.insertar(colaAux.primero().getID());
+                                        if (i + 1 < tamY) {
+                                            salas[i + 1][j].nuevoPersonaje(colaAux.primero(), false);
+                                        } else {
+                                            salaAux.nuevoPersonaje(colaAux.primero(), true);
+                                        }
+                                    } else {
+                                        salaAux.nuevoPersonaje(colaAux.primero(), true);
+                                    }
+                                    colaAux.desencolar();
+                                    break;
+                                case O:
+                                    if (!personajesMovidos.pertenece(colaAux.primero().getID())) {
+                                        personajesMovidos.insertar(colaAux.primero().getID());
+                                        if (i - 1 >= 0) {
+                                            salas[i - 1][j].nuevoPersonaje(colaAux.primero(), false);
+                                        } else {
+                                            salaAux.nuevoPersonaje(colaAux.primero(), true);
+                                        }
+                                    } else {
+                                        salaAux.nuevoPersonaje(colaAux.primero(), true);
+                                    }
+                                    colaAux.desencolar();
+                                    break;
+                            }
+                        } catch (NoMovesLeftException ex) {
+                            salaAux.nuevoPersonaje(colaAux.primero(), true);
+                            colaSolicitudes.desencolar();
+                            }
+                        }
+                        else{
+                        salaAux.nuevoPersonaje(colaAux.primero(), true);
+                        colaAux.desencolar();}
                     }
                 } else {
                     while (!colaSolicitudes.vacia()) {
@@ -219,48 +283,64 @@ public class Mapa {
                             switch (colaSolicitudes.primero().nextMove()) {
                                 case N:
                                     if (!personajesMovidos.pertenece(colaSolicitudes.primero().getID())) {
+                                        personajesMovidos.insertar(colaSolicitudes.primero().getID());
                                         if (j - 1 >= 0) {
-                                            trono = salas[i][j - 1].nuevoPersonaje(colaSolicitudes.primero());
-                                            personajesMovidos.insertar(colaSolicitudes.primero().getID());
+                                            trono = salas[i][j - 1].nuevoPersonaje(colaSolicitudes.primero(), false);
+                                        } else {
+                                            salaAux.nuevoPersonaje(colaSolicitudes.primero(), true);
                                         }
+                                    } else {
+                                        salaAux.nuevoPersonaje(colaSolicitudes.primero(), true);
                                     }
                                     colaSolicitudes.desencolar();
                                     break;
                                 case S:
                                     if (!personajesMovidos.pertenece(colaSolicitudes.primero().getID())) {
+                                        personajesMovidos.insertar(colaSolicitudes.primero().getID());
                                         if (j + 1 < tamX) {
-                                            trono = salas[i][j + 1].nuevoPersonaje(colaSolicitudes.primero());
-                                            personajesMovidos.insertar(colaSolicitudes.primero().getID());
+                                            trono = salas[i][j + 1].nuevoPersonaje(colaSolicitudes.primero(), false);
+                                        } else {
+                                            salaAux.nuevoPersonaje(colaSolicitudes.primero(), true);
                                         }
+                                    } else {
+                                        salaAux.nuevoPersonaje(colaSolicitudes.primero(), true);
                                     }
                                     colaSolicitudes.desencolar();
                                     break;
                                 case E:
                                     if (!personajesMovidos.pertenece(colaSolicitudes.primero().getID())) {
+                                        personajesMovidos.insertar(colaSolicitudes.primero().getID());
                                         if (i + 1 < tamY) {
-                                            trono = salas[i + 1][j].nuevoPersonaje(colaSolicitudes.primero());
-                                            personajesMovidos.insertar(colaSolicitudes.primero().getID());
+                                            trono = salas[i + 1][j].nuevoPersonaje(colaSolicitudes.primero(), false);
+                                        } else {
+                                            salaAux.nuevoPersonaje(colaSolicitudes.primero(), true);
                                         }
+                                    } else {
+                                        salaAux.nuevoPersonaje(colaSolicitudes.primero(), true);
                                     }
                                     colaSolicitudes.desencolar();
                                     break;
                                 case O:
                                     if (!personajesMovidos.pertenece(colaSolicitudes.primero().getID())) {
+                                        personajesMovidos.insertar(colaSolicitudes.primero().getID());
                                         if (i - 1 >= 0) {
-                                            trono = salas[i - 1][j].nuevoPersonaje(colaSolicitudes.primero());
-                                            personajesMovidos.insertar(colaSolicitudes.primero().getID());
+                                            trono = salas[i - 1][j].nuevoPersonaje(colaSolicitudes.primero(), false);
+                                        } else {
+                                            salaAux.nuevoPersonaje(colaSolicitudes.primero(), true);
                                         }
+                                    } else {
+                                        salaAux.nuevoPersonaje(colaSolicitudes.primero(), true);
                                     }
                                     colaSolicitudes.desencolar();
                                     break;
                             }
                         } catch (NoMovesLeftException ex) {
-                            System.err.println("A ese personaje no le quedan movimientos");
-                            salaAux.nuevoPersonaje(colaSolicitudes.primero());
+                            salaAux.nuevoPersonaje(colaSolicitudes.primero(), true);
+                            colaSolicitudes.desencolar();
                         } finally {
                             if (trono) {
                                 while (salas[iPuerta][jPuerta].tienePersonaje()) {
-                                    this.trono.nuevoPersonaje(salas[iPuerta][jPuerta].primero());
+                                    this.trono.nuevoPersonaje(salas[iPuerta][jPuerta].primero(), false);
                                     salas[iPuerta][jPuerta].desencolar();
                                 }
                             }
@@ -271,18 +351,18 @@ public class Mapa {
         }
         turno++;
     }
-    
+
     public boolean puertaAbierta() throws NotKingsLandingException {
         return salas[iPuerta][jPuerta].getPuerta().estaAbierta();
     }
-    
+
     public void insertarPersonaje(Personaje p) {
         if (p instanceof Stark || p instanceof Targaryen) {
-            salas[0][0].nuevoPersonaje(p);
+            salas[0][0].nuevoPersonaje(p, true);
         } else if (p instanceof CaminanteBlanco) {
-            salas[tamY - 1][0].nuevoPersonaje(p);
+            salas[tamY - 1][0].nuevoPersonaje(p, true);
         } else {
-            salas[tamY - 1][tamX - 1].nuevoPersonaje(p);
+            salas[iPuerta][jPuerta].nuevoPersonaje(p, true);
         }
     }
 
@@ -320,20 +400,17 @@ public class Mapa {
 
         //Creación de personajes
         //Dado que no conozco personajes de Juego de Tronos, los nombres son de JoJo's Bizarre Adventure
-        Personaje[] personajes = new Personaje[8];
+        Personaje[] personajes = new Personaje[4];
         personajes[0] = new Stark("Jonathan", 'J');
-        personajes[1] = new Stark("Joseph", 'O');
-        personajes[2] = new Targaryen("Speedwagon", 'S');
-        personajes[3] = new Targaryen("Zeppeli", 'Z');
-        personajes[4] = new Lannister("Santana", 'A');
-        personajes[5] = new Lannister("Kars", 'K');
-        personajes[6] = new CaminanteBlanco("Dio Brando", 'B');
-        personajes[7] = new CaminanteBlanco("DIO", 'D');
+        personajes[1] = new Targaryen("Speedwagon", 'S');
+        personajes[2] = new Lannister("Kars", 'K');
+        personajes[3] = new CaminanteBlanco("DIO", 'D');
 
+        /*
         //Sistema de generación de rutas
         Random RNG = new Random(); //Generador de números aleatorios (RNG)
         Orientacion[] ruta = new Orientacion[30];
-        for (int pi = 0; pi < 8; pi++) {
+        for (int pi = 0; pi < 4; pi++) {
             for (int i = 0; i < 30; i++) {
                 switch (RNG.nextInt(4)) {
                     case 0:
@@ -352,8 +429,17 @@ public class Mapa {
             }
             personajes[pi].setRuta(ruta);
         }
+         */
+        Orientacion[] ruta = {Orientacion.E, Orientacion.E, Orientacion.E, Orientacion.S, Orientacion.S, Orientacion.S, Orientacion.S, Orientacion.O, Orientacion.E, Orientacion.S, Orientacion.S, Orientacion.E, Orientacion.E, Orientacion.N, Orientacion.E, Orientacion.S};
+        personajes[0].setRuta(ruta);
+        personajes[1].setRuta(ruta);
+        Orientacion[] ruta2 = {Orientacion.E, Orientacion.E, Orientacion.E, Orientacion.E, Orientacion.N, Orientacion.N, Orientacion.N, Orientacion.S, Orientacion.S, Orientacion.S, Orientacion.E, Orientacion.E, Orientacion.N, Orientacion.N, Orientacion.S, Orientacion.S};
+        personajes[2].setRuta(ruta2);
+        Orientacion[] ruta3 = {Orientacion.N, Orientacion.N, Orientacion.N, Orientacion.N, Orientacion.N, Orientacion.N, Orientacion.S, Orientacion.S, Orientacion.S, Orientacion.S, Orientacion.S, Orientacion.S, Orientacion.O, Orientacion.E, Orientacion.O, Orientacion.E};
+        personajes[3].setRuta(ruta3);
+
         //Inserción de personajes
-        for (int i = 0; i < 8; i++) {
+        for (int i = 0; i < 4; i++) {
             m.insertarPersonaje(personajes[i]);
         }
 
@@ -369,5 +455,5 @@ public class Mapa {
         }
         m.mostrarMapa();
     }
-    
+
 }

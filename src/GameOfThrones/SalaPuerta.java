@@ -47,14 +47,15 @@ public class SalaPuerta extends Sala {
      * Añade un nuevo personaje
      *
      * @param pe Personaje a añadir
+     * @param reinsert Indica si el personaje se vuelve a insertar o se mueve
      * @return True si la puerta está abierta, false si no.
      */
     @Override
-    public boolean nuevoPersonaje(Personaje pe) {
+    public boolean nuevoPersonaje(Personaje pe, boolean reinsert) {
         if (!p.estaAbierta()) {
-            return super.nuevoPersonaje(pe);
+            return super.nuevoPersonaje(pe, reinsert);
         } else {
-            return !super.nuevoPersonaje(pe);
+            return !super.nuevoPersonaje(pe, reinsert);
         }
     }
 }

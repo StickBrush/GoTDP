@@ -35,9 +35,12 @@ public class Defensor extends Personaje {
      * @return Llave a dejar
      */
     public Llave dejarLlave() {
-        Llave aux = this.llaves.getTop();
+        Llave aux = null;
+        if(!llaves.isEmpty()){
+        aux= this.llaves.getTop();
         this.llaves.removeData();
         numLlaves--;
+        }
         return aux;
     }
 

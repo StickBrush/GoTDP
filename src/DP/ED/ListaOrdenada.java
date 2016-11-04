@@ -5,6 +5,8 @@
  */
 package DP.ED;
 
+import java.util.Queue;
+import java.util.PriorityQueue;
 /**
  * Implementación de la Lista Ordenada
  *
@@ -12,34 +14,33 @@ package DP.ED;
  * @author Juan Luis Herrera González Curso: 2º (Grupo Grande A) EC1
  * @param <tipoDato> Tipo de dato de la lista ordenada. Debe ser comparable.
  */
-public class ListaOrdenada<tipoDato extends Comparable<tipoDato>> extends List<tipoDato> {
-
+public class ListaOrdenada<tipoDato>{
+    
+    private Queue<tipoDato> l;
     /**
      * Constructor por defecto de la lista ordenada
      */
     public ListaOrdenada() {
-        super();
+        l=new PriorityQueue<tipoDato>();
     }
-
+    
+    public boolean estaVacia(){
+        return l.isEmpty();
+    }
+    
+    public tipoDato getFirst(){
+        return l.element();
+    }
     /**
      * Constructor parametrizado de la Lista Ordenada
      *
      * @param data Dato con el que crear la lista
      */
     public ListaOrdenada(tipoDato data) {
-        super(data);
+        l=new PriorityQueue<tipoDato>();
+        l.add(data);
     }
 
-    /**
-     * Lanza una OrderViolationException
-     *
-     * @param data Será ignorado
-     * @throws OrderViolationException
-     */
-    @Override
-    public void addLast(tipoDato data) throws OrderViolationException {
-        throw new OrderViolationException();
-    }
 
     /**
      * Añade un dato en orden
@@ -47,25 +48,7 @@ public class ListaOrdenada<tipoDato extends Comparable<tipoDato>> extends List<t
      * @param data Dato a añadir
      */
     public void add(tipoDato data) {
-        if (!l.isEmpty()) {
-            tipoDato it = l.getFirst();
-            int i = 1;
-            boolean encontrado = false;
-            while (i < l.size() && !encontrado) {
-                if (l.get(i).compareTo(it) > 0) {
-                    encontrado = true;
-                } else {
-                    i++;
-                }
-                if (!encontrado) {
-                    l.addLast(data);
-                } else {
-                    l.add(i, data);
-                }
-            }
-        } else {
-            l.add(data);
-        }
+       l.add(data);
     }
 
     /**
@@ -74,6 +57,10 @@ public class ListaOrdenada<tipoDato extends Comparable<tipoDato>> extends List<t
      * @param d Dato a borrar
      */
     public void searchAndDelete(tipoDato d) {
-        l.removeFirstOccurrence(d);
+        l.remove(d);
+    }
+    
+    public void deleteFirst(){
+        l.remove();
     }
 }

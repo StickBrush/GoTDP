@@ -57,21 +57,27 @@ public class Sala {
      * Añade un nuevo personaje
      *
      * @param p Personaje a añadir
+     * @param reinsert Indica si el personaje se vuelve a insertar o se mueve
      * @return False si el personaje no sale del mapa
      */
-    public boolean nuevoPersonaje(Personaje p) {
+    public boolean nuevoPersonaje(Personaje p, boolean reinsert) {
         if (p instanceof CaminanteBlanco && this.tienePersonaje()) {
             ((CaminanteBlanco) p).kill(primero());
             personajes.desencolar();
         }
         personajes.encolar(p);
-        if (p instanceof Atacante) {
-            if(tieneLlave()){
-            ((Atacante) p).cogerLlave(getLlave(0));
-            eliminarLlave(getLlave(0));
+        if (!reinsert) {
+            if (p instanceof Atacante) {
+                if (tieneLlave()) {
+                    ((Atacante) p).cogerLlave(llaves.getFirst());
+                    eliminarLlave();
+                }
+            } else if (p instanceof Defensor && !(p instanceof CaminanteBlanco)) {
+                Llave aux = ((Defensor) p).dejarLlave();
+                if (aux != null) {
+                    this.nuevaLlave(aux);
+                }
             }
-        } else if (p instanceof Defensor && !(p instanceof CaminanteBlanco)) {
-            this.nuevaLlave(((Defensor) p).dejarLlave());
         }
         return false;
     }
@@ -86,16 +92,6 @@ public class Sala {
     }
 
     /**
-     * Devuelve una llave
-     *
-     * @param pos Posición de la llave
-     * @return Llave de la posición pos
-     */
-    public Llave getLlave(int pos) {
-        return llaves.get(pos);
-    }
-
-    /**
      * Devuelve al personaje que más tiempo lleve
      *
      * @return Personaje que más tiempo lleva
@@ -106,11 +102,9 @@ public class Sala {
 
     /**
      * Elimina llave de la sala
-     *
-     * @param l Llave a eliminar
      */
-    public void eliminarLlave(Llave l) {
-        llaves.searchAndDelete(l);
+    public void eliminarLlave() {
+        llaves.deleteFirst();
     }
 
     /**
@@ -166,7 +160,7 @@ public class Sala {
     public String getLlaves() {
         Cola<Llave> caux = new Cola<Llave>();
         String saux = "";
-        for (Llave aux = null; !llaves.estaVacia(); llaves.delete(0)) {
+        for (Llave aux = null; !llaves.estaVacia(); llaves.deleteFirst()) {
             aux = llaves.getFirst();
             caux.encolar(aux);
             saux = saux + aux.toString() + " ";
@@ -192,6 +186,12 @@ public class Sala {
                 } else {
                     System.out.println(personajes.primero().getTipo() + ":" + personajes.primero().getID() + ":" + ID + ":" + turno + ":" + ((CaminanteBlanco) personajes.primero()).getCapturados());
                 }
+                caux.encolar(personajes.primero());
+                personajes.desencolar();
+            }
+            while (!caux.vacia()) {
+                personajes.encolar(caux.primero());
+                caux.desencolar();
             }
         }
     }

@@ -13,7 +13,7 @@ import java.util.LinkedList;
  */
 public class List<tipoDato> {
 
-    protected LinkedList<tipoDato> l;
+    private LinkedList<tipoDato> l;
 
     /**
      * Default Constructor for the List class
@@ -28,11 +28,7 @@ public class List<tipoDato> {
      * @param data the data that the List will store
      */
     public List(tipoDato data) {
-        try {
-            addLast(data);
-        } catch (OrderViolationException ex) {
-            System.err.println("Esta parte del código no debería ser alcanzada jamás.");
-        }
+        addLast(data);
     }
 
     /**
@@ -88,7 +84,7 @@ public class List<tipoDato> {
      * @param Data value that is going to be added to the list
      * @throws DP.ED.OrderViolationException
      */
-    public void addLast(tipoDato Data) throws OrderViolationException {
+    public void addLast(tipoDato Data){
         l.addLast(Data);
     }
 
