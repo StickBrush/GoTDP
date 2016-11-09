@@ -95,6 +95,7 @@ public abstract class Personaje {
      *
      * @return Siguiente movimiento del personaje
      * @throws NoMovesLeftException
+     * @deprecated 
      */
     public Orientacion nextMove() throws NoMovesLeftException {
         if (!ruta.vacia()) {
@@ -106,6 +107,40 @@ public abstract class Personaje {
         }
     }
 
+    public void mover(Mapa m, int i, int j) throws NoMovesLeftException{
+        if(!ruta.vacia()){
+            Orientacion o= ruta.primero();
+            ruta.desencolar();
+            switch(o){
+                case N:
+                    if(i-1>0)
+                        m.getSala(i-1, j).nuevoPersonaje(this, false);
+                    else
+                        throw new NoMovesLeftException();
+                    break;
+                case S:
+                    if(i+1<m.getTamY())
+                        m.getSala(i+1, j).nuevoPersonaje(this, false);
+                    else
+                        throw new NoMovesLeftException();
+                    break;
+                case O:
+                    if(j-1>0)
+                        m.getSala(i, j-1).nuevoPersonaje(this, false);
+                    else
+                        throw new NoMovesLeftException();
+                    break;
+                case E:
+                    if(j+1<m.getTamX())
+                        m.getSala(i, j+1).nuevoPersonaje(this, false);
+                    else
+                        throw new NoMovesLeftException();
+                    break;
+            }
+        }
+        else
+            throw new NoMovesLeftException();
+    }
     /**
      * Interactúa con la puerta
      *

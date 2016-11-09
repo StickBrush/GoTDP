@@ -2,6 +2,7 @@ package GameOfThrones;
 
 import DP.ED.ListaOrdenada;
 import DP.ED.Cola;
+import DP.ED.Arbol;
 
 /**
  * Implementación de la NotKingsLandingException
@@ -27,7 +28,7 @@ public class Sala {
     /**
      * Personajes de la sala
      */
-    private Cola<Personaje> personajes;
+    protected Cola<Personaje> personajes;
     /**
      * Identificador de la sala
      */
@@ -170,6 +171,28 @@ public class Sala {
             llaves.add(aux);
         }
         return saux;
+    }
+    
+    public void simular(int i, int j, Mapa m, Arbol<Character> movidos){
+        Cola<Personaje> cAux=new Cola<>();
+        for(Personaje p;this.tienePersonaje();personajes.desencolar()){
+            p=personajes.primero();
+            try{
+                if(!movidos.pertenece(p.getID())){
+                    movidos.insertar(p.getID());
+                    p.mover(m, i, j);
+                }
+                else
+                    cAux.encolar(p);
+            }
+            catch(NoMovesLeftException ex){
+                cAux.encolar(p);
+            }
+        }
+        for(Personaje p;!cAux.vacia();cAux.desencolar()){
+            p=cAux.primero();
+            this.nuevoPersonaje(p, true);
+        }
     }
 
     /**

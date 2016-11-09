@@ -185,167 +185,34 @@ public class Mapa {
         System.out.println("nuevorey:");
         trono.showPersonajes(turno);
     }
+    
+    public Sala getSala(int i, int j){
+        return salas[i][j];
+    }
+    
+    public Integer getTamX(){
+        return tamX;
+    }
+    
+    public Integer getTamY(){
+        return tamY;
+    }
 
     public void simularTurno() {
-        Cola<Personaje> colaSolicitudes = new Cola<Personaje>();
         Sala salaAux = null;
         Arbol<Character> personajesMovidos = new Arbol<Character>(); //Evita mover varias veces el mismo personaje.
         for (int i = 0; i < tamY; i++) {
             for (int j = 0; j < tamX; j++) {
                 salaAux = salas[i][j];
-                while (salaAux.tienePersonaje()) {
-                    colaSolicitudes.encolar(salaAux.primero());
-                    salaAux.desencolar();
-                }
-                if (salaAux instanceof SalaPuerta) {
-                    Cola<Personaje> colaAux = new Cola<Personaje>();
-                    while (!colaSolicitudes.vacia()) {
-                        try {
-                            if (!personajesMovidos.pertenece(colaSolicitudes.primero().getID())) {
-                                colaSolicitudes.primero().interactuarPuerta(salaAux.getPuerta());
-                            }
-                        } catch (NotKingsLandingException ex) {
-                            System.err.println("Interactuada puerta que no existe");
-                        } finally {
-                            colaAux.encolar(colaSolicitudes.primero());
-                            colaSolicitudes.desencolar();
-                        }
+                salaAux.simular(i, j, this, personajesMovidos);
+                if(salaAux instanceof SalaPuerta){
+                    try{
+                        Puerta p=salaAux.getPuerta();
+                        if(p.estaAbierta())
+                            ((SalaPuerta) salaAux).dumpThrone(trono);
                     }
-                    while (!colaAux.vacia()) {
-                        if(colaAux.primero() instanceof Lannister){
-                            try{
-                                switch (colaAux.primero().nextMove()){
-                                case N:
-                                    if (!personajesMovidos.pertenece(colaAux.primero().getID())) {
-                                        personajesMovidos.insertar(colaAux.primero().getID());
-                                        if (j - 1 >= 0) {
-                                            salas[i][j - 1].nuevoPersonaje(colaAux.primero(), false);
-                                        } else {
-                                            salaAux.nuevoPersonaje(colaAux.primero(), true);
-                                        }
-                                    } else {
-                                        salaAux.nuevoPersonaje(colaAux.primero(), true);
-                                    }
-                                    colaAux.desencolar();
-                                    break;
-                                case S:
-                                    if (!personajesMovidos.pertenece(colaAux.primero().getID())) {
-                                        personajesMovidos.insertar(colaAux.primero().getID());
-                                        if (j + 1 < tamX) {
-                                            salas[i][j + 1].nuevoPersonaje(colaAux.primero(), false);
-                                        } else {
-                                            salaAux.nuevoPersonaje(colaAux.primero(), true);
-                                        }
-                                    } else {
-                                        salaAux.nuevoPersonaje(colaAux.primero(), true);
-                                    }
-                                    colaAux.desencolar();
-                                    break;
-                                case E:
-                                    if (!personajesMovidos.pertenece(colaAux.primero().getID())) {
-                                        personajesMovidos.insertar(colaAux.primero().getID());
-                                        if (i + 1 < tamY) {
-                                            salas[i + 1][j].nuevoPersonaje(colaAux.primero(), false);
-                                        } else {
-                                            salaAux.nuevoPersonaje(colaAux.primero(), true);
-                                        }
-                                    } else {
-                                        salaAux.nuevoPersonaje(colaAux.primero(), true);
-                                    }
-                                    colaAux.desencolar();
-                                    break;
-                                case O:
-                                    if (!personajesMovidos.pertenece(colaAux.primero().getID())) {
-                                        personajesMovidos.insertar(colaAux.primero().getID());
-                                        if (i - 1 >= 0) {
-                                            salas[i - 1][j].nuevoPersonaje(colaAux.primero(), false);
-                                        } else {
-                                            salaAux.nuevoPersonaje(colaAux.primero(), true);
-                                        }
-                                    } else {
-                                        salaAux.nuevoPersonaje(colaAux.primero(), true);
-                                    }
-                                    colaAux.desencolar();
-                                    break;
-                            }
-                        } catch (NoMovesLeftException ex) {
-                            salaAux.nuevoPersonaje(colaAux.primero(), true);
-                            colaSolicitudes.desencolar();
-                            }
-                        }
-                        else{
-                        salaAux.nuevoPersonaje(colaAux.primero(), true);
-                        colaAux.desencolar();}
-                    }
-                } else {
-                    while (!colaSolicitudes.vacia()) {
-                        boolean trono = false;
-                        try {
-                            switch (colaSolicitudes.primero().nextMove()) {
-                                case N:
-                                    if (!personajesMovidos.pertenece(colaSolicitudes.primero().getID())) {
-                                        personajesMovidos.insertar(colaSolicitudes.primero().getID());
-                                        if (j - 1 >= 0) {
-                                            trono = salas[i][j - 1].nuevoPersonaje(colaSolicitudes.primero(), false);
-                                        } else {
-                                            salaAux.nuevoPersonaje(colaSolicitudes.primero(), true);
-                                        }
-                                    } else {
-                                        salaAux.nuevoPersonaje(colaSolicitudes.primero(), true);
-                                    }
-                                    colaSolicitudes.desencolar();
-                                    break;
-                                case S:
-                                    if (!personajesMovidos.pertenece(colaSolicitudes.primero().getID())) {
-                                        personajesMovidos.insertar(colaSolicitudes.primero().getID());
-                                        if (j + 1 < tamX) {
-                                            trono = salas[i][j + 1].nuevoPersonaje(colaSolicitudes.primero(), false);
-                                        } else {
-                                            salaAux.nuevoPersonaje(colaSolicitudes.primero(), true);
-                                        }
-                                    } else {
-                                        salaAux.nuevoPersonaje(colaSolicitudes.primero(), true);
-                                    }
-                                    colaSolicitudes.desencolar();
-                                    break;
-                                case E:
-                                    if (!personajesMovidos.pertenece(colaSolicitudes.primero().getID())) {
-                                        personajesMovidos.insertar(colaSolicitudes.primero().getID());
-                                        if (i + 1 < tamY) {
-                                            trono = salas[i + 1][j].nuevoPersonaje(colaSolicitudes.primero(), false);
-                                        } else {
-                                            salaAux.nuevoPersonaje(colaSolicitudes.primero(), true);
-                                        }
-                                    } else {
-                                        salaAux.nuevoPersonaje(colaSolicitudes.primero(), true);
-                                    }
-                                    colaSolicitudes.desencolar();
-                                    break;
-                                case O:
-                                    if (!personajesMovidos.pertenece(colaSolicitudes.primero().getID())) {
-                                        personajesMovidos.insertar(colaSolicitudes.primero().getID());
-                                        if (i - 1 >= 0) {
-                                            trono = salas[i - 1][j].nuevoPersonaje(colaSolicitudes.primero(), false);
-                                        } else {
-                                            salaAux.nuevoPersonaje(colaSolicitudes.primero(), true);
-                                        }
-                                    } else {
-                                        salaAux.nuevoPersonaje(colaSolicitudes.primero(), true);
-                                    }
-                                    colaSolicitudes.desencolar();
-                                    break;
-                            }
-                        } catch (NoMovesLeftException ex) {
-                            salaAux.nuevoPersonaje(colaSolicitudes.primero(), true);
-                            colaSolicitudes.desencolar();
-                        } finally {
-                            if (trono) {
-                                while (salas[iPuerta][jPuerta].tienePersonaje()) {
-                                    this.trono.nuevoPersonaje(salas[iPuerta][jPuerta].primero(), false);
-                                    salas[iPuerta][jPuerta].desencolar();
-                                }
-                            }
-                        }
+                    catch (NotKingsLandingException ex){
+                        System.err.println("Esto no va a pasar");
                     }
                 }
             }

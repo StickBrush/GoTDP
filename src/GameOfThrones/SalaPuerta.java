@@ -1,5 +1,8 @@
 package GameOfThrones;
 
+import DP.ED.Arbol;
+import DP.ED.Cola;
+
 /**
  * Implementación de la sala de la puerta
  *
@@ -56,6 +59,42 @@ public class SalaPuerta extends Sala {
             return super.nuevoPersonaje(pe, reinsert);
         } else {
             return !super.nuevoPersonaje(pe, reinsert);
+        }
+    }
+    
+    @Override
+    public void simular(int i, int j, Mapa m, Arbol<Character> movidos) {
+        Cola<Personaje> cAux = new Cola<>();
+        for (Personaje p; this.tienePersonaje(); personajes.desencolar()) {
+            p = personajes.primero();
+            if (!movidos.pertenece(p.getID())) {
+                p.interactuarPuerta(this.p);
+            }
+            if (p instanceof Defensor) {
+                try {
+                    if (!movidos.pertenece(p.getID())) {
+                        movidos.insertar(p.getID());
+                        p.mover(m, i, j);
+                    } else {
+                        cAux.encolar(p);
+                    }
+                } catch (NoMovesLeftException ex) {
+                    cAux.encolar(p);
+                }
+            } else {
+                cAux.encolar(p);
+            }
+        }
+        for (Personaje p; !cAux.vacia(); cAux.desencolar()) {
+            p = cAux.primero();
+            this.nuevoPersonaje(p, true);
+        }
+    }
+    
+    public void dumpThrone(Sala throne){
+        for(Personaje p;this.tienePersonaje();personajes.desencolar()){
+            p=personajes.primero();
+            throne.nuevoPersonaje(p, true);
         }
     }
 }
