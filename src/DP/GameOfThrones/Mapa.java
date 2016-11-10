@@ -1,4 +1,4 @@
-package GameOfThrones;
+package DP.GameOfThrones;
 
 import java.util.Random;
 import DP.ED.*;

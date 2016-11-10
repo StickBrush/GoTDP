@@ -1,4 +1,4 @@
-package GameOfThrones;
+package DP.GameOfThrones;
 
 /**
  * Implementación de los atacantes

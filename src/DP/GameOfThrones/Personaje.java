@@ -1,4 +1,4 @@
-package GameOfThrones;
+package DP.GameOfThrones;
 
 import DP.ED.Stack;
 import DP.ED.Cola;

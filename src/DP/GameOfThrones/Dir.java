@@ -1,4 +1,4 @@
-package GameOfThrones;
+package DP.GameOfThrones;
 
 /**
  * Tipo enumerado de orientación
