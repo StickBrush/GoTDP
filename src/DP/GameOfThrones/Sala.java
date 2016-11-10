@@ -54,6 +54,14 @@ public class Sala {
         llaves.add(l);
     }
 
+    public Llave getLlave(){
+        Llave aux=null;
+        if(!llaves.estaVacia()){
+            aux=llaves.getFirst();
+            llaves.deleteFirst();
+        }
+        return aux;
+    }
     /**
      * Añade un nuevo personaje
      *
@@ -68,17 +76,7 @@ public class Sala {
         }
         personajes.encolar(p);
         if (!reinsert) {
-            if (p instanceof Atacante) {
-                if (tieneLlave()) {
-                    ((Atacante) p).cogerLlave(llaves.getFirst());
-                    eliminarLlave();
-                }
-            } else{
-                Llave aux = ((Defensor) p).dejarLlave();
-                if (aux != null) {
-                    this.nuevaLlave(aux);
-                }
-            }
+            p.interactuarSala(this);
         }
         return false;
     }
@@ -173,19 +171,19 @@ public class Sala {
         return saux;
     }
     
-    public void simular(int i, int j, Mapa m, Arbol<Character> movidos, int turno){
+    public void simular(int i, int j, Mapa m, Arbol<Character> movidos){
         Cola<Personaje> cAux=new Cola<>();
         for(Personaje p;this.tienePersonaje();personajes.desencolar()){
             p=personajes.primero();
             try{
                 if(!movidos.pertenece(p.getID())){
                     movidos.insertar(p.getID());
-                    p.mover(m, i, j, turno);
+                    p.mover(m, i, j, m.getTurno());
                 }
                 else
                     cAux.encolar(p);
             }
-            catch(NoMovesLeftException ex){
+            catch(MovementException ex){
                 cAux.encolar(p);
             }
         }

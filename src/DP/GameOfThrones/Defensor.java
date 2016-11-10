@@ -1,5 +1,8 @@
 package DP.GameOfThrones;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  * Implementación de los Defensores
  *
@@ -20,29 +23,26 @@ public class Defensor extends Personaje {
         super(nombre, tipo, ID, turno);
     }
 
-    /**
-     * Cerrado de puerta
-     *
-     * @param p Puerta a cerrar
-     */
     @Override
-    public void interactuarPuerta(Puerta p) {
-        p.cerrar();
+    public void interactuarPuerta(Mapa m, int i, int j) {
+        try {
+            m.getPuerta().cerrar();
+        } catch (NotKingsLandingException ex) {
+            System.err.println("Mapa no configurado");
+        }
+        try {
+            this.mover(m, i, j, m.getTurno());
+        } catch (MovementException ex) {
+            m.getSala(i, j).nuevoPersonaje(this, true);
+        }
     }
 
-    /**
-     * Deja una llave en el suelo
-     *
-     * @return Llave a dejar
-     */
-    public Llave dejarLlave() {
-        Llave aux = null;
+    @Override
+    public void interactuarSala(Sala s) {
         if(!llaves.isEmpty()){
-        aux= this.llaves.getTop();
-        this.llaves.removeData();
-        numLlaves--;
+            s.nuevaLlave(llaves.getTop());
+            llaves.removeData();
         }
-        return aux;
     }
 
 }

@@ -62,13 +62,11 @@ public class CaminanteBlanco extends Defensor {
         }
         return aux;
     }
-    
-    /**
-     * Método polimórfico dejarLlave (los caminantes no tienen llaves)
-     * @return null
-     */
     @Override
-    public Llave dejarLlave(){
-        return null;
+    public void interactuarSala(Sala s){
+        if(s.tienePersonaje()){
+            capturados.addData(s.primero().getID());
+            s.desencolar();
+        }
     }
 }

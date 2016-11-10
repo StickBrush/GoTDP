@@ -54,7 +54,6 @@ public abstract class Personaje {
         this.ID = ID;
         llaves = new Stack<Llave>();
         ruta = new Cola<Dir>();
-        numLlaves = 0;
         this.turno=turno;
     }
 
@@ -97,7 +96,7 @@ public abstract class Personaje {
     }
 
 
-    public void mover(Mapa m, int i, int j, int turno) throws NoMovesLeftException{
+    public void mover(Mapa m, int i, int j, int turno) throws MovementException{
         if(!ruta.vacia() && this.turno<=turno){
             Dir o= ruta.primero();
             ruta.desencolar();
@@ -106,37 +105,35 @@ public abstract class Personaje {
                     if(i-1>0)
                         m.getSala(i-1, j).nuevoPersonaje(this, false);
                     else
-                        throw new NoMovesLeftException();
+                        throw new MovementException();
                     break;
                 case S:
                     if(i+1<m.getTamY())
                         m.getSala(i+1, j).nuevoPersonaje(this, false);
                     else
-                        throw new NoMovesLeftException();
+                        throw new MovementException();
                     break;
                 case O:
                     if(j-1>0)
                         m.getSala(i, j-1).nuevoPersonaje(this, false);
                     else
-                        throw new NoMovesLeftException();
+                        throw new MovementException();
                     break;
                 case E:
                     if(j+1<m.getTamX())
                         m.getSala(i, j+1).nuevoPersonaje(this, false);
                     else
-                        throw new NoMovesLeftException();
+                        throw new MovementException();
                     break;
             }
         }
         else
-            throw new NoMovesLeftException();
+            throw new MovementException();
     }
-    /**
-     * Interactúa con la puerta
-     *
-     * @param p Puerta con la que interactuar
-     */
-    public abstract void interactuarPuerta(Puerta p);
+    
+    public abstract void interactuarSala(Sala s);
+
+    public abstract void interactuarPuerta(Mapa m, int i, int j) throws MovementException;
 
     /**
      * Devuelve concatenadas todas las llaves

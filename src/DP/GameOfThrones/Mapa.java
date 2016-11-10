@@ -42,9 +42,11 @@ public class Mapa {
      * @param Y Número de filas
      * @param profComb Profundidad de la combinación
      */
-    public Mapa(int salaPuerta, int X, int Y, int profComb) {
+    public Mapa(int salaPuerta, int X, int Y, int profComb) throws MapSizeException {
         tamX = X;
         tamY = Y;
+        if(X<=0||Y<=0)
+            throw new MapSizeException();
         turno = 1;
         this.profComb = profComb;
         salas = new Sala[tamX][tamY];
@@ -186,25 +188,25 @@ public class Mapa {
         return tamY;
     }
 
+    public Sala getSalaTrono(){
+        return trono;
+    }
+    
+    public int getTurno(){
+        return turno;
+    }
+    public Puerta getPuerta() throws NotKingsLandingException{
+        return salas[iPuerta][jPuerta].getPuerta();
+    }
     public void simularTurno() {
         Sala salaAux;
         Arbol<Character> personajesMovidos = new Arbol<Character>(); //Evita mover varias veces el mismo personaje.
         for (int i = 0; i < tamY; i++) {
             for (int j = 0; j < tamX; j++) {
                 salaAux = salas[i][j];
-                salaAux.simular(i, j, this, personajesMovidos, turno);
-                if (salaAux instanceof SalaPuerta) {
-                    try {
-                        Puerta p = salaAux.getPuerta();
-                        if (p.estaAbierta()) {
-                            ((SalaPuerta) salaAux).dumpThrone(trono);
-                        }
-                    } catch (NotKingsLandingException ex) {
-                        System.err.println("Esto no va a pasar");
-                    }
+                salaAux.simular(i, j, this, personajesMovidos);
                 }
             }
-        }
         turno++;
     }
 
@@ -223,11 +225,12 @@ public class Mapa {
     }
 
     /**
-     * Programa principal - EC1
+     * Programa principal - EC2
      *
      * @param args Argumentos de línea de comandos
+     * @throws DP.GameOfThrones.MapSizeException
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws MapSizeException{
         int numLlaves = 15;
         int X = 6;
         int Y = 6;

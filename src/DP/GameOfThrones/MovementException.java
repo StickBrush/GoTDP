@@ -6,6 +6,6 @@ package DP.GameOfThrones;
  * @author Juan Luis Herrera González Curso: 2º (Grupo Grande A)
  * EC2
  */
-class NoMovesLeftException extends Exception {
+class MovementException extends Exception {
     
 }

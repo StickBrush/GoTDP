@@ -20,27 +20,25 @@ public class Atacante extends Personaje {
         super(nombre, tipo, ID, turno);
     }
 
-    /**
-     * Interacción con la puerta de los atacantes
-     *
-     * @param p Puerta con la que interactuar
-     */
+
     @Override
-    public void interactuarPuerta(Puerta p) {
+    public void interactuarPuerta(Mapa m, int i, int j) throws MovementException{
         if (!this.llaves.isEmpty()) {
-            p.abrir(this.llaves.getTop());
+            try {
+                m.getPuerta().abrir(this.llaves.getTop());
+            } catch (NotKingsLandingException ex) {
+                System.err.println("Mapa no configurado");
+            }
             this.llaves.removeData();
         }
+        throw new MovementException();
     }
 
-    /**
-     * Coger una llave del suelo
-     *
-     * @param l Llave a coger
-     */
-    public void cogerLlave(Llave l) {
-        this.llaves.addData(l);
-        numLlaves++;
+    @Override
+    public void interactuarSala(Sala s) {
+        Llave aux=s.getLlave();
+        if(aux!=null)
+            llaves.addData(aux);
     }
 
 }
