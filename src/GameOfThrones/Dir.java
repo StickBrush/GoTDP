@@ -6,4 +6,4 @@ package GameOfThrones;
  * @author Juan Luis Herrera González Curso: 2º (Grupo Grande A)
  * EC2
  */
-public enum Orientacion{N, S, E, O};
+public enum Dir{N, S, E, O};

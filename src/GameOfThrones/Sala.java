@@ -73,7 +73,7 @@ public class Sala {
                     ((Atacante) p).cogerLlave(llaves.getFirst());
                     eliminarLlave();
                 }
-            } else if (p instanceof Defensor && !(p instanceof CaminanteBlanco)) {
+            } else{
                 Llave aux = ((Defensor) p).dejarLlave();
                 if (aux != null) {
                     this.nuevaLlave(aux);
@@ -173,14 +173,14 @@ public class Sala {
         return saux;
     }
     
-    public void simular(int i, int j, Mapa m, Arbol<Character> movidos){
+    public void simular(int i, int j, Mapa m, Arbol<Character> movidos, int turno){
         Cola<Personaje> cAux=new Cola<>();
         for(Personaje p;this.tienePersonaje();personajes.desencolar()){
             p=personajes.primero();
             try{
                 if(!movidos.pertenece(p.getID())){
                     movidos.insertar(p.getID());
-                    p.mover(m, i, j);
+                    p.mover(m, i, j, turno);
                 }
                 else
                     cAux.encolar(p);

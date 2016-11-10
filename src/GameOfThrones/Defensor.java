@@ -14,9 +14,10 @@ public class Defensor extends Personaje {
      * @param nombre Nombre del Defensor
      * @param tipo Tipo del Defensor
      * @param ID Marca identificativa del Defensor
+     * @param turno Turno en el que empieza a moverse
      */
-    public Defensor(String nombre, String tipo, char ID) {
-        super(nombre, tipo, ID);
+    public Defensor(String nombre, String tipo, char ID, int turno) {
+        super(nombre, tipo, ID, turno);
     }
 
     /**

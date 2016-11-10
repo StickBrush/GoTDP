@@ -63,7 +63,7 @@ public class SalaPuerta extends Sala {
     }
     
     @Override
-    public void simular(int i, int j, Mapa m, Arbol<Character> movidos) {
+    public void simular(int i, int j, Mapa m, Arbol<Character> movidos, int turno) {
         Cola<Personaje> cAux = new Cola<>();
         for (Personaje p; this.tienePersonaje(); personajes.desencolar()) {
             p = personajes.primero();
@@ -74,7 +74,7 @@ public class SalaPuerta extends Sala {
                 try {
                     if (!movidos.pertenece(p.getID())) {
                         movidos.insertar(p.getID());
-                        p.mover(m, i, j);
+                        p.mover(m, i, j, turno);
                     } else {
                         cAux.encolar(p);
                     }

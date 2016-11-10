@@ -14,9 +14,10 @@ public class Atacante extends Personaje {
      * @param nombre Nombre del personaje
      * @param tipo Tipo de personaje
      * @param ID Marca identificativa
+     * @param turno Turno en el que empieza a moverse
      */
-    public Atacante(String nombre, String tipo, char ID) {
-        super(nombre, tipo, ID);
+    public Atacante(String nombre, String tipo, char ID, int turno) {
+        super(nombre, tipo, ID, turno);
     }
 
     /**

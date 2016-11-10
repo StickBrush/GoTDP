@@ -13,9 +13,10 @@ public class Lannister extends Defensor {
      *
      * @param nombre Nombre del Lannister
      * @param ID Marca identificativa
+     * @param turno Turno en el que empieza a moverse
      */
-    public Lannister(String nombre, char ID) {
-        super(nombre, "Lannister", ID);
+    public Lannister(String nombre, char ID, int turno) {
+        super(nombre, "Lannister", ID, turno);
         int numLlavesGenerar = 45;
         numLlaves = numLlavesGenerar;
         Llave[] llavesGen = new Llave[numLlavesGenerar];

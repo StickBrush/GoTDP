@@ -13,9 +13,10 @@ public class Targaryen extends Atacante {
      *
      * @param nombre Nombre del Targaryen
      * @param ID Marca identificativa
+     * @param turno Turno en el que empieza a moverse
      */
-    public Targaryen(String nombre, char ID) {
-        super(nombre, "Targaryen", ID);
+    public Targaryen(String nombre, char ID,int turno) {
+        super(nombre, "Targaryen", ID, turno);
     }
 
 }

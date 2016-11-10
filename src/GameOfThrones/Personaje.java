@@ -30,11 +30,15 @@ public abstract class Personaje {
     /**
      * Ruta a seguir por el personaje
      */
-    private Cola<Orientacion> ruta;
+    private Cola<Dir> ruta;
     /**
      * Número de llaves del personaje
      */
     protected int numLlaves;
+    /**
+     * Turno en el que el personaje empieza a moverse
+     */
+    protected int turno;
 
     /**
      * Constructor parametrizado de Personaje
@@ -42,14 +46,16 @@ public abstract class Personaje {
      * @param nombre Nombre del personaje
      * @param tipo Tipo de personaje
      * @param ID Marca identificativa
+     * @param turno Turno en el que empieza a moverse
      */
-    public Personaje(String nombre, String tipo, char ID) {
+    public Personaje(String nombre, String tipo, char ID, int turno) {
         this.nombre = nombre;
         this.tipo = tipo;
         this.ID = ID;
         llaves = new Stack<Llave>();
-        ruta = new Cola<Orientacion>();
+        ruta = new Cola<Dir>();
         numLlaves = 0;
+        this.turno=turno;
     }
 
     /**
@@ -84,32 +90,16 @@ public abstract class Personaje {
      *
      * @param vRuta Ruta a seguir por el personaje
      */
-    public void setRuta(Orientacion[] vRuta) {
+    public void setRuta(Dir[] vRuta) {
         for (int i = 0; i < vRuta.length; i++) {
             ruta.encolar(vRuta[i]);
         }
     }
 
-    /**
-     * Devuelve el siguiente movimiento del personaje
-     *
-     * @return Siguiente movimiento del personaje
-     * @throws NoMovesLeftException
-     * @deprecated 
-     */
-    public Orientacion nextMove() throws NoMovesLeftException {
-        if (!ruta.vacia()) {
-            Orientacion o = ruta.primero();
-            ruta.desencolar();
-            return o;
-        } else {
-            throw new NoMovesLeftException();
-        }
-    }
 
-    public void mover(Mapa m, int i, int j) throws NoMovesLeftException{
-        if(!ruta.vacia()){
-            Orientacion o= ruta.primero();
+    public void mover(Mapa m, int i, int j, int turno) throws NoMovesLeftException{
+        if(!ruta.vacia() && this.turno<=turno){
+            Dir o= ruta.primero();
             ruta.desencolar();
             switch(o){
                 case N:

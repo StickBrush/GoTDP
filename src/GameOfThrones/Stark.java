@@ -13,9 +13,10 @@ public class Stark extends Atacante {
      *
      * @param nombre Nombre del Stark
      * @param ID Marca identificativa
+     * @param turno Turno en el que empieza a moverse
      */
-    public Stark(String nombre, char ID) {
-        super(nombre, "Stark", ID);
+    public Stark(String nombre, char ID, int turno) {
+        super(nombre, "Stark", ID, turno);
     }
 
 }

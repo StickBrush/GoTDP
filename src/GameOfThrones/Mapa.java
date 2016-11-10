@@ -20,15 +20,9 @@ public class Mapa {
      */
     private int tamY;
     /**
-     * Sala de la puerta
-     */
-    private int salaPuerta;
-    /**
      * Profundidad de la combinación
      */
     private int profComb;
-
-    private List<Llave> llaves;
 
     private Sala[][] salas;
 
@@ -51,23 +45,22 @@ public class Mapa {
     public Mapa(int salaPuerta, int X, int Y, int profComb) {
         tamX = X;
         tamY = Y;
-        turno = 0;
-        this.salaPuerta = salaPuerta;
+        turno = 1;
         this.profComb = profComb;
-        llaves = new List<Llave>();
         salas = new Sala[tamX][tamY];
         int contador = 0;
         for (int i = 0; i < tamY; i++) {
             for (int j = 0; j < tamX; j++) {
-                if (i != tamX - 1 || j != tamY - 1) {
+                if (contador != salaPuerta) {
                     salas[i][j] = new Sala(contador);
+                } else {
+                    salas[i][j] = new SalaPuerta(contador);
+                    iPuerta = i;
+                    jPuerta = j;
                 }
                 contador++;
             }
         }
-        salas[tamX - 1][tamY - 1] = new SalaPuerta((tamX * tamY) - 1);
-        iPuerta = tamX - 1;
-        jPuerta = tamY - 1;
         trono = new Sala(1111);
     }
 
@@ -85,8 +78,8 @@ public class Mapa {
         }
     }
 
-    public void distribuirLlaves(Integer[] salasLlaves){
-         int numLlavesGenerar = 45;
+    public void distribuirLlaves(Integer[] salasLlaves) {
+        int numLlavesGenerar = 45;
         Llave[] llavesGen = new Llave[numLlavesGenerar];
         int idLlave = 0;
         for (int i = 0; i < numLlavesGenerar; i++) {
@@ -97,23 +90,17 @@ public class Mapa {
             }
             idLlave++;
         }
-         Integer k = 0;
-        boolean found = false;
+        Integer k = 0;
         for (Integer i : salasLlaves) {
-            found = false;
-            for (int im = 0; im < tamY && !found; im++) {
-                for (int jm = 0; jm < tamX && !found; jm++) {
-                    if (salas[im][jm].getID() == i) {
-                        found = true;
-                        for (int contadorl = 0; contadorl < numLlavesGenerar/salasLlaves.length; contadorl++) {
-                            salas[im][jm].nuevaLlave(llavesGen[k]);
-                            k++;
-                        }
-                    }
-                }
+            int x = i % tamX;
+            int y = i / tamX;
+            for (int contadorl = 0; contadorl < numLlavesGenerar / salasLlaves.length; contadorl++) {
+                salas[y][x].nuevaLlave(llavesGen[k]);
+                k++;
             }
         }
     }
+
     /**
      * Método auxiliar para reordenar un vector
      *
@@ -158,8 +145,9 @@ public class Mapa {
      * Muestra el mapa por pantalla
      */
     public void mostrarMapa() {
+        int SalaPuerta = iPuerta * tamY + tamX;
         System.out.println("turno:" + turno);
-        System.out.println("mapa:" + salaPuerta);
+        System.out.println("mapa:" + SalaPuerta);
         try {
             if (puertaAbierta()) {
                 System.out.println("puerta:abierta:" + profComb + ":" + ((salas[iPuerta][jPuerta]).getPuerta().llavesCerr()) + ":" + ((salas[iPuerta][jPuerta]).getPuerta().llavesProb()));
@@ -185,33 +173,33 @@ public class Mapa {
         System.out.println("nuevorey:");
         trono.showPersonajes(turno);
     }
-    
-    public Sala getSala(int i, int j){
+
+    public Sala getSala(int i, int j) {
         return salas[i][j];
     }
-    
-    public Integer getTamX(){
+
+    public Integer getTamX() {
         return tamX;
     }
-    
-    public Integer getTamY(){
+
+    public Integer getTamY() {
         return tamY;
     }
 
     public void simularTurno() {
-        Sala salaAux = null;
+        Sala salaAux;
         Arbol<Character> personajesMovidos = new Arbol<Character>(); //Evita mover varias veces el mismo personaje.
         for (int i = 0; i < tamY; i++) {
             for (int j = 0; j < tamX; j++) {
                 salaAux = salas[i][j];
-                salaAux.simular(i, j, this, personajesMovidos);
-                if(salaAux instanceof SalaPuerta){
-                    try{
-                        Puerta p=salaAux.getPuerta();
-                        if(p.estaAbierta())
+                salaAux.simular(i, j, this, personajesMovidos, turno);
+                if (salaAux instanceof SalaPuerta) {
+                    try {
+                        Puerta p = salaAux.getPuerta();
+                        if (p.estaAbierta()) {
                             ((SalaPuerta) salaAux).dumpThrone(trono);
-                    }
-                    catch (NotKingsLandingException ex){
+                        }
+                    } catch (NotKingsLandingException ex) {
                         System.err.println("Esto no va a pasar");
                     }
                 }
@@ -225,7 +213,7 @@ public class Mapa {
     }
 
     public void insertarPersonaje(Personaje p) {
-        if (p instanceof Stark || p instanceof Targaryen) {
+        if (p instanceof Atacante) {
             salas[0][0].nuevoPersonaje(p, true);
         } else if (p instanceof CaminanteBlanco) {
             salas[tamY - 1][0].nuevoPersonaje(p, true);
@@ -270,10 +258,10 @@ public class Mapa {
 
         //Creación de personajes
         Personaje[] personajes = new Personaje[4];
-        personajes[0] = new Stark("Jonathan", 'J');
-        personajes[1] = new Targaryen("Speedwagon", 'S');
-        personajes[2] = new Lannister("Kars", 'K');
-        personajes[3] = new CaminanteBlanco("DIO", 'D');
+        personajes[0] = new Stark("Jonathan", 'J', 1);
+        personajes[1] = new Targaryen("Speedwagon", 'S', 1);
+        personajes[2] = new Lannister("Kars", 'K', 1);
+        personajes[3] = new CaminanteBlanco("DIO", 'D', 1);
 
         /*
         //Sistema de generación de rutas
@@ -299,20 +287,20 @@ public class Mapa {
             personajes[pi].setRuta(ruta);
         }
          */
-        Orientacion[] ruta = {Orientacion.S, Orientacion.S, Orientacion.E, Orientacion.E, Orientacion.N, Orientacion.E, Orientacion.N, Orientacion.E, Orientacion.S, Orientacion.E, Orientacion.S, Orientacion.S, Orientacion.O, Orientacion.S, Orientacion.E, Orientacion.S};
+        Dir[] ruta = {Dir.S, Dir.S, Dir.E, Dir.E, Dir.N, Dir.E, Dir.N, Dir.E, Dir.S, Dir.E, Dir.S, Dir.S, Dir.O, Dir.S, Dir.E, Dir.S};
         personajes[0].setRuta(ruta);
-        Orientacion[] ruta2 ={Orientacion.E, Orientacion.S, Orientacion.S, Orientacion.S, Orientacion.O, Orientacion.S, Orientacion.E, Orientacion.E, Orientacion.N, Orientacion.E, Orientacion.S, Orientacion.S, Orientacion.E, Orientacion.E};
+        Dir[] ruta2 = {Dir.E, Dir.S, Dir.S, Dir.S, Dir.O, Dir.S, Dir.E, Dir.E, Dir.N, Dir.E, Dir.S, Dir.S, Dir.E, Dir.E};
         personajes[1].setRuta(ruta2);
-        Orientacion[] ruta3 = {Orientacion.N, Orientacion.N, Orientacion.O, Orientacion.N, Orientacion.N, Orientacion.O, Orientacion.S, Orientacion.O, Orientacion.O, Orientacion.N, Orientacion.N, Orientacion.O, Orientacion.S, Orientacion.S, Orientacion.S, Orientacion.S, Orientacion.S, Orientacion.E, Orientacion.E, Orientacion.E, Orientacion.E, Orientacion.E};
+        Dir[] ruta3 = {Dir.N, Dir.N, Dir.O, Dir.N, Dir.N, Dir.O, Dir.S, Dir.O, Dir.O, Dir.N, Dir.N, Dir.O, Dir.S, Dir.S, Dir.S, Dir.S, Dir.S, Dir.E, Dir.E, Dir.E, Dir.E, Dir.E};
         personajes[2].setRuta(ruta3);
-        Orientacion[] ruta4 = {Orientacion.N, Orientacion.N, Orientacion.N, Orientacion.E, Orientacion.S, Orientacion.E, Orientacion.N, Orientacion.N, Orientacion.E, Orientacion.N, Orientacion.E, Orientacion.E, Orientacion.S, Orientacion.S, Orientacion.S, Orientacion.S, Orientacion.S};
+        Dir[] ruta4 = {Dir.N, Dir.N, Dir.N, Dir.E, Dir.S, Dir.E, Dir.N, Dir.N, Dir.E, Dir.N, Dir.E, Dir.E, Dir.S, Dir.S, Dir.S, Dir.S, Dir.S};
         personajes[3].setRuta(ruta4);
 
         //Inserción de personajes
         for (int i = 0; i < 4; i++) {
             m.insertarPersonaje(personajes[i]);
         }
-        
+
         m.mostrarMapa();
 
         //Simulación

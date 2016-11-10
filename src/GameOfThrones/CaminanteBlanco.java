@@ -20,9 +20,10 @@ public class CaminanteBlanco extends Defensor {
      *
      * @param nombre Nombre del Caminante Blanco
      * @param ID Marca identificativa del Caminante Blanco
+     * @param turno Turno en el que empieza a moverse
      */
-    public CaminanteBlanco(String nombre, char ID) {
-        super(nombre, "Caminante Blanco", ID);
+    public CaminanteBlanco(String nombre, char ID, int turno) {
+        super(nombre, "Caminante Blanco", ID, turno);
         llaves = null;
         capturados = new Stack<Character>();
     }
@@ -61,5 +62,13 @@ public class CaminanteBlanco extends Defensor {
         }
         return aux;
     }
-
+    
+    /**
+     * Método polimórfico dejarLlave (los caminantes no tienen llaves)
+     * @return null
+     */
+    @Override
+    public Llave dejarLlave(){
+        return null;
+    }
 }
