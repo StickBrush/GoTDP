@@ -74,6 +74,8 @@ public class SalaPuerta extends Sala {
                     cAux.encolar(p);
                 }
             }
+            else
+                cAux.encolar(p);
         }
         for (Personaje p; !cAux.vacia(); cAux.desencolar()) {
             p = cAux.primero();

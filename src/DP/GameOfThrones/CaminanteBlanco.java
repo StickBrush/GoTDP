@@ -67,7 +67,6 @@ public class CaminanteBlanco extends Defensor {
     public void interactuarSala(Sala s) {
         if (s.tienePersonaje()) {
             capturados.addData(s.primero().getID());
-            System.out.println(s.primero().toString());
             s.desencolar();
         }
     }
