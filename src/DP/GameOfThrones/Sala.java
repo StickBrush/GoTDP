@@ -70,14 +70,11 @@ public class Sala {
      * @return False si el personaje no sale del mapa
      */
     public boolean nuevoPersonaje(Personaje p, boolean reinsert) {
-        if (p instanceof CaminanteBlanco && this.tienePersonaje()) {
-            ((CaminanteBlanco) p).kill(primero());
-            personajes.desencolar();
-        }
-        personajes.encolar(p);
         if (!reinsert) {
             p.interactuarSala(this);
         }
+        personajes.encolar(p);
+        
         return false;
     }
 
@@ -202,9 +199,13 @@ public class Sala {
         if (this.tienePersonaje()) {
             Cola<Personaje> caux = new Cola<Personaje>();
             while (this.tienePersonaje()) {
-                if (!(personajes.primero() instanceof CaminanteBlanco)) {
-                    System.out.println(personajes.primero().getTipo() + ":" + personajes.primero().getID() + ":" + ID + ":" + turno + ":" + personajes.primero().getLlaves());
+                if ((personajes.primero() instanceof Atacante)) {
+                    System.out.println(personajes.primero().getTipo() + ":" + personajes.primero().getID() + ":" + ID + ":" + turno + ":" + ((Atacante) personajes.primero()).getLlaves());
                 } else {
+                    if (!(personajes.primero() instanceof CaminanteBlanco))
+                        System.out.println(personajes.primero().getTipo() + ":" + personajes.primero().getID() + ":" + ID + ":" + turno + ":" + ((Lannister) personajes.primero()).getLlaves());
+                        else
+                        
                     System.out.println(personajes.primero().getTipo() + ":" + personajes.primero().getID() + ":" + ID + ":" + turno + ":" + ((CaminanteBlanco) personajes.primero()).getCapturados());
                 }
                 caux.encolar(personajes.primero());

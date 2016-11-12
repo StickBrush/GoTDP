@@ -215,13 +215,9 @@ public class Mapa {
     }
 
     public void insertarPersonaje(Personaje p) {
-        if (p instanceof Atacante) {
-            salas[0][0].nuevoPersonaje(p, true);
-        } else if (p instanceof CaminanteBlanco) {
-            salas[tamY - 1][0].nuevoPersonaje(p, true);
-        } else {
-            salas[iPuerta][jPuerta].nuevoPersonaje(p, true);
-        }
+        int i=p.init(this)/tamX;
+        int j=p.init(this)%tamX;
+        salas[i][j].nuevoPersonaje(p, true);
     }
 
     /**

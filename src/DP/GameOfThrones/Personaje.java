@@ -24,10 +24,6 @@ public abstract class Personaje {
      */
     protected char ID;
     /**
-     * Llaves del personaje
-     */
-    protected Stack<Llave> llaves;
-    /**
      * Ruta a seguir por el personaje
      */
     private Cola<Dir> ruta;
@@ -52,7 +48,6 @@ public abstract class Personaje {
         this.nombre = nombre;
         this.tipo = tipo;
         this.ID = ID;
-        llaves = new Stack<Llave>();
         ruta = new Cola<Dir>();
         this.turno=turno;
     }
@@ -134,34 +129,6 @@ public abstract class Personaje {
     public abstract void interactuarSala(Sala s);
 
     public abstract void interactuarPuerta(Mapa m, int i, int j) throws MovementException;
-
-    /**
-     * Devuelve concatenadas todas las llaves
-     *
-     * @return Todas las llaves concatenadas
-     */
-    public String getLlaves() {
-        if (llaves != null) {
-            return getAllLlaves("");
-        } else {
-            return "";
-        }
-    }
-
-    /**
-     * Devuelve todas las llaves concatenadas, recursivamente
-     *
-     * @param aux String a modificar recursivamente
-     * @return Todas las llaves concatenadas
-     */
-    private String getAllLlaves(String aux) {
-        if (!llaves.isEmpty()) {
-            Llave laux = llaves.getTop();
-            llaves.removeData();
-            aux = aux + laux.toString() + " ";
-            aux = getAllLlaves(aux);
-            llaves.addData(laux);
-        }
-        return aux;
-    }
+    
+    public abstract Integer init(Mapa m);
 }

@@ -1,5 +1,7 @@
 package DP.GameOfThrones;
 
+import DP.ED.Stack;
+
 /**
  * Implementación de la clase Lannister
  *
@@ -7,7 +9,10 @@ package DP.GameOfThrones;
  * @author Juan Luis Herrera González Curso: 2º (Grupo Grande A) EC2
  */
 public class Lannister extends Defensor {
-
+        /**
+     * Llaves del personaje
+     */
+    protected Stack<Llave> llaves;
     /**
      * Constructor parametrizado de Lannister
      *
@@ -17,6 +22,7 @@ public class Lannister extends Defensor {
      */
     public Lannister(String nombre, char ID, int turno) {
         super(nombre, "Lannister", ID, turno);
+        llaves=new Stack<Llave>();
         int numLlavesGenerar = 45;
         numLlaves = numLlavesGenerar;
         Llave[] llavesGen = new Llave[numLlavesGenerar];
@@ -33,5 +39,46 @@ public class Lannister extends Defensor {
             this.llaves.addData(llavesGen[i]);
         }
     }
+    
+    @Override
+    public Integer init(Mapa m) {
+        return (m.getTamX()*m.getTamY())-1;
+    }
+    
+        @Override
+    public void interactuarSala(Sala s) {
+        if(!llaves.isEmpty()){
+            s.nuevaLlave(llaves.getTop());
+            llaves.removeData();
+        }
+    }
+    /**
+     * Devuelve concatenadas todas las llaves
+     *
+     * @return Todas las llaves concatenadas
+     */
+    public String getLlaves() {
+        if (llaves != null) {
+            return getAllLlaves("");
+        } else {
+            return "";
+        }
+    }
 
+    /**
+     * Devuelve todas las llaves concatenadas, recursivamente
+     *
+     * @param aux String a modificar recursivamente
+     * @return Todas las llaves concatenadas
+     */
+    private String getAllLlaves(String aux) {
+        if (!llaves.isEmpty()) {
+            Llave laux = llaves.getTop();
+            llaves.removeData();
+            aux = aux + laux.toString() + " ";
+            aux = getAllLlaves(aux);
+            llaves.addData(laux);
+        }
+        return aux;
+    }
 }

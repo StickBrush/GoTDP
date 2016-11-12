@@ -24,7 +24,6 @@ public class CaminanteBlanco extends Defensor {
      */
     public CaminanteBlanco(String nombre, char ID, int turno) {
         super(nombre, "Caminante Blanco", ID, turno);
-        llaves = null;
         capturados = new Stack<Character>();
     }
 
@@ -68,5 +67,9 @@ public class CaminanteBlanco extends Defensor {
             capturados.addData(s.primero().getID());
             s.desencolar();
         }
+    }
+    @Override
+    public Integer init(Mapa m) {
+        return (m.getTamY()-1)*m.getTamX();
     }
 }

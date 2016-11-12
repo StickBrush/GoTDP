@@ -1,5 +1,7 @@
 package DP.GameOfThrones;
 
+import DP.ED.Stack;
+
 /**
  * Implementación de los atacantes
  *
@@ -7,7 +9,10 @@ package DP.GameOfThrones;
  * @author Juan Luis Herrera González Curso: 2º (Grupo Grande A) EC2
  */
 public class Atacante extends Personaje {
-
+        /**
+     * Llaves del personaje
+     */
+    protected Stack<Llave> llaves;
     /**
      * Constructor parametrizado de atacante
      *
@@ -18,6 +23,7 @@ public class Atacante extends Personaje {
      */
     public Atacante(String nombre, String tipo, char ID, int turno) {
         super(nombre, tipo, ID, turno);
+        llaves=new Stack<Llave>();
     }
 
 
@@ -41,4 +47,38 @@ public class Atacante extends Personaje {
             llaves.addData(aux);
     }
 
+    @Override
+    public Integer init(Mapa m) {
+        return 0;
+    }
+
+    /**
+     * Devuelve concatenadas todas las llaves
+     *
+     * @return Todas las llaves concatenadas
+     */
+    public String getLlaves() {
+        if (llaves != null) {
+            return getAllLlaves("");
+        } else {
+            return "";
+        }
+    }
+
+    /**
+     * Devuelve todas las llaves concatenadas, recursivamente
+     *
+     * @param aux String a modificar recursivamente
+     * @return Todas las llaves concatenadas
+     */
+    private String getAllLlaves(String aux) {
+        if (!llaves.isEmpty()) {
+            Llave laux = llaves.getTop();
+            llaves.removeData();
+            aux = aux + laux.toString() + " ";
+            aux = getAllLlaves(aux);
+            llaves.addData(laux);
+        }
+        return aux;
+    }
 }

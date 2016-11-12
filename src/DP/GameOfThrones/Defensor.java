@@ -38,11 +38,13 @@ public class Defensor extends Personaje {
     }
 
     @Override
-    public void interactuarSala(Sala s) {
-        if(!llaves.isEmpty()){
-            s.nuevaLlave(llaves.getTop());
-            llaves.removeData();
-        }
+    public Integer init(Mapa m) {
+        return null;
     }
+
+    @Override
+    public void interactuarSala(Sala s) {}
+    
+    
 
 }
