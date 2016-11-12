@@ -162,7 +162,7 @@ public class Mapa {
         for (int i = 0; i < tamY; i++) {
             for (int j = 0; j < tamX; j++) {
                 if (salas[i][j].tieneLlave()) {
-                    System.out.println("sala:" + salas[i][j].getID() + ":" + salas[i][j].getLlaves()); //¿Cómo se hace print sin salto de línea?
+                    System.out.println("sala:" + salas[i][j].getID() + ":" + salas[i][j].getLlaves());
                 }
             }
         }

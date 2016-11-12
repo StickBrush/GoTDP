@@ -23,7 +23,7 @@ public class Atacante extends Personaje {
      */
     public Atacante(String nombre, String tipo, char ID, int turno) {
         super(nombre, tipo, ID, turno);
-        llaves=new Stack<Llave>();
+        llaves=new Stack<>();
     }
 
 
@@ -79,6 +79,15 @@ public class Atacante extends Personaje {
             aux = getAllLlaves(aux);
             llaves.addData(laux);
         }
+        return aux;
+    }
+    
+    @Override
+    public String toString(){
+        String aux="";
+        if(llaves != null)
+            aux=getAllLlaves("");
+        aux = tipo + ":" + ID +":" + aux;
         return aux;
     }
 }

@@ -81,4 +81,13 @@ public class Lannister extends Defensor {
         }
         return aux;
     }
+    
+        @Override
+        public String toString(){
+        String aux="";
+        if(llaves != null)
+            aux=getAllLlaves("");
+        aux = tipo + ":" + ID +":" + aux;
+        return aux;
+    }
 }

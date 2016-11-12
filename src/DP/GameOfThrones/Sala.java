@@ -54,14 +54,15 @@ public class Sala {
         llaves.add(l);
     }
 
-    public Llave getLlave(){
-        Llave aux=null;
-        if(!llaves.estaVacia()){
-            aux=llaves.getFirst();
+    public Llave getLlave() {
+        Llave aux = null;
+        if (!llaves.estaVacia()) {
+            aux = llaves.getFirst();
             llaves.deleteFirst();
         }
         return aux;
     }
+
     /**
      * Añade un nuevo personaje
      *
@@ -74,7 +75,7 @@ public class Sala {
             p.interactuarSala(this);
         }
         personajes.encolar(p);
-        
+
         return false;
     }
 
@@ -167,25 +168,24 @@ public class Sala {
         }
         return saux;
     }
-    
-    public void simular(int i, int j, Mapa m, Arbol<Character> movidos){
-        Cola<Personaje> cAux=new Cola<>();
-        for(Personaje p;this.tienePersonaje();personajes.desencolar()){
-            p=personajes.primero();
-            try{
-                if(!movidos.pertenece(p.getID())){
+
+    public void simular(int i, int j, Mapa m, Arbol<Character> movidos) {
+        Cola<Personaje> cAux = new Cola<>();
+        for (Personaje p; this.tienePersonaje(); personajes.desencolar()) {
+            p = personajes.primero();
+            try {
+                if (!movidos.pertenece(p.getID())) {
                     movidos.insertar(p.getID());
                     p.mover(m, i, j, m.getTurno());
-                }
-                else
+                } else {
                     cAux.encolar(p);
-            }
-            catch(MovementException ex){
+                }
+            } catch (MovementException ex) {
                 cAux.encolar(p);
             }
         }
-        for(Personaje p;!cAux.vacia();cAux.desencolar()){
-            p=cAux.primero();
+        for (Personaje p; !cAux.vacia(); cAux.desencolar()) {
+            p = cAux.primero();
             this.nuevoPersonaje(p, true);
         }
     }
@@ -199,15 +199,7 @@ public class Sala {
         if (this.tienePersonaje()) {
             Cola<Personaje> caux = new Cola<Personaje>();
             while (this.tienePersonaje()) {
-                if ((personajes.primero() instanceof Atacante)) {
-                    System.out.println(personajes.primero().getTipo() + ":" + personajes.primero().getID() + ":" + ID + ":" + turno + ":" + ((Atacante) personajes.primero()).getLlaves());
-                } else {
-                    if (!(personajes.primero() instanceof CaminanteBlanco))
-                        System.out.println(personajes.primero().getTipo() + ":" + personajes.primero().getID() + ":" + ID + ":" + turno + ":" + ((Lannister) personajes.primero()).getLlaves());
-                        else
-                        
-                    System.out.println(personajes.primero().getTipo() + ":" + personajes.primero().getID() + ":" + ID + ":" + turno + ":" + ((CaminanteBlanco) personajes.primero()).getCapturados());
-                }
+                System.out.println(personajes.primero().toString() + ":" + ID + ":" + turno);
                 caux.encolar(personajes.primero());
                 personajes.desencolar();
             }

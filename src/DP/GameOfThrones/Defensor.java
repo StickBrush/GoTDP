@@ -44,7 +44,5 @@ public class Defensor extends Personaje {
 
     @Override
     public void interactuarSala(Sala s) {}
-    
-    
 
 }

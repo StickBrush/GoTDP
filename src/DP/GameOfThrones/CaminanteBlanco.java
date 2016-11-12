@@ -34,6 +34,7 @@ public class CaminanteBlanco extends Defensor {
      */
     public void kill(Personaje p) {
         capturados.addData(p.getID());
+        System.out.println(p);
     }
 
     /**
@@ -61,15 +62,25 @@ public class CaminanteBlanco extends Defensor {
         }
         return aux;
     }
+
     @Override
-    public void interactuarSala(Sala s){
-        if(s.tienePersonaje()){
+    public void interactuarSala(Sala s) {
+        if (s.tienePersonaje()) {
             capturados.addData(s.primero().getID());
+            System.out.println(s.primero().toString());
             s.desencolar();
         }
     }
+
     @Override
     public Integer init(Mapa m) {
-        return (m.getTamY()-1)*m.getTamX();
+        return (m.getTamY() - 1) * m.getTamX();
+    }
+
+    @Override
+    public String toString() {
+        String aux = capturados("");
+        aux = tipo + ":" + ID + ":" + aux;
+        return aux;
     }
 }

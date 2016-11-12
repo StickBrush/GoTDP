@@ -131,4 +131,9 @@ public abstract class Personaje {
     public abstract void interactuarPuerta(Mapa m, int i, int j) throws MovementException;
     
     public abstract Integer init(Mapa m);
+    
+    public String toString(){
+        String aux = tipo + ":" + ID;
+        return aux;
+    }
 }
