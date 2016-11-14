@@ -2,8 +2,6 @@ package DP.GameOfThrones;
 
 import DP.Exceptions.MovementException;
 import DP.Exceptions.NotKingsLandingException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * Implementación de los Defensores
@@ -11,7 +9,7 @@ import java.util.logging.Logger;
  * @version 2.0
  * @author Juan Luis Herrera González Curso: 2º (Grupo Grande A) EC2
  */
-public class Defensor extends Personaje {
+public abstract class Defensor extends Personaje {
 
     /**
      * Constructor parametrizado del Defensor
@@ -40,8 +38,5 @@ public class Defensor extends Personaje {
         return null;
     }
 
-    @Override
-    public void interactuarSala(Sala s) {
-    }
 
 }
