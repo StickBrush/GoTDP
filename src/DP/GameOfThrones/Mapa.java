@@ -1,5 +1,7 @@
 package DP.GameOfThrones;
 
+import DP.Exceptions.MapSizeException;
+import DP.Exceptions.NotKingsLandingException;
 import java.util.Random;
 import DP.ED.*;
 

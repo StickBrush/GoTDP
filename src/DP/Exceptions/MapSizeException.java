@@ -1,4 +1,4 @@
-package DP.GameOfThrones;
+package DP.Exceptions;
 
 /**
  *

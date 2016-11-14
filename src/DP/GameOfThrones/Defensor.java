@@ -1,5 +1,7 @@
 package DP.GameOfThrones;
 
+import DP.Exceptions.MovementException;
+import DP.Exceptions.NotKingsLandingException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 

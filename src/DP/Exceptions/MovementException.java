@@ -1,4 +1,4 @@
-package DP.GameOfThrones;
+package DP.Exceptions;
 
 /**
  * Implementación de la NoMovesLeftException
@@ -6,6 +6,6 @@ package DP.GameOfThrones;
  * @author Juan Luis Herrera González Curso: 2º (Grupo Grande A)
  * EC2
  */
-class MovementException extends Exception {
+public class MovementException extends Exception {
     
 }

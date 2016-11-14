@@ -1,5 +1,6 @@
 package DP.GameOfThrones;
 
+import DP.Exceptions.MovementException;
 import DP.ED.Stack;
 import DP.ED.Cola;
 

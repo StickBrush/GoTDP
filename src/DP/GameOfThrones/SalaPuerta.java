@@ -1,5 +1,7 @@
 package DP.GameOfThrones;
 
+import DP.Exceptions.MovementException;
+import DP.Exceptions.NotKingsLandingException;
 import DP.ED.Arbol;
 import DP.ED.Cola;
 

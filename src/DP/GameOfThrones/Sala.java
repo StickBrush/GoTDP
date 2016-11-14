@@ -1,17 +1,10 @@
 package DP.GameOfThrones;
 
+import DP.Exceptions.MovementException;
+import DP.Exceptions.NotKingsLandingException;
 import DP.ED.ListaOrdenada;
 import DP.ED.Cola;
 import DP.ED.Arbol;
-
-/**
- * Implementación de la NotKingsLandingException
- *
- * @version 2.0
- * @author Juan Luis Herrera González Curso: 2º (Grupo Grande A) EC2
- */
-class NotKingsLandingException extends Exception {
-}
 
 /**
  * Implementación de la Sala
