@@ -9,10 +9,12 @@ import DP.ED.Stack;
  * @author Juan Luis Herrera González Curso: 2º (Grupo Grande A) EC2
  */
 public class Atacante extends Personaje {
-        /**
+
+    /**
      * Llaves del personaje
      */
     protected Stack<Llave> llaves;
+
     /**
      * Constructor parametrizado de atacante
      *
@@ -23,12 +25,11 @@ public class Atacante extends Personaje {
      */
     public Atacante(String nombre, String tipo, char ID, int turno) {
         super(nombre, tipo, ID, turno);
-        llaves=new Stack<>();
+        llaves = new Stack<>();
     }
 
-
     @Override
-    public void interactuarPuerta(Mapa m, int i, int j) throws MovementException{
+    public void interactuarPuerta(Mapa m, int i, int j) throws MovementException {
         if (!this.llaves.isEmpty()) {
             try {
                 m.getPuerta().abrir(this.llaves.getTop());
@@ -42,9 +43,10 @@ public class Atacante extends Personaje {
 
     @Override
     public void interactuarSala(Sala s) {
-        Llave aux=s.getLlave();
-        if(aux!=null)
+        Llave aux = s.getLlave();
+        if (aux != null) {
             llaves.addData(aux);
+        }
     }
 
     @Override
@@ -81,13 +83,14 @@ public class Atacante extends Personaje {
         }
         return aux;
     }
-    
+
     @Override
-    public String toString(){
-        String aux="";
-        if(llaves != null)
-            aux=getAllLlaves("");
-        aux = tipo + ":" + ID +":" + aux;
+    public String toString() {
+        String aux = "";
+        if (llaves != null) {
+            aux = getAllLlaves("");
+        }
+        aux = tipo + ":" + ID + ":" + aux;
         return aux;
     }
 }

@@ -24,17 +24,13 @@ public class Defensor extends Personaje {
     }
 
     @Override
-    public void interactuarPuerta(Mapa m, int i, int j) {
+    public void interactuarPuerta(Mapa m, int i, int j) throws MovementException {
         try {
             m.getPuerta().cerrar();
         } catch (NotKingsLandingException ex) {
             System.err.println("Mapa no configurado");
         }
-        try {
-            this.mover(m, i, j, m.getTurno());
-        } catch (MovementException ex) {
-            m.getSala(i, j).nuevoPersonaje(this, true);
-        }
+        this.mover(m, i, j, m.getTurno());
     }
 
     @Override
@@ -43,6 +39,7 @@ public class Defensor extends Personaje {
     }
 
     @Override
-    public void interactuarSala(Sala s) {}
+    public void interactuarSala(Sala s) {
+    }
 
 }

@@ -45,8 +45,9 @@ public class Mapa {
     public Mapa(int salaPuerta, int X, int Y, int profComb) throws MapSizeException {
         tamX = X;
         tamY = Y;
-        if(X<=0||Y<=0)
+        if (X <= 0 || Y <= 0) {
             throw new MapSizeException();
+        }
         turno = 1;
         this.profComb = profComb;
         salas = new Sala[tamX][tamY];
@@ -188,16 +189,18 @@ public class Mapa {
         return tamY;
     }
 
-    public Sala getSalaTrono(){
+    public Sala getSalaTrono() {
         return trono;
     }
-    
-    public int getTurno(){
+
+    public int getTurno() {
         return turno;
     }
-    public Puerta getPuerta() throws NotKingsLandingException{
+
+    public Puerta getPuerta() throws NotKingsLandingException {
         return salas[iPuerta][jPuerta].getPuerta();
     }
+
     public void simularTurno() {
         Sala salaAux;
         Arbol<Character> personajesMovidos = new Arbol<Character>(); //Evita mover varias veces el mismo personaje.
@@ -205,8 +208,8 @@ public class Mapa {
             for (int j = 0; j < tamX; j++) {
                 salaAux = salas[i][j];
                 salaAux.simular(i, j, this, personajesMovidos);
-                }
             }
+        }
         turno++;
     }
 
@@ -215,8 +218,8 @@ public class Mapa {
     }
 
     public void insertarPersonaje(Personaje p) {
-        int i=p.init(this)/tamX;
-        int j=p.init(this)%tamX;
+        int i = p.init(this) / tamX;
+        int j = p.init(this) % tamX;
         salas[i][j].nuevoPersonaje(p, true);
     }
 
@@ -226,7 +229,7 @@ public class Mapa {
      * @param args Argumentos de línea de comandos
      * @throws DP.GameOfThrones.MapSizeException
      */
-    public static void main(String[] args) throws MapSizeException{
+    public static void main(String[] args) throws MapSizeException {
         int numLlaves = 15;
         int X = 6;
         int Y = 6;
