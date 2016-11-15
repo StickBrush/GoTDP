@@ -9,6 +9,7 @@ import DP.Exceptions.MapSizeException;
 import DP.Exceptions.NotKingsLandingException;
 import java.util.Random;
 import DP.ED.*;
+import java.util.Objects;
 
 /**
  * Implementación del mapa
@@ -40,6 +41,8 @@ public class Mapa {
     private Integer jPuerta;
 
     private int turno;
+    
+    private Grafo laberinto;
 
     /**
      * Constructor parametrizado de Mapa
@@ -50,6 +53,7 @@ public class Mapa {
      * @param profComb Profundidad de la combinación
      */
     public Mapa(int salaPuerta, int X, int Y, int profComb) throws MapSizeException {
+        laberinto=new Grafo();
         tamX = X;
         tamY = Y;
         if (X <= 0 || Y <= 0) {
@@ -63,8 +67,10 @@ public class Mapa {
             for (int j = 0; j < tamX; j++) {
                 if (contador != salaPuerta) {
                     salas[i][j] = new Sala(contador);
+                    laberinto.nuevoNodo(contador);
                 } else {
                     salas[i][j] = new SalaPuerta(contador);
+                    laberinto.nuevoNodo(contador);
                     iPuerta = i;
                     jPuerta = j;
                 }
@@ -72,8 +78,49 @@ public class Mapa {
             }
         }
         trono = new Sala(1111);
+        List<Pared> paredes= new List<>();
+        generarParedes(paredes);
+        Kruskal(paredes);
+    }
+    
+    private void Kruskal(List<Pared> paredes){
+        Random RNG=new Random();
+        Pared aux;
+        int pos;
+        while(!paredes.estaVacia()){
+            pos=RNG.nextInt(paredes.size());
+            aux=paredes.get(pos);
+            paredes.delete(pos);
+            if(aux.tirable()){
+                for(int i=0;i<tamY;i++){
+                    for(int j=0;j<tamX;j++){
+                        if(Objects.equals(salas[i][j].getKruskal(), aux.getSala2().getKruskal()))
+                            salas[i][j].setKruskal(aux.getSala1().getKruskal());
+                    }
+                }
+                laberinto.nuevoArco(aux.getSala1().getID(), aux.getSala2().getID(), 1);
+            }
+        }
     }
 
+    private void generarParedes(List<Pared> paredes){
+        for(int i=0;i<tamY;i++){
+            for(int j=0;j<tamX;j++){
+                if(i!=0){
+                    paredes.addLast(new Pared(salas[i][j], salas[i-1][j]));
+                }
+                if(j!=tamX-1){
+                    paredes.addLast(new Pared(salas[i][j], salas[i][j+1]));
+                }
+                if(i!=tamY-1){
+                    paredes.addLast(new Pared(salas[i][j], salas[i+1][j]));
+                }
+                if(j!=0){
+                    paredes.addLast(new Pared(salas[i][j], salas[i][j-1]));
+                }
+            }
+        }
+    }
     /**
      * Inserta una puerta en el mapa
      *

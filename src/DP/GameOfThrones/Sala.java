@@ -27,6 +27,8 @@ public class Sala {
      * Identificador de la sala
      */
     private Integer ID;
+    
+    private Integer Kruskal;
 
     /**
      * Constructor parametrizado de sala
@@ -37,6 +39,7 @@ public class Sala {
         llaves = new ListaOrdenada<Llave>();
         personajes = new Cola<Personaje>();
         this.ID = ID;
+        Kruskal=ID;
     }
 
     /**
@@ -202,5 +205,13 @@ public class Sala {
                 caux.desencolar();
             }
         }
+    }
+    
+    public void setKruskal(Integer nuevo){
+        Kruskal=nuevo;
+    }
+    
+    public Integer getKruskal(){
+        return Kruskal;
     }
 }
