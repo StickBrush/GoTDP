@@ -1,8 +1,11 @@
-package DP.GameOfThrones;
+package DP.Personajes;
 
 import DP.Exceptions.MovementException;
 import DP.Exceptions.NotKingsLandingException;
 import DP.ED.Stack;
+import DP.GameOfThrones.Llave;
+import DP.GameOfThrones.Mapa;
+import DP.GameOfThrones.Sala;
 
 /**
  * Implementación de los atacantes

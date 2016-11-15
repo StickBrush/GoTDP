@@ -1,8 +1,11 @@
-package DP.GameOfThrones;
+package DP.Personajes;
 
 import DP.Exceptions.MovementException;
 import DP.ED.Stack;
 import DP.ED.Cola;
+import DP.GameOfThrones.Dir;
+import DP.GameOfThrones.Mapa;
+import DP.GameOfThrones.Sala;
 
 /**
  * Implementación de la clase Personaje

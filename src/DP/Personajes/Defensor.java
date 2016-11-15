@@ -1,7 +1,8 @@
-package DP.GameOfThrones;
+package DP.Personajes;
 
 import DP.Exceptions.MovementException;
 import DP.Exceptions.NotKingsLandingException;
+import DP.GameOfThrones.Mapa;
 
 /**
  * Implementación de los Defensores

@@ -1,4 +1,4 @@
-package DP.GameOfThrones;
+package DP.Personajes;
 
 /**
  * Implementación de la clase Targaryen

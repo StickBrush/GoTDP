@@ -1,6 +1,9 @@
-package DP.GameOfThrones;
+package DP.Personajes;
 
 import DP.ED.Stack;
+import DP.GameOfThrones.Llave;
+import DP.GameOfThrones.Mapa;
+import DP.GameOfThrones.Sala;
 
 /**
  * Implementación de la clase Lannister
