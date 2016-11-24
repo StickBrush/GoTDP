@@ -6,8 +6,7 @@ import DP.ED.Arbol;
  * Implementación de la puerta
  *
  * @version 2.0
- * @author Juan Luis Herrera González Curso: 2º (Grupo Grande A)
- * EC2
+ * @author Juan Luis Herrera González Curso: 2º (Grupo Grande A) EC2
  */
 public class Puerta {
 
@@ -22,7 +21,7 @@ public class Puerta {
     /**
      * Indica si la puerta está abierta o cerrada
      */
-    private boolean abierta;
+    protected boolean abierta;
     /**
      * Combinación para la que está configurada la puerta
      */
@@ -30,7 +29,7 @@ public class Puerta {
     /**
      * Altura de la combinación
      */
-    private int altura;
+    protected int altura;
 
     /**
      * Constructor parametrizado de Puerta
@@ -78,21 +77,14 @@ public class Puerta {
      * @param llave Llave insertada en la puerta
      */
     public void abrir(Llave llave) {
-        if (!probadas.pertenece(llave)) {
-            if (comb.pertenece(llave)) {
-                comb.borrar(llave);
-                System.out.println("Llave " + llave.identificar() + " insertada");
-            } else {
-                System.out.println("La llave " + llave.identificar() + " no coincide");
-            }
+        if (!probadas.pertenece(llave) && comb.pertenece(llave)) {
+            comb.borrar(llave);
             probadas.insertar(llave);
             Integer[] nodos = {0, 0};
             comb.tiposNodos(nodos);
             if (nodos[0] <= nodos[1] && comb.profundidad() < altura) {
                 abierta = true;
             }
-        } else {
-            System.out.println("Esta llave ya se ha probado");
         }
     }
 

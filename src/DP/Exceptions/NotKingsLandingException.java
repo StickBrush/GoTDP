@@ -8,6 +8,7 @@ package DP.Exceptions;
 /**
  *
  * @author Solaire
+ * @deprecated
  */
 public class NotKingsLandingException extends Exception {
     

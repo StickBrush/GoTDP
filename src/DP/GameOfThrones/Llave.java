@@ -39,7 +39,7 @@ public class Llave implements Comparable<Llave> {
      */
     @Override
     public int compareTo(Llave t) {
-        return (ID.compareTo(t.ID));
+        return ID.compareTo(t.ID);
     }
 
     /**

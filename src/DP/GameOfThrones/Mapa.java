@@ -1,15 +1,15 @@
 package DP.GameOfThrones;
 
-import DP.Personajes.CaminanteBlanco;
-import DP.Personajes.Lannister;
-import DP.Personajes.Personaje;
-import DP.Personajes.Targaryen;
-import DP.Personajes.Stark;
+import DP.Personajes.*;
 import DP.Exceptions.MapSizeException;
 import DP.Exceptions.NotKingsLandingException;
 import java.util.Random;
 import DP.ED.*;
 import java.util.Objects;
+import DP.util.FicheroCarga;
+import DP.util.Cargador;
+import java.io.IOException;
+import DP.util.Repartidor;
 
 /**
  * Implementación del mapa
@@ -43,6 +43,8 @@ public class Mapa {
     private int turno;
     
     private Grafo laberinto;
+    
+    private List<Personaje> personajes;
 
     /**
      * Constructor parametrizado de Mapa
@@ -51,8 +53,10 @@ public class Mapa {
      * @param X Número de columnas
      * @param Y Número de filas
      * @param profComb Profundidad de la combinación
+     * @throws DP.Exceptions.MapSizeException Se intentó crear el mapa con dimensiones no válidas
      */
     public Mapa(int salaPuerta, int X, int Y, int profComb) throws MapSizeException {
+        personajes=new List<>();
         laberinto=new Grafo();
         tamX = X;
         tamY = Y;
@@ -121,6 +125,11 @@ public class Mapa {
             }
         }
     }
+    
+    public void nuevoPersonaje(Personaje p){
+        personajes.addLast(p);
+    }
+    
     /**
      * Inserta una puerta en el mapa
      *
@@ -135,8 +144,12 @@ public class Mapa {
         }
     }
 
-    public void distribuirLlaves(Integer[] salasLlaves) {
+    public boolean esAccesible(int IDS1, int IDS2){
+        return laberinto.adyacente(IDS1, IDS2);
+    }
+    public void distribuirLlaves() {
         int numLlavesGenerar = 45;
+        List<Integer> salasLlaves=Repartidor.sortByFrequence(iPuerta*tamX+jPuerta, laberinto, tamX*tamY);
         Llave[] llavesGen = new Llave[numLlavesGenerar];
         int idLlave = 0;
         for (int i = 0; i < numLlavesGenerar; i++) {
@@ -148,10 +161,10 @@ public class Mapa {
             idLlave++;
         }
         Integer k = 0;
-        for (Integer i : salasLlaves) {
-            int x = i % tamX;
-            int y = i / tamX;
-            for (int contadorl = 0; contadorl < numLlavesGenerar / salasLlaves.length; contadorl++) {
+        for (int i=0;i<salasLlaves.size();i++) {
+            int x = salasLlaves.get(i) % tamX;
+            int y = salasLlaves.get(i) / tamX;
+            for (int contadorl = 0; contadorl < 5 && k<llavesGen.length-1; contadorl++) {
                 salas[y][x].nuevaLlave(llavesGen[k]);
                 k++;
             }
@@ -277,22 +290,36 @@ public class Mapa {
         salas[i][j].nuevoPersonaje(p, true);
     }
 
+    public void showMapa(){
+        for(int i=0;i<tamX;i++){
+            System.out.println("_");
+        }
+        for(int i=0;i<tamY;i++){
+            System.out.println("|");
+            for(int j=0;j<tamX;j++){
+                System.out.println(salas[i][j].showSala(this));
+            }
+            System.out.println("|");
+        }
+    }
     /**
      * Programa principal - EC2
      *
      * @param args Argumentos de línea de comandos
-     * @throws DP.GameOfThrones.MapSizeException
+     * @throws DP.Exceptions.MapSizeException
+     * @throws java.io.IOException
      */
-    public static void main(String[] args) throws MapSizeException {
+    public static void main(String[] args) throws MapSizeException, IOException {
         int numLlaves = 15;
-        int X = 6;
-        int Y = 6;
-        int salaPuerta = (X * Y) - 1;
-        int profComb = 4;
+        //int X = 6;
+        //int Y = 6;
+        //int salaPuerta = (X * Y) - 1;
+        //int profComb = 4;
         //Creación del mapa
-        Mapa m = new Mapa(salaPuerta, X, Y, profComb);
-        Integer[] SalasLlaves = {3, 4, 6, 8, 9, 10, 11, 12, 13};
-        m.distribuirLlaves(SalasLlaves);
+        //Mapa m = new Mapa(salaPuerta, X, Y, profComb);
+        Cargador cargador=new Cargador();
+        Mapa m=FicheroCarga.procesarFichero("inicio.txt", cargador);
+        m.distribuirLlaves();
         int j = 1;
         //Creación de la lista de identificadores
         Integer[] listaLlaves = new Integer[numLlaves];
@@ -311,65 +338,41 @@ public class Mapa {
         Puerta p = new Puerta();
         p.configurar(combLlaves);
         m.insertarPuerta(p);
-
+        
         //Creación de personajes
-        Personaje[] personajes = new Personaje[4];
-        personajes[0] = new Stark("Jonathan", 'J', 1);
-        personajes[1] = new Targaryen("Speedwagon", 'S', 1);
-        personajes[2] = new Lannister("Kars", 'K', 1);
-        personajes[3] = new CaminanteBlanco("DIO", 'D', 1);
-
-        /*
-        //Sistema de generación de rutas
-        Random RNG = new Random(); //Generador de números aleatorios (RNG)
-        Orientacion[] ruta = new Orientacion[30];
-        for (int pi = 0; pi < 4; pi++) {
-            for (int i = 0; i < 30; i++) {
-                switch (RNG.nextInt(4)) {
-                    case 0:
-                        ruta[i] = Orientacion.N;
-                        break;
-                    case 1:
-                        ruta[i] = Orientacion.S;
-                        break;
-                    case 2:
-                        ruta[i] = Orientacion.E;
-                        break;
-                    case 3:
-                        ruta[i] = Orientacion.O;
-                        break;
-                }
-            }
-            personajes[pi].setRuta(ruta);
-        }
-         */
-        Dir[] ruta = {Dir.S, Dir.S, Dir.E, Dir.E, Dir.N, Dir.E, Dir.N, Dir.E, Dir.S, Dir.E, Dir.S, Dir.S, Dir.O, Dir.S, Dir.E, Dir.S};
-        personajes[0].setRuta(ruta);
-        Dir[] ruta2 = {Dir.E, Dir.S, Dir.S, Dir.S, Dir.O, Dir.S, Dir.E, Dir.E, Dir.N, Dir.E, Dir.S, Dir.S, Dir.E, Dir.E};
-        personajes[1].setRuta(ruta2);
-        Dir[] ruta3 = {Dir.N, Dir.N, Dir.O, Dir.N, Dir.N, Dir.O, Dir.S, Dir.O, Dir.O, Dir.N, Dir.N, Dir.O, Dir.S, Dir.S, Dir.S, Dir.S, Dir.S, Dir.E, Dir.E, Dir.E, Dir.E, Dir.E};
-        personajes[2].setRuta(ruta3);
-        Dir[] ruta4 = {Dir.N, Dir.N, Dir.N, Dir.E, Dir.S, Dir.E, Dir.N, Dir.N, Dir.E, Dir.N, Dir.E, Dir.E, Dir.S, Dir.S, Dir.S, Dir.S, Dir.S};
-        personajes[3].setRuta(ruta4);
-
-        //Inserción de personajes
-        for (int i = 0; i < 4; i++) {
-            m.insertarPersonaje(personajes[i]);
-        }
-
-        m.mostrarMapa();
-
-        //Simulación
-        boolean abierta = false;
-        for (int i = 0; i < 50 && !abierta; i++) {
-            m.simularTurno();
-            try {
-                abierta = m.puertaAbierta();
-            } catch (NotKingsLandingException ex) {
-                System.err.println("¿El mapa no fue inicializado?");
-            }
-        }
-        m.mostrarMapa();
+//        Personaje[] personajes = new Personaje[4];
+//        personajes[0] = new Stark("Jonathan", 'J', 1);
+//        personajes[1] = new Targaryen("Speedwagon", 'S', 1);
+//        personajes[2] = new Lannister("Kars", 'K', 1);
+//        personajes[3] = new CaminanteBlanco("DIO", 'D', 1);
+//        
+//        Dir[] ruta = {Dir.S, Dir.S, Dir.E, Dir.E, Dir.N, Dir.E, Dir.N, Dir.E, Dir.S, Dir.E, Dir.S, Dir.S, Dir.O, Dir.S, Dir.E, Dir.S};
+//        personajes[0].setRuta(ruta);
+//        Dir[] ruta2 = {Dir.E, Dir.S, Dir.S, Dir.S, Dir.O, Dir.S, Dir.E, Dir.E, Dir.N, Dir.E, Dir.S, Dir.S, Dir.E, Dir.E};
+//        personajes[1].setRuta(ruta2);
+//        Dir[] ruta3 = {Dir.N, Dir.N, Dir.O, Dir.N, Dir.N, Dir.O, Dir.S, Dir.O, Dir.O, Dir.N, Dir.N, Dir.O, Dir.S, Dir.S, Dir.S, Dir.S, Dir.S, Dir.E, Dir.E, Dir.E, Dir.E, Dir.E};
+//        personajes[2].setRuta(ruta3);
+//        Dir[] ruta4 = {Dir.N, Dir.N, Dir.N, Dir.E, Dir.S, Dir.E, Dir.N, Dir.N, Dir.E, Dir.N, Dir.E, Dir.E, Dir.S, Dir.S, Dir.S, Dir.S, Dir.S};
+//        personajes[3].setRuta(ruta4);
+//
+//        //Inserción de personajes
+//        for (int i = 0; i < 4; i++) {
+//            m.insertarPersonaje(personajes[i]);
+//        }
+//
+//        m.mostrarMapa();
+//
+//        //Simulación
+//        boolean abierta = false;
+//        for (int i = 0; i < 50 && !abierta; i++) {
+//            m.simularTurno();
+//            try {
+//                abierta = m.puertaAbierta();
+//            } catch (NotKingsLandingException ex) {
+//                System.err.println("¿El mapa no fue inicializado?");
+//            }
+//        }
+//        m.mostrarMapa();
     }
 
 }

@@ -60,4 +60,13 @@ public class Cola<tipoDato> {
         }
     }
 
+    /**
+     * Devuelve el número de elementos de la cola
+     *
+     * @return Elementos de la cola
+     */
+    public int numEl() {
+        return q.size();
+    }
+
 }

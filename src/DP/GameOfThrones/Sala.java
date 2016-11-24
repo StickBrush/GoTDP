@@ -214,4 +214,39 @@ public class Sala {
     public Integer getKruskal(){
         return Kruskal;
     }
+    
+    public String showSala(Mapa m){
+        String aux="";
+        if(ID>0){
+            if(!m.esAccesible(ID, ID+1))
+                aux=aux+"|";
+            else
+                aux=aux+" ";
+        }
+        else
+            aux=aux+" ";
+        switch(personajes.numEl()){
+            case 0:
+                if(ID==m.getTamY()-1 || !m.esAccesible(ID, ID+m.getTamX()))
+                    aux=aux+"_";
+                else
+                    aux=aux+" ";
+                break;
+            case 1:
+                aux=aux+personajes.primero().getID();
+                break;
+            default:
+                aux=aux+personajes.numEl();
+                break;
+        }
+        if(ID<m.getTamX()-1){
+            if(!m.esAccesible(ID, ID-1))
+                aux=aux+"|";
+            else
+                aux=aux+" ";
+        }
+        else
+            aux=aux+" ";
+        return aux;
+    }
 }
