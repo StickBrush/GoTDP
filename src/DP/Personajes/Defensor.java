@@ -1,7 +1,6 @@
 package DP.Personajes;
 
 import DP.Exceptions.MovementException;
-import DP.Exceptions.NotKingsLandingException;
 import DP.GameOfThrones.Mapa;
 
 /**
@@ -26,11 +25,7 @@ public abstract class Defensor extends Personaje {
 
     @Override
     public void interactuarPuerta(Mapa m, int i, int j) throws MovementException {
-        try {
-            m.getPuerta().cerrar();
-        } catch (NotKingsLandingException ex) {
-            System.err.println("Mapa no configurado");
-        }
+        m.getPuerta().cerrar();
         this.mover(m, i, j, m.getTurno());
     }
 
@@ -38,6 +33,5 @@ public abstract class Defensor extends Personaje {
     public Integer init(Mapa m) {
         return null;
     }
-
 
 }

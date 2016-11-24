@@ -2,7 +2,6 @@ package DP.GameOfThrones;
 
 import DP.Personajes.Personaje;
 import DP.Exceptions.MovementException;
-import DP.Exceptions.NotKingsLandingException;
 import DP.ED.ListaOrdenada;
 import DP.ED.Cola;
 import DP.ED.Arbol;
@@ -115,26 +114,6 @@ public class Sala {
      */
     public void desencolar() {
         personajes.desencolar();
-    }
-
-    /**
-     * Lanza una NotKingsLandingException
-     *
-     * @param p Puerta ignorada
-     * @throws NotKingsLandingException
-     */
-    public void insertarPuerta(Puerta p) throws NotKingsLandingException {
-        throw new NotKingsLandingException();
-    }
-
-    /**
-     * Lanza una NotKingsLandingException
-     *
-     * @return N/A
-     * @throws NotKingsLandingException
-     */
-    public Puerta getPuerta() throws NotKingsLandingException {
-        throw new NotKingsLandingException();
     }
 
     /**

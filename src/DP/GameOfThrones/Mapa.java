@@ -2,7 +2,6 @@ package DP.GameOfThrones;
 
 import DP.Personajes.*;
 import DP.Exceptions.MapSizeException;
-import DP.Exceptions.NotKingsLandingException;
 import DP.ED.*;
 import java.util.Objects;
 import DP.util.FicheroCarga;
@@ -136,11 +135,7 @@ public class Mapa {
      */
     public void insertarPuerta(Puerta p) {
         p.setAltura(profComb);
-        try {
-            salas[iPuerta][jPuerta].insertarPuerta(p);
-        } catch (NotKingsLandingException ex) {
-            System.err.println("La sala de la puerta está mal configurada");
-        }
+            ((SalaPuerta) salas[iPuerta][jPuerta]).insertarPuerta(p);
     }
 
     public boolean esAccesible(int IDS1, int IDS2){
@@ -177,15 +172,11 @@ public class Mapa {
         int SalaPuerta = iPuerta * tamY + tamX;
         System.out.println("turno:" + turno);
         System.out.println("mapa:" + SalaPuerta);
-        try {
             if (puertaAbierta()) {
-                System.out.println("puerta:abierta:" + profComb + ":" + ((salas[iPuerta][jPuerta]).getPuerta().llavesCerr()) + ":" + ((salas[iPuerta][jPuerta]).getPuerta().llavesProb()));
+                System.out.println("puerta:abierta:" + profComb + ":" + (((SalaPuerta)salas[iPuerta][jPuerta]).getPuerta().llavesCerr()) + ":" + (((SalaPuerta)salas[iPuerta][jPuerta]).getPuerta().llavesProb()));
             } else {
-                System.out.println("puerta:cerrada:" + profComb + ":" + ((salas[iPuerta][jPuerta]).getPuerta().llavesCerr()) + ":" + ((salas[iPuerta][jPuerta]).getPuerta().llavesProb()));
+                System.out.println("puerta:cerrada:" + profComb + ":" + (((SalaPuerta)salas[iPuerta][jPuerta]).getPuerta().llavesCerr()) + ":" + (((SalaPuerta)salas[iPuerta][jPuerta]).getPuerta().llavesProb()));
             }
-        } catch (NotKingsLandingException ex) {
-            System.err.println("¿Mapa no configurado?");
-        }
         for (int i = 0; i < tamY; i++) {
             for (int j = 0; j < tamX; j++) {
                 if (salas[i][j].tieneLlave()) {
@@ -223,8 +214,8 @@ public class Mapa {
         return turno;
     }
 
-    public Puerta getPuerta() throws NotKingsLandingException {
-        return salas[iPuerta][jPuerta].getPuerta();
+    public Puerta getPuerta(){
+        return ((SalaPuerta) salas[iPuerta][jPuerta]).getPuerta();
     }
 
     public void simularTurno() {
@@ -239,8 +230,8 @@ public class Mapa {
         turno++;
     }
 
-    public boolean puertaAbierta() throws NotKingsLandingException {
-        return salas[iPuerta][jPuerta].getPuerta().estaAbierta();
+    public boolean puertaAbierta(){
+        return ((SalaPuerta)salas[iPuerta][jPuerta]).getPuerta().estaAbierta();
     }
 
     public void insertarPersonaje(Personaje p) {

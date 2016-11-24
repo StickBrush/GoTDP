@@ -2,7 +2,6 @@ package DP.GameOfThrones;
 
 import DP.Personajes.Personaje;
 import DP.Exceptions.MovementException;
-import DP.Exceptions.NotKingsLandingException;
 import DP.ED.Arbol;
 import DP.ED.Cola;
 
@@ -34,8 +33,7 @@ public class SalaPuerta extends Sala {
      * @param p Puerta a insertar
      * @throws NotKingsLandingException
      */
-    @Override
-    public void insertarPuerta(Puerta p) throws NotKingsLandingException {
+    public void insertarPuerta(Puerta p){
         this.p = p;
     }
 
@@ -44,7 +42,6 @@ public class SalaPuerta extends Sala {
      *
      * @return Puerta de la sala
      */
-    @Override
     public Puerta getPuerta() {
         return p;
     }

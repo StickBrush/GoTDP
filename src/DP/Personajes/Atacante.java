@@ -1,7 +1,6 @@
 package DP.Personajes;
 
 import DP.Exceptions.MovementException;
-import DP.Exceptions.NotKingsLandingException;
 import DP.ED.Stack;
 import DP.GameOfThrones.Llave;
 import DP.GameOfThrones.Mapa;
@@ -36,11 +35,7 @@ public abstract class Atacante extends Personaje {
     @Override
     public void interactuarPuerta(Mapa m, int i, int j) throws MovementException {
         if (!this.llaves.isEmpty()) {
-            try {
-                m.getPuerta().abrir(this.llaves.getTop());
-            } catch (NotKingsLandingException ex) {
-                System.err.println("Mapa no configurado");
-            }
+            m.getPuerta().abrir(this.llaves.getTop());
             this.llaves.removeData();
         }
         throw new MovementException();
