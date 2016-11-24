@@ -3,13 +3,13 @@ package DP.GameOfThrones;
 import DP.Personajes.*;
 import DP.Exceptions.MapSizeException;
 import DP.Exceptions.NotKingsLandingException;
-import java.util.Random;
 import DP.ED.*;
 import java.util.Objects;
 import DP.util.FicheroCarga;
 import DP.util.Cargador;
 import java.io.IOException;
-import DP.util.Repartidor;
+import DP.util.UtilityKnife;
+import DP.util.GenAleatorios;
 
 /**
  * Implementación del mapa
@@ -88,11 +88,10 @@ public class Mapa {
     }
     
     private void Kruskal(List<Pared> paredes){
-        Random RNG=new Random();
         Pared aux;
         int pos;
         while(!paredes.estaVacia()){
-            pos=RNG.nextInt(paredes.size());
+            pos=GenAleatorios.generarNumero(paredes.size());
             aux=paredes.get(pos);
             paredes.delete(pos);
             if(aux.tirable()){
@@ -149,7 +148,7 @@ public class Mapa {
     }
     public void distribuirLlaves() {
         int numLlavesGenerar = 45;
-        List<Integer> salasLlaves=Repartidor.sortByFrequence(iPuerta*tamX+jPuerta, laberinto, tamX*tamY);
+        List<Integer> salasLlaves=UtilityKnife.sortByFrequence(iPuerta*tamX+jPuerta, laberinto, tamX*tamY);
         Llave[] llavesGen = new Llave[numLlavesGenerar];
         int idLlave = 0;
         for (int i = 0; i < numLlavesGenerar; i++) {
@@ -169,46 +168,6 @@ public class Mapa {
                 k++;
             }
         }
-    }
-
-    /**
-     * Método auxiliar para reordenar un vector
-     *
-     * @param lista Vector a reordenar
-     * @param i Posición para introducir el dato en mitad del vector
-     * @param aux Vector reordenado
-     * @return Siguiente posición libre de aux
-     */
-    private int comb(Integer[] lista, int i, Integer[] aux) {
-        if (lista.length == 1) {
-            aux[i] = lista[0];
-            i++;
-        } else {
-            Integer[] divIz = new Integer[(lista.length) / 2];
-            Integer[] divDer = new Integer[(lista.length) / 2];
-            int mitad = lista.length / 2;
-            for (int x = 0; x < mitad; x++) {
-                divIz[x] = lista[x];
-                divDer[x] = lista[x + mitad + 1];
-            }
-            aux[i] = lista[mitad];
-            i++;
-            i = comb(divIz, i, aux);
-            i = comb(divDer, i, aux);
-        }
-        return i;
-    }
-
-    /**
-     * Método para reordenar la combinación de llaves
-     *
-     * @param lista Combinación de llaves a reordenar
-     * @return Combinación reordenada
-     */
-    public Integer[] nuevaCombinacion(Integer[] lista) {
-        Integer[] aux = new Integer[lista.length];
-        comb(lista, 0, aux);
-        return aux;
     }
 
     /**
@@ -292,14 +251,15 @@ public class Mapa {
 
     public void showMapa(){
         for(int i=0;i<tamX;i++){
-            System.out.println("_");
+            System.out.print(" _");
         }
+        System.out.print("\n");
         for(int i=0;i<tamY;i++){
-            System.out.println("|");
+            System.out.print("|");
             for(int j=0;j<tamX;j++){
-                System.out.println(salas[i][j].showSala(this));
+                System.out.print(salas[i][j].showSala(this));
             }
-            System.out.println("|");
+            System.out.print("|\n");
         }
     }
     /**
@@ -319,6 +279,7 @@ public class Mapa {
         //Mapa m = new Mapa(salaPuerta, X, Y, profComb);
         Cargador cargador=new Cargador();
         Mapa m=FicheroCarga.procesarFichero("inicio.txt", cargador);
+        m.showMapa();
         m.distribuirLlaves();
         int j = 1;
         //Creación de la lista de identificadores
@@ -328,7 +289,7 @@ public class Mapa {
             j += 2;
         }
         //Reordenación de la lista de identificadores
-        listaLlaves = m.nuevaCombinacion(listaLlaves);
+        listaLlaves = UtilityKnife.nuevaCombinacion(listaLlaves);
         //Paso de identificadores a llaves
         Llave[] combLlaves = new Llave[numLlaves];
         for (int i = 0; i < listaLlaves.length; i++) {

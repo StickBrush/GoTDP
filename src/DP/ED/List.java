@@ -84,8 +84,8 @@ public class List<tipoDato> {
      * @param pos Dato a eliminar
      */
     public void delete(Integer pos) {
-        l.remove(pos);
-    }
+        l.remove((int) pos);
+     }
 
     /**
      * Método que añade un dato al final

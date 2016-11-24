@@ -110,7 +110,7 @@ public class Cargador {
     private Mapa crearMapa(int numCampos, List<String> vCampos) {
         Mapa m = null;
         try {
-            m = new Mapa(Integer.parseInt(vCampos.get(4)), Integer.parseInt(vCampos.get(2)), Integer.parseInt(vCampos.get(3)), Integer.parseInt(vCampos.get(5)));
+            m = new Mapa(Integer.parseInt(vCampos.get(1)), Integer.parseInt(vCampos.get(2)), Integer.parseInt(vCampos.get(2)), Integer.parseInt(vCampos.get(4)));
         } catch (MapSizeException ex) {
             System.err.println("Tamaño del mapa inválido");
             System.err.println("Creando mapa por defecto...");
@@ -130,7 +130,7 @@ public class Cargador {
      * @param vCampos array que contiene los valores de cada atributo
      */
     private Stark crearStark(int numCampos, List<String> vCampos) {
-        return new Stark(vCampos.get(2), (char) vCampos.get(3).charAt(0), Integer.parseInt(vCampos.get(4)));
+        return new Stark(vCampos.get(1), (char) vCampos.get(2).charAt(0), Integer.parseInt(vCampos.get(3)));
     }
 
     /**
@@ -140,7 +140,7 @@ public class Cargador {
      * @param vCampos array que contiene los valores de cada atributo
      */
     private Targaryen crearTargaryen(int numCampos, List<String> vCampos) {
-        return new Targaryen(vCampos.get(2), (char) vCampos.get(3).charAt(0), Integer.parseInt(vCampos.get(4)));
+        return new Targaryen(vCampos.get(1), (char) vCampos.get(2).charAt(0), Integer.parseInt(vCampos.get(3)));
     }
 
     /**
@@ -150,7 +150,7 @@ public class Cargador {
      * @param vCampos array que contiene los valores de cada atributo
      */
     private Lannister crearLannister(int numCampos, List<String> vCampos) {
-        return new Lannister(vCampos.get(2), (char) vCampos.get(3).charAt(0), Integer.parseInt(vCampos.get(4)));
+        return new Lannister(vCampos.get(1), (char) vCampos.get(2).charAt(0), Integer.parseInt(vCampos.get(3)));
     }
 
     /**
@@ -160,7 +160,7 @@ public class Cargador {
      * @param vCampos array que contiene los valores de cada atributo
      */
     private CaminanteBlanco crearCaminante(int numCampos, List<String> vCampos) {
-        return new CaminanteBlanco(vCampos.get(2), (char) vCampos.get(3).charAt(0), Integer.parseInt(vCampos.get(4)));
+        return new CaminanteBlanco(vCampos.get(1), (char) vCampos.get(2).charAt(0), Integer.parseInt(vCampos.get(3)));
     }
 
 }

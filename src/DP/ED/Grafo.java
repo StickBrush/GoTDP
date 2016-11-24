@@ -1,20 +1,10 @@
 package DP.ED;
 
-//ALMACENAR TODAS LAS PAREDES POSIBLES:
-//void llenar(Mapa m){
-//for(int i=0;i<m.getY();i++){
-//for(int j=0;j<m.getX();j++){
-//if(i-1>0)
-//CrearPared(m.getSala(i,j).getID(), m.getSala(i-1,j).getID())
-//Seguir p'alante con E, S, O.
-//}
-//}
-//}
-import java.util.Arrays;
 import java.util.LinkedHashSet;
 import java.util.Set;
 import java.util.Queue;
 import java.util.LinkedList;
+import DP.util.UtilityKnife;
 
 /**
  * @file grafo.h Declaracion de la clase grafo
@@ -425,18 +415,12 @@ public class Grafo {
 
     }
 
-    private Set<Integer> setCopy(Set<Integer> original) {
-        Set<Integer> nuevo = new LinkedHashSet<>();
-        nuevo.addAll(original);
-        return nuevo;
-    }
-
     private void genCamino(int origen, int destino, Set<Integer> visitados, Set<Set<Integer>> caminos) {
         Set<Integer> Ady = new LinkedHashSet<>();
         int x;
         visitados.add(origen);
         if (origen == destino) {
-            caminos.add(setCopy(visitados));
+            caminos.add(UtilityKnife.setCopy(visitados));
         } else {
             this.adyacentes(origen, Ady);
             while (!Ady.isEmpty()) {
