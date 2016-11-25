@@ -110,7 +110,7 @@ public class Cargador {
     private Mapa crearMapa(int numCampos, List<String> vCampos) {
         Mapa m = null;
         try {
-            m = new Mapa(Integer.parseInt(vCampos.get(1)), Integer.parseInt(vCampos.get(2)), Integer.parseInt(vCampos.get(2)), Integer.parseInt(vCampos.get(4)));
+            m = new Mapa(Integer.parseInt(vCampos.get(3)), Integer.parseInt(vCampos.get(1)), Integer.parseInt(vCampos.get(2)), Integer.parseInt(vCampos.get(4)));
         } catch (MapSizeException ex) {
             System.err.println("Tamaño del mapa inválido");
             System.err.println("Creando mapa por defecto...");

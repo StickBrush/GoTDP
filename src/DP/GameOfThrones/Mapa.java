@@ -3,7 +3,6 @@ package DP.GameOfThrones;
 import DP.Personajes.*;
 import DP.Exceptions.MapSizeException;
 import DP.ED.*;
-import java.util.Objects;
 import DP.util.FicheroCarga;
 import DP.util.Cargador;
 import java.io.IOException;
@@ -64,7 +63,7 @@ public class Mapa {
         }
         turno = 1;
         this.profComb = profComb;
-        salas = new Sala[tamX][tamY];
+        salas = new Sala[tamY][tamX];
         int contador = 0;
         for (int i = 0; i < tamY; i++) {
             for (int j = 0; j < tamX; j++) {
@@ -89,18 +88,20 @@ public class Mapa {
     private void Kruskal(List<Pared> paredes){
         Pared aux;
         int pos;
+        int marca;
         while(!paredes.estaVacia()){
             pos=GenAleatorios.generarNumero(paredes.size());
             aux=paredes.get(pos);
             paredes.delete(pos);
             if(aux.tirable()){
+                marca=aux.getSala2().getKruskal();
                 for(int i=0;i<tamY;i++){
                     for(int j=0;j<tamX;j++){
-                        if(Objects.equals(salas[i][j].getKruskal(), aux.getSala2().getKruskal()))
+                        if(salas[i][j].getKruskal() == marca)
                             salas[i][j].setKruskal(aux.getSala1().getKruskal());
                     }
                 }
-                laberinto.nuevoArco(aux.getSala1().getID(), aux.getSala2().getID(), 1);
+                laberinto.nuevoArco(aux.getSala1().getID(), aux.getSala2().getID());
             }
         }
     }

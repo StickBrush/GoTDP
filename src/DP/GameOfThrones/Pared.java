@@ -5,8 +5,6 @@
  */
 package DP.GameOfThrones;
 
-import java.util.Objects;
-
 /**
  *
  * @author Solaire
@@ -29,6 +27,6 @@ public class Pared {
     }
     
     public boolean tirable(){
-        return (!Objects.equals(s1.getKruskal(), s2.getKruskal()));
+        return (s1.getKruskal()!=s2.getKruskal());
     }
 }

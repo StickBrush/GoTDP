@@ -34,7 +34,8 @@ public class UtilityKnife {
                 }
             }
             if (may != -1) {
-                sorted.addLast(inMay);
+                if(inMay!=kingsLanding && inMay!=0)
+                    sorted.addLast(inMay);
                 freq[inMay] = -1;
             } else {
                 fin = true;

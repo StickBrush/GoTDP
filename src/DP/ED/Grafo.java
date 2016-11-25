@@ -95,11 +95,11 @@ public class Grafo {
      * @param valor es el peso del arco nuevo
      * @return true si se pudo insertar
      */
-    public boolean nuevoArco(int origen, int destino, int valor) {
+    public boolean nuevoArco(int origen, int destino) {
         boolean resultado = false;
         if ((origen >= 0) && (origen < numNodos) && (destino >= 0) && (destino < numNodos)) {
-            arcos[origen][destino] = valor;
-            arcos[destino][origen] = valor;
+            arcos[origen][destino] = 1;
+            arcos[destino][origen] = 1;
             resultado = true;
         }
         return resultado;
