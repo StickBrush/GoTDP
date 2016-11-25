@@ -8,6 +8,7 @@ import DP.util.Cargador;
 import java.io.IOException;
 import DP.util.UtilityKnife;
 import DP.util.GenAleatorios;
+import DP.util.Logger;
 
 /**
  * Implementación del mapa
@@ -159,7 +160,7 @@ public class Mapa {
         for (int i=0;i<salasLlaves.size();i++) {
             int x = salasLlaves.get(i) % tamX;
             int y = salasLlaves.get(i) / tamX;
-            for (int contadorl = 0; contadorl < 5 && k<llavesGen.length-1; contadorl++) {
+            for (int contadorl = 0; contadorl < 5 && k<llavesGen.length; contadorl++) {
                 salas[y][x].nuevaLlave(llavesGen[k]);
                 k++;
             }
@@ -241,39 +242,58 @@ public class Mapa {
         salas[i][j].nuevoPersonaje(p, true);
     }
 
-    public void showMapa(){
-        System.out.print(" ");
+    public List<String> structureString(){
+        List<String> structure=new List<>();
+        String total="";
+        total=total+" ";
         for(int i=0;i<tamX;i++){
-            System.out.print("_ ");
+            total=total+"_ ";
         }
-        System.out.print("\n");
+        structure.addLast(total);
+        total="";
         for(int i=0;i<tamY;i++){
-            System.out.print("|");
+            total=total+"|";
             for(int j=0;j<tamX;j++){
-                System.out.print(salas[i][j].showSala(this));
+                total=total+salas[i][j].showSala(this);
             }
-            System.out.print("|\n");
+            total=total+"|";
+            structure.addLast(total);
+            total="";
+        }
+        return structure;
+    }
+    
+    public void dumpPersonajes(){
+        while(!personajes.estaVacia()){
+            insertarPersonaje(personajes.getFirst());
+            personajes.delete(0);
         }
     }
     /**
      * Programa principal - EC2
      *
      * @param args Argumentos de línea de comandos
-     * @throws DP.Exceptions.MapSizeException
-     * @throws java.io.IOException
      */
-    public static void main(String[] args) throws MapSizeException, IOException {
+    public static void main(String[] args){
         int numLlaves = 15;
-        //int X = 6;
-        //int Y = 6;
-        //int salaPuerta = (X * Y) - 1;
-        //int profComb = 4;
-        //Creación del mapa
-        //Mapa m = new Mapa(salaPuerta, X, Y, profComb);
         Cargador cargador=new Cargador();
-        Mapa m=FicheroCarga.procesarFichero("inicio.txt", cargador);
-        m.showMapa();
+        Mapa m=null;
+        try{
+            m=FicheroCarga.procesarFichero("inicio.txt", cargador);
+        }
+        catch (IOException ex){
+            System.err.println("Error al cargar inicio.txt. Creando mapa por defecto...");
+            try{
+                m=new Mapa(35, 6, 6, 4);
+            }
+            catch(MapSizeException exc){
+                System.err.println("Esto no pasará");
+            }
+        }
+        Logger logger=new Logger();
+        logger.logMapa(m);
         m.distribuirLlaves();
+        m.dumpPersonajes();
         int j = 1;
         //Creación de la lista de identificadores
         Integer[] listaLlaves = new Integer[numLlaves];
