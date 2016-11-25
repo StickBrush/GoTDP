@@ -52,7 +52,7 @@ public abstract class Personaje {
         this.tipo = tipo;
         this.ID = ID;
         ruta = new Cola<Dir>();
-        this.turno=turno;
+        this.turno = turno;
     }
 
     /**
@@ -93,49 +93,52 @@ public abstract class Personaje {
         }
     }
 
-
-    public void mover(Mapa m, int i, int j, int turno) throws MovementException{
-        if(!ruta.vacia() && this.turno<=turno){
-            Dir o= ruta.primero();
+    public void mover(Mapa m, int i, int j, int turno) throws MovementException {
+        if (!ruta.vacia() && this.turno <= turno) {
+            Dir o = ruta.primero();
             ruta.desencolar();
-            switch(o){
+            switch (o) {
                 case N:
-                    if(i-1>0)
-                        m.getSala(i-1, j).nuevoPersonaje(this, false);
-                    else
+                    if (i - 1 > 0 && m.esAccesible(i * m.getTamX() + j, (i - 1) * m.getTamX() + j)) {
+                        m.getSala(i - 1, j).nuevoPersonaje(this, false);
+                    } else {
                         throw new MovementException();
+                    }
                     break;
                 case S:
-                    if(i+1<m.getTamY())
-                        m.getSala(i+1, j).nuevoPersonaje(this, false);
-                    else
+                    if (i + 1 < m.getTamY() && m.esAccesible(i * m.getTamX() + j, (i + 1) * m.getTamX() + j)) {
+                        m.getSala(i + 1, j).nuevoPersonaje(this, false);
+                    } else {
                         throw new MovementException();
+                    }
                     break;
                 case O:
-                    if(j-1>0)
-                        m.getSala(i, j-1).nuevoPersonaje(this, false);
-                    else
+                    if (j - 1 > 0 && m.esAccesible(i * m.getTamX() + j, i * m.getTamX() + j - 1)) {
+                        m.getSala(i, j - 1).nuevoPersonaje(this, false);
+                    } else {
                         throw new MovementException();
+                    }
                     break;
                 case E:
-                    if(j+1<m.getTamX())
-                        m.getSala(i, j+1).nuevoPersonaje(this, false);
-                    else
+                    if (j + 1 < m.getTamX() && m.esAccesible(i * m.getTamX() + j, i * m.getTamX() + j + 1)) {
+                        m.getSala(i, j + 1).nuevoPersonaje(this, false);
+                    } else {
                         throw new MovementException();
+                    }
                     break;
             }
-        }
-        else
+        } else {
             throw new MovementException();
+        }
     }
-    
+
     public abstract void interactuarSala(Sala s);
 
     public abstract void interactuarPuerta(Mapa m, int i, int j) throws MovementException;
-    
+
     public abstract Integer init(Mapa m);
-    
-    public String toString(){
+
+    public String toString() {
         String aux = tipo + ":" + ID;
         return aux;
     }

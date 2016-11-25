@@ -92,7 +92,6 @@ public class Grafo {
      *
      * @param origen es el nodo de origen del arco nuevo
      * @param destino es el nodo de destino del arco nuevo
-     * @param valor es el peso del arco nuevo
      * @return true si se pudo insertar
      */
     public boolean nuevoArco(int origen, int destino) {
@@ -368,12 +367,26 @@ public class Grafo {
         return sig;
     }
 
+    /**
+     * Genera la ruta más corta entre origen y destino
+     *
+     * @param origen Nodo del que partir
+     * @param destino Nodo al que llegar
+     * @return Ruta más corta
+     */
     public Set<Integer> ruta(int origen, int destino) {
         Set<Integer> camino = new LinkedHashSet<Integer>();
         genRuta(origen, destino, camino);
         return camino;
     }
 
+    /**
+     * Generador de la ruta
+     *
+     * @param origen Origen de la ruta
+     * @param destino Destino de la ruta
+     * @param ruta Ruta que se irá actualizando
+     */
     private void genRuta(int origen, int destino, Set<Integer> ruta) {
         int x = siguiente(origen, destino);
         ruta.add(x);
@@ -382,6 +395,9 @@ public class Grafo {
         }
     }
 
+    /**
+     * Recorrido en profundidad del grafo
+     */
     public void profundidad() {
         if (!esVacio()) {
             Set<Integer> visitados = new LinkedHashSet<Integer>();
@@ -391,6 +407,12 @@ public class Grafo {
         }
     }
 
+    /**
+     * Recorrido en profundidad del grafo
+     *
+     * @param origen Nodo actual
+     * @param visitados Nodos visitados hasta ahora
+     */
     private void prof(int origen, Set<Integer> visitados) {
         Set<Integer> Ady = new LinkedHashSet<>();
         int x;
@@ -406,6 +428,13 @@ public class Grafo {
         }
     }
 
+    /**
+     * Devuelve todos los posibles caminos de origen a destino
+     *
+     * @param origen Nodo del que partir
+     * @param destino Nodo al que llegar
+     * @return Todos los posibles caminos origen->destino
+     */
     public Set<Set<Integer>> caminos(int origen, int destino) {
         Set<Set<Integer>> caminos = new LinkedHashSet<>();
         Set<Integer> visitados = new LinkedHashSet<>();
@@ -416,6 +445,14 @@ public class Grafo {
 
     }
 
+    /**
+     * Generador de todos los caminos
+     *
+     * @param origen Nodo actual
+     * @param destino Destino final
+     * @param visitados Nodos visitados
+     * @param caminos Caminos posibles
+     */
     private void genCamino(int origen, int destino, Set<Integer> visitados, Set<Set<Integer>> caminos) {
         Set<Integer> Ady = new LinkedHashSet<>();
         int x;
@@ -435,6 +472,11 @@ public class Grafo {
         visitados.remove(origen);
     }
 
+    /**
+     * Devuelve el nodo más conectado
+     *
+     * @return Nodo con mayor número de arcos de salida
+     */
     public int nodoConectado() {
         int nodoMax = 0;
         int contMax = 0;
@@ -456,6 +498,9 @@ public class Grafo {
         return nodoMax;
     }
 
+    /**
+     * Recorrido en anchura del grafo
+     */
     public void anchura() {
         if (!esVacio()) {
             Set<Integer> visitados = new LinkedHashSet<>();
@@ -463,6 +508,12 @@ public class Grafo {
         }
     }
 
+    /**
+     * Recorrido en anchura
+     *
+     * @param origen Nodo actual
+     * @param visitados Nodos visitados
+     */
     public void recAnchura(int origen, Set<Integer> visitados) {
         int x;
         Queue<Integer> q = new LinkedList<>();

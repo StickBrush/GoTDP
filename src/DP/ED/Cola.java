@@ -6,8 +6,8 @@ import java.util.LinkedList;
 /**
  * Implementación de la cola
  *
- * @version 2.0
- * @author Juan Luis Herrera González Curso: 2º (Grupo Grande A) EC2
+ * @version 3.0
+ * @author Juan Luis Herrera González Curso: 2º (Grupo Grande A) EC3
  * @param <tipoDato> Tipo genérico de dato para la cola
  */
 public class Cola<tipoDato> {

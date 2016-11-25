@@ -8,11 +8,22 @@ import java.util.LinkedHashSet;
 import java.util.Arrays;
 
 /**
+ * Clase Utility, tiene toda clase de utilidades para otras clases. No es
+ * instanciable
  *
- * @author Solaire
+ * @version 3.0
+ * @author Juan Luis Herrera González Curso: 2º (Grupo Grande A) EC3
  */
-public class UtilityKnife {
+public abstract class UtilityKnife {
 
+    /**
+     * Devuelve, ordenadas por frecuencia, las salas de mayor tránsito
+     *
+     * @param kingsLanding Identificador de King's Landing
+     * @param laberinto Laberinto de salas
+     * @param size Tamaño total del mapa
+     * @return Lista de salas ordenadas por frecuencia de tránsito
+     */
     public static List<Integer> sortByFrequence(int kingsLanding, Grafo laberinto, int size) {
         Set<Set<Integer>> caminos = laberinto.caminos(0, kingsLanding);
         int[] freq = new int[size];
@@ -86,15 +97,28 @@ public class UtilityKnife {
         return i;
     }
 
+    /**
+     * Devuelve una copia del Set dado
+     *
+     * @param original Set original
+     * @return Copia de original
+     */
     public static Set<Integer> setCopy(Set<Integer> original) {
         Set<Integer> nuevo = new LinkedHashSet<>();
         nuevo.addAll(original);
         return nuevo;
     }
-    
-    public static boolean hayPared(Grafo g, int[] paredes){
+
+    /**
+     * Devuelve si hay pared o no
+     *
+     * @param g Grafo sobre el que comprobar
+     * @param paredes Identificadores de las salas a comprobar
+     * @return True si hay paredes internas entre las salas, false si no
+     */
+    public static boolean hayPared(Grafo g, int[] paredes) {
         boolean pared;
-        Arrays.sort(paredes); //¡Eso es trampa!
+        Arrays.sort(paredes);
         pared = !g.adyacente(paredes[0], paredes[1]);
         pared = pared || !g.adyacente(paredes[0], paredes[2]);
         pared = pared || !g.adyacente(paredes[1], paredes[3]);
