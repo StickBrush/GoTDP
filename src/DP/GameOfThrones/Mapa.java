@@ -242,8 +242,9 @@ public class Mapa {
     }
 
     public void showMapa(){
+        System.out.print(" ");
         for(int i=0;i<tamX;i++){
-            System.out.print(" _");
+            System.out.print("_ ");
         }
         System.out.print("\n");
         for(int i=0;i<tamY;i++){
