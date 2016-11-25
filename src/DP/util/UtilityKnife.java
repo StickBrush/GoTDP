@@ -5,6 +5,7 @@ import java.util.Set;
 import java.util.Iterator;
 import DP.ED.List;
 import java.util.LinkedHashSet;
+import java.util.Arrays;
 
 /**
  *
@@ -34,8 +35,9 @@ public class UtilityKnife {
                 }
             }
             if (may != -1) {
-                if(inMay!=kingsLanding && inMay!=0)
+                if (inMay != kingsLanding && inMay != 0) {
                     sorted.addLast(inMay);
+                }
                 freq[inMay] = -1;
             } else {
                 fin = true;
@@ -83,10 +85,20 @@ public class UtilityKnife {
         }
         return i;
     }
-    
-        public static Set<Integer> setCopy(Set<Integer> original) {
+
+    public static Set<Integer> setCopy(Set<Integer> original) {
         Set<Integer> nuevo = new LinkedHashSet<>();
         nuevo.addAll(original);
         return nuevo;
+    }
+    
+    public static boolean hayPared(Grafo g, int[] paredes){
+        boolean pared;
+        Arrays.sort(paredes); //¡Eso es trampa!
+        pared = !g.adyacente(paredes[0], paredes[1]);
+        pared = pared || !g.adyacente(paredes[0], paredes[2]);
+        pared = pared || !g.adyacente(paredes[1], paredes[3]);
+        pared = pared || !g.adyacente(paredes[2], paredes[3]);
+        return pared;
     }
 }

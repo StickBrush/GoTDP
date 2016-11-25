@@ -116,6 +116,7 @@ public class Grafo {
         boolean resultado = false;
         if ((origen >= 0) && (origen < numNodos) && (destino >= 0) && (destino < numNodos)) {
             arcos[origen][destino] = INFINITO;
+            arcos[destino][origen] = INFINITO;
             resultado = true;
         }
         return resultado;

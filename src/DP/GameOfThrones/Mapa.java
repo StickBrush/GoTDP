@@ -110,16 +110,17 @@ public class Mapa {
     private void generarParedes(List<Pared> paredes){
         for(int i=0;i<tamY;i++){
             for(int j=0;j<tamX;j++){
-                if(i!=0){
+                int ID=i*tamX+j;
+                if(i!=0 && !laberinto.adyacente(ID, ID-tamX)){
                     paredes.addLast(new Pared(salas[i][j], salas[i-1][j]));
                 }
-                if(j!=tamX-1){
+                if(j!=tamX-1 && !laberinto.adyacente(ID, ID+1)){
                     paredes.addLast(new Pared(salas[i][j], salas[i][j+1]));
                 }
-                if(i!=tamY-1){
+                if(i!=tamY-1 && !laberinto.adyacente(ID, ID+tamX)){
                     paredes.addLast(new Pared(salas[i][j], salas[i+1][j]));
                 }
-                if(j!=0){
+                if(j!=0 && !laberinto.adyacente(ID, ID-1)){
                     paredes.addLast(new Pared(salas[i][j], salas[i][j-1]));
                 }
             }
@@ -269,6 +270,47 @@ public class Mapa {
             personajes.delete(0);
         }
     }
+    
+    public void crearAtajos(){
+        Double a = (tamX*tamY)*0.05; //Calculamos el 5% de las salas, es decir, las paredes a tirar
+        Integer i = a.intValue();
+        if(i<1)
+            i=1; //Garantizamos que tiramos al menos una pared
+        List<Pared> paredes=new List<>();
+        generarParedes(paredes);
+        boolean tirable=false;
+        for(;i>0 && !paredes.estaVacia();i--){
+            int pos=GenAleatorios.generarNumero(paredes.size());
+            Pared aux=paredes.get(pos);
+            paredes.delete(pos);
+            laberinto.nuevoArco(aux.getSala1().getID(), aux.getSala2().getID()); //Tiramos la pared
+            if(aux.horizontal()){ //Comprobamos que se podía tirar
+                if(aux.getSala1().getID()%tamX<tamX-1){
+                    int[] ids={aux.getSala1().getID(), aux.getSala1().getID()+1, aux.getSala2().getID(), aux.getSala2().getID()+1};
+                    tirable=tirable || UtilityKnife.hayPared(laberinto, ids);
+                }
+                if(aux.getSala1().getID()%tamX>0){
+                    int[] ids={aux.getSala1().getID(), aux.getSala1().getID()-1, aux.getSala2().getID(), aux.getSala2().getID()-1};
+                    tirable=tirable || UtilityKnife.hayPared(laberinto, ids);
+                }
+            }
+            else{
+                if(aux.getSala1().getID()/tamX<tamY-1){
+                    int[] ids={aux.getSala1().getID(), aux.getSala1().getID()+tamX, aux.getSala2().getID(), aux.getSala2().getID()+tamX};
+                    tirable=tirable || UtilityKnife.hayPared(laberinto, ids);
+                }
+                if(aux.getSala1().getID()/tamX>0){
+                    int[] ids={aux.getSala1().getID(), aux.getSala1().getID()-tamX, aux.getSala2().getID(), aux.getSala2().getID()-tamX};
+                    tirable=tirable || UtilityKnife.hayPared(laberinto, ids);
+                }
+            }
+            if(!tirable){ //Si no se podía, la restauramos
+                laberinto.borraArco(aux.getSala1().getID(), aux.getSala2().getID());
+                i++;
+            }
+        }
+    }
+    
     /**
      * Programa principal - EC2
      *
@@ -292,8 +334,10 @@ public class Mapa {
         }
         Logger logger=new Logger();
         logger.logMapa(m);
+        m.crearAtajos();
+        logger.logMapa(m);
         m.distribuirLlaves();
-        m.dumpPersonajes();
+        //m.dumpPersonajes();
         int j = 1;
         //Creación de la lista de identificadores
         Integer[] listaLlaves = new Integer[numLlaves];
