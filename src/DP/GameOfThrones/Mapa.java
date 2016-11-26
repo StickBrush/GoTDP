@@ -9,6 +9,8 @@ import java.io.IOException;
 import DP.util.UtilityKnife;
 import DP.util.GenAleatorios;
 import DP.util.Logger;
+import java.util.Set;
+import java.util.LinkedHashSet;
 
 /**
  * Implementación del mapa
@@ -99,6 +101,7 @@ public class Mapa {
         List<Pared> paredes = new List<>();
         generarParedes(paredes);
         Kruskal(paredes);
+        crearAtajos();
     }
 
     /**
@@ -137,16 +140,16 @@ public class Mapa {
         for (int i = 0; i < tamY; i++) {
             for (int j = 0; j < tamX; j++) {
                 int ID = i * tamX + j;
-                if (i != 0 && !laberinto.adyacente(ID, ID - tamX)) {
+                if (i != 0) {
                     paredes.addLast(new Pared(salas[i][j], salas[i - 1][j]));
                 }
-                if (j != tamX - 1 && !laberinto.adyacente(ID, ID + 1)) {
+                if (j != tamX - 1) {
                     paredes.addLast(new Pared(salas[i][j], salas[i][j + 1]));
                 }
-                if (i != tamY - 1 && !laberinto.adyacente(ID, ID + tamX)) {
+                if (i != tamY - 1) {
                     paredes.addLast(new Pared(salas[i][j], salas[i + 1][j]));
                 }
-                if (j != 0 && !laberinto.adyacente(ID, ID - 1)) {
+                if (j != 0) {
                     paredes.addLast(new Pared(salas[i][j], salas[i][j - 1]));
                 }
             }
@@ -208,58 +211,97 @@ public class Mapa {
     }
 
     /**
-     * Muestra el mapa por pantalla
+     * Devuelve la información del Mapa
+     *
+     * @return Información del Mapa
      */
-    public void mostrarMapa() {
+    public String infoMapa() {
         int SalaPuerta = iPuerta * tamY + tamX;
-        System.out.println("turno:" + turno);
-        System.out.println("mapa:" + SalaPuerta);
+        String sol;
+        sol = "(turno:" + turno + ")" + "\n";
+        sol = sol + "(mapa:" + SalaPuerta + ")" + "\n";
         if (puertaAbierta()) {
-            System.out.println("puerta:abierta:" + profComb + ":" + (((SalaPuerta) salas[iPuerta][jPuerta]).getPuerta().llavesCerr()) + ":" + (((SalaPuerta) salas[iPuerta][jPuerta]).getPuerta().llavesProb()));
+            sol = sol + ("(puerta:abierta:" + profComb + ":" + (((SalaPuerta) salas[iPuerta][jPuerta]).getPuerta().llavesCerr()) + ":" + (((SalaPuerta) salas[iPuerta][jPuerta]).getPuerta().llavesProb()) + ")") + "\n";
         } else {
-            System.out.println("puerta:cerrada:" + profComb + ":" + (((SalaPuerta) salas[iPuerta][jPuerta]).getPuerta().llavesCerr()) + ":" + (((SalaPuerta) salas[iPuerta][jPuerta]).getPuerta().llavesProb()));
+            sol = sol + ("(puerta:cerrada:" + profComb + ":" + (((SalaPuerta) salas[iPuerta][jPuerta]).getPuerta().llavesCerr()) + ":" + (((SalaPuerta) salas[iPuerta][jPuerta]).getPuerta().llavesProb()) + ")") + "\n";
         }
+        sol = sol + structureString();
         for (int i = 0; i < tamY; i++) {
             for (int j = 0; j < tamX; j++) {
                 if (salas[i][j].tieneLlave()) {
-                    System.out.println("sala:" + salas[i][j].getID() + ":" + salas[i][j].getLlaves());
+                    sol = sol + "(sala:" + salas[i][j].getID() + ":" + salas[i][j].getLlaves() + ")" + "\n";
                 }
             }
         }
         for (int i = 0; i < tamY; i++) {
             for (int j = 0; j < tamX; j++) {
-                salas[i][j].showPersonajes(turno);
+                sol = sol + salas[i][j].showPersonajes(turno);
             }
         }
-        System.out.println("(miembrostrono)");
-        System.out.println("nuevorey:");
-        trono.showPersonajes(turno);
+        sol = sol + "(miembrostrono)\n";
+        sol = sol + "(nuevorey:" + trono.showPersonajes(turno) + ")+\n";
+        return sol;
     }
 
+    /**
+     * Retorna la sala especificada del mapa
+     *
+     * @param i Coordenada Y de la sala
+     * @param j Coordenada X de la sala
+     * @return Sala con identificador (i*tamX)+j
+     */
     public Sala getSala(int i, int j) {
         return salas[i][j];
     }
 
+    /**
+     * Retorna el ancho del mapa
+     *
+     * @return Máxima coordenada X del mapa
+     */
     public Integer getTamX() {
         return tamX;
     }
 
+    /**
+     * Retorna el alto del mapa
+     *
+     * @return Máxima coordenada Y del mapa
+     */
     public Integer getTamY() {
         return tamY;
     }
 
+    /**
+     * Retorna la sala del trono
+     *
+     * @return Trono
+     */
     public Sala getSalaTrono() {
         return trono;
     }
 
+    /**
+     * Retorna el turno actual
+     *
+     * @return Turno actual
+     */
     public int getTurno() {
         return turno;
     }
 
+    /**
+     * Retorna la puerta del mapa
+     *
+     * @return Puerta del trono
+     */
     public Puerta getPuerta() {
         return ((SalaPuerta) salas[iPuerta][jPuerta]).getPuerta();
     }
 
+    /**
+     * Simula un turno completo. Acarrea incremento de turno
+     */
     public void simularTurno() {
         Sala salaAux;
         Arbol<Character> personajesMovidos = new Arbol<Character>(); //Evita mover varias veces el mismo personaje.
@@ -272,16 +314,31 @@ public class Mapa {
         turno++;
     }
 
+    /**
+     * Retorna el estado de la puerta
+     *
+     * @return True si la puerta está abierta, false si no
+     */
     public boolean puertaAbierta() {
         return ((SalaPuerta) salas[iPuerta][jPuerta]).getPuerta().estaAbierta();
     }
 
+    /**
+     * Inserta un personaje en el mapa, en su sala de inicio correspondiente
+     *
+     * @param p Personaje al que insertar
+     */
     public void insertarPersonaje(Personaje p) {
         int i = p.init(this) / tamX;
         int j = p.init(this) % tamX;
         salas[i][j].nuevoPersonaje(p, true);
     }
 
+    /**
+     * Devuelve un string con la estructura del mapa. Usado en Logger.
+     *
+     * @return String con dibujo del mapa
+     */
     public List<String> structureString() {
         List<String> structure = new List<>();
         String total = "";
@@ -303,6 +360,9 @@ public class Mapa {
         return structure;
     }
 
+    /**
+     * Inserta al mapa todos los personajes de la lista
+     */
     public void dumpPersonajes() {
         while (!personajes.estaVacia()) {
             insertarPersonaje(personajes.getFirst());
@@ -310,44 +370,71 @@ public class Mapa {
         }
     }
 
-    public void crearAtajos() {
+    /**
+     * Crea atajos en el mapa
+     */
+    private void crearAtajos() {
         Double a = (tamX * tamY) * 0.05; //Calculamos el 5% de las salas, es decir, las paredes a tirar
         Integer i = a.intValue();
+        int checked = 0;
         if (i < 1) {
-            i = 1; //Garantizamos que tiramos al menos una pared
+            i = 1; //Garantizamos que tiramos al menos una pared (para garantizar multiplicidad de caminos)
         }
-        List<Pared> paredes = new List<>();
-        generarParedes(paredes);
-        boolean tirable = false;
-        for (; i > 0 && !paredes.estaVacia(); i--) {
-            int pos = GenAleatorios.generarNumero(paredes.size());
-            Pared aux = paredes.get(pos);
-            paredes.delete(pos);
-            laberinto.nuevoArco(aux.getSala1().getID(), aux.getSala2().getID()); //Tiramos la pared
-            if (aux.horizontal()) { //Comprobamos que se podía tirar
-                if (aux.getSala1().getID() % tamX < tamX - 1) {
-                    int[] ids = {aux.getSala1().getID(), aux.getSala1().getID() + 1, aux.getSala2().getID(), aux.getSala2().getID() + 1};
-                    tirable = tirable || UtilityKnife.hayPared(laberinto, ids);
-                }
-                if (aux.getSala1().getID() % tamX > 0) {
-                    int[] ids = {aux.getSala1().getID(), aux.getSala1().getID() - 1, aux.getSala2().getID(), aux.getSala2().getID() - 1};
-                    tirable = tirable || UtilityKnife.hayPared(laberinto, ids);
+        Set<Integer> comprobadas = new LinkedHashSet<>(); //Salas ya comprobadas
+        boolean tirable;
+        for (; i > 0 && checked < tamX * tamY; i--) { //Pararemos, bien si ya creamos suficientes atajos, bien si no se puede
+            tirable = true; //Asumimos que podemos tirar la pared
+            int pos = GenAleatorios.generarNumero(tamX * tamY); //Tomamos sala al azar
+            if (!comprobadas.contains(pos)) { //Si no la hemos comprobado ya...
+                checked++;
+                comprobadas.add(pos);
+                Sala comprobar = salas[pos / tamX][pos % tamX];
+                Pared aux = comprobar.vecinoNoAccesible(this); //Tomamos el vecino no accesible
+                if (aux != null) { //Si existe...
+                    laberinto.nuevoArco(aux.getSala1().getID(), aux.getSala2().getID()); //Tiramos la pared
+                    if (aux.horizontal()) { //Comprobamos que se podía tirar
+                        if (aux.getSala1().getID() % tamX < tamX - 1) {
+                            int[] ids = {aux.getSala1().getID(), aux.getSala1().getID() + 1, aux.getSala2().getID(), aux.getSala2().getID() + 1};
+                            tirable = tirable && UtilityKnife.hayPared(laberinto, ids);
+                        }
+                        if (aux.getSala1().getID() % tamX > 0) {
+                            int[] ids = {aux.getSala1().getID(), aux.getSala1().getID() - 1, aux.getSala2().getID(), aux.getSala2().getID() - 1};
+                            tirable = tirable && UtilityKnife.hayPared(laberinto, ids);
+                        }
+                    } else {
+                        if (aux.getSala1().getID() / tamX < tamY - 1) {
+                            int[] ids = {aux.getSala1().getID(), aux.getSala1().getID() + tamX, aux.getSala2().getID(), aux.getSala2().getID() + tamX};
+                            tirable = tirable && UtilityKnife.hayPared(laberinto, ids);
+                        }
+                        if (aux.getSala1().getID() / tamX > 0) {
+                            int[] ids = {aux.getSala1().getID(), aux.getSala1().getID() - tamX, aux.getSala2().getID(), aux.getSala2().getID() - tamX};
+                            tirable = tirable && UtilityKnife.hayPared(laberinto, ids);
+                        }
+                    }
+                    if (!tirable) { //Si no se podía, la restauramos
+                        laberinto.borraArco(aux.getSala1().getID(), aux.getSala2().getID());
+                        i++; //No hemos tirado nada
+                    }
+                } else {
+                    i++; //Si no había vecino, no hemos tirado nada
                 }
             } else {
-                if (aux.getSala1().getID() / tamX < tamY - 1) {
-                    int[] ids = {aux.getSala1().getID(), aux.getSala1().getID() + tamX, aux.getSala2().getID(), aux.getSala2().getID() + tamX};
-                    tirable = tirable || UtilityKnife.hayPared(laberinto, ids);
-                }
-                if (aux.getSala1().getID() / tamX > 0) {
-                    int[] ids = {aux.getSala1().getID(), aux.getSala1().getID() - tamX, aux.getSala2().getID(), aux.getSala2().getID() - tamX};
-                    tirable = tirable || UtilityKnife.hayPared(laberinto, ids);
-                }
-            }
-            if (!tirable) { //Si no se podía, la restauramos
-                laberinto.borraArco(aux.getSala1().getID(), aux.getSala2().getID());
-                i++;
+                i++; //Si ya la comprobamos, no hemos tirado nada
             }
         }
+    }
+
+    /**
+     * Devuelve, concatenadas, las rutas de los personajes
+     *
+     * @return Rutas concatenadas
+     */
+    public String rutas() {
+        String sol = "";
+        for (int i = 0; i < personajes.size(); i++) {
+            sol = sol + personajes.get(i).ruta();
+        }
+        return sol;
     }
 
     /**
@@ -360,23 +447,23 @@ public class Mapa {
         Cargador cargador = new Cargador();
         Mapa m = null;
         try {
-            m = FicheroCarga.procesarFichero("inicio.txt", cargador);
+            m = FicheroCarga.procesarFichero("inicio.txt", cargador); //Cargamos el mapa de fichero
         } catch (IOException ex) {
             System.err.println("Error al cargar inicio.txt. Creando mapa por defecto...");
             try {
-                m = new Mapa(35, 6, 6, 4);
+                m = new Mapa(35, 6, 6, 4); //Mapa por defecto (el de EC2)
             } catch (MapSizeException exc) {
-                System.err.println("Esto no pasará");
+                System.err.println("Esto no pasará"); //La excepción se controla manualmente, aquí no se llegará
             }
         }
+        //Log del mapa
         Logger logger = new Logger();
         logger.logMapa(m);
-        m.crearAtajos();
-        logger.logMapa(m);
+        logger.logRutas(m);
         m.distribuirLlaves();
-        //m.dumpPersonajes();
-        int j = 1;
+
         //Creación de la lista de identificadores
+        int j = 1;
         Integer[] listaLlaves = new Integer[numLlaves];
         for (int i = 0; i < listaLlaves.length; i++) {
             listaLlaves[i] = j;
@@ -389,45 +476,20 @@ public class Mapa {
         for (int i = 0; i < listaLlaves.length; i++) {
             combLlaves[i] = new Llave(listaLlaves[i]);
         }
+
         //Creación, configuración e inserción de la puerta
         Puerta p = new Puerta();
         p.configurar(combLlaves);
         m.insertarPuerta(p);
-
-        //Creación de personajes
-//        Personaje[] personajes = new Personaje[4];
-//        personajes[0] = new Stark("Jonathan", 'J', 1);
-//        personajes[1] = new Targaryen("Speedwagon", 'S', 1);
-//        personajes[2] = new Lannister("Kars", 'K', 1);
-//        personajes[3] = new CaminanteBlanco("DIO", 'D', 1);
-//        
-//        Dir[] ruta = {Dir.S, Dir.S, Dir.E, Dir.E, Dir.N, Dir.E, Dir.N, Dir.E, Dir.S, Dir.E, Dir.S, Dir.S, Dir.O, Dir.S, Dir.E, Dir.S};
-//        personajes[0].setRuta(ruta);
-//        Dir[] ruta2 = {Dir.E, Dir.S, Dir.S, Dir.S, Dir.O, Dir.S, Dir.E, Dir.E, Dir.N, Dir.E, Dir.S, Dir.S, Dir.E, Dir.E};
-//        personajes[1].setRuta(ruta2);
-//        Dir[] ruta3 = {Dir.N, Dir.N, Dir.O, Dir.N, Dir.N, Dir.O, Dir.S, Dir.O, Dir.O, Dir.N, Dir.N, Dir.O, Dir.S, Dir.S, Dir.S, Dir.S, Dir.S, Dir.E, Dir.E, Dir.E, Dir.E, Dir.E};
-//        personajes[2].setRuta(ruta3);
-//        Dir[] ruta4 = {Dir.N, Dir.N, Dir.N, Dir.E, Dir.S, Dir.E, Dir.N, Dir.N, Dir.E, Dir.N, Dir.E, Dir.E, Dir.S, Dir.S, Dir.S, Dir.S, Dir.S};
-//        personajes[3].setRuta(ruta4);
-//
-//        //Inserción de personajes
-//        for (int i = 0; i < 4; i++) {
-//            m.insertarPersonaje(personajes[i]);
-//        }
-//
-//        m.mostrarMapa();
-//
-//        //Simulación
-//        boolean abierta = false;
-//        for (int i = 0; i < 50 && !abierta; i++) {
-//            m.simularTurno();
-//            try {
-//                abierta = m.puertaAbierta();
-//            } catch (NotKingsLandingException ex) {
-//                System.err.println("¿El mapa no fue inicializado?");
-//            }
-//        }
-//        m.mostrarMapa();
+        m.dumpPersonajes();
+        //Simulación
+        boolean abierta = false;
+        for (int i = 0; i < 50 && !abierta; i++) {
+            m.simularTurno();
+            logger.logInfoMapa(m);
+            abierta = m.puertaAbierta();
+        }
+        logger.endLogger();
     }
 
 }

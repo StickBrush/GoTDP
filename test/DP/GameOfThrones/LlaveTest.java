@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package DP.GameOfThrones;
 
 import org.junit.Test;
@@ -10,18 +5,20 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 
 /**
+ * Pruebas de la Llave
  *
- * @author Solaire
+ * @version 3.0
+ * @author Juan Luis Herrera González Curso: 2º (Grupo Grande A) EC3
  */
 public class LlaveTest {
-    
+
     private Llave instance;
 
     @Before
-    public void setUp(){
-        instance=new Llave(115);
+    public void setUp() {
+        instance = new Llave(115);
     }
-    
+
     /**
      * Test of identificar method, of class Llave.
      */
@@ -41,12 +38,12 @@ public class LlaveTest {
         int expResult = 0;
         int result = instance.compareTo(t);
         assertEquals(expResult, result);
-        t=new Llave(7);
-        result=instance.compareTo(t);
-        assertTrue(result>0);
-        t=new Llave(200);
-        result=instance.compareTo(t);
-        assertTrue(result<0);
+        t = new Llave(7);
+        result = instance.compareTo(t);
+        assertTrue(result > 0);
+        t = new Llave(200);
+        result = instance.compareTo(t);
+        assertTrue(result < 0);
     }
 
     /**
@@ -56,11 +53,11 @@ public class LlaveTest {
     public void testEquals() {
         Object t = null;
         assertFalse(instance.equals(t));
-        t=new Llave(0);
+        t = new Llave(0);
         assertFalse(instance.equals(t));
-        t=new Llave(115);
+        t = new Llave(115);
         assertTrue(instance.equals(t));
-        
+
     }
 
     /**
@@ -72,5 +69,5 @@ public class LlaveTest {
         String result = instance.toString();
         assertEquals(expResult, result);
     }
-    
+
 }

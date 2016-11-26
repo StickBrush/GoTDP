@@ -167,15 +167,17 @@ public class Sala {
     }
 
     /**
-     * Muestra a todos los personajes de la sala
+     * Devuelve concatenados los personajes de la sala
      *
      * @param turno Turno actual
+     * @return Personajes concatenados
      */
-    public void showPersonajes(int turno) {
+    public String showPersonajes(int turno) {
+        String sol="";
         if (this.tienePersonaje()) {
             Cola<Personaje> caux = new Cola<Personaje>();
             while (this.tienePersonaje()) {
-                System.out.println(personajes.primero().toString() + ":" + ID + ":" + turno);
+                sol=sol+"(" + personajes.primero().toString() + ":" + ID + ":" + turno +")\n";
                 caux.encolar(personajes.primero());
                 personajes.desencolar();
             }
@@ -184,6 +186,7 @@ public class Sala {
                 caux.desencolar();
             }
         }
+        return sol;
     }
     
     public void setKruskal(Integer nuevo){
@@ -217,5 +220,22 @@ public class Sala {
                 aux=aux+" ";
         }
         return aux;
+    }
+    
+    public Pared vecinoNoAccesible(Mapa m){
+        Pared p=null;
+        if(ID/m.getTamX()!=0 && !m.esAccesible(ID, ID-m.getTamX())){
+            p=new Pared(this, m.getSala((ID/m.getTamX())-1, ID%m.getTamX()));
+        }
+        if(ID/m.getTamX()!=m.getTamY()-1 && !m.esAccesible(ID, ID+m.getTamX())){
+            p=new Pared(this, m.getSala((ID/m.getTamX())+1, ID%m.getTamX()));
+        }
+        if(ID%m.getTamX()!=0 && !m.esAccesible(ID, ID-1)){
+            p=new Pared(this, m.getSala((ID/m.getTamX()), ID%m.getTamX()-1));
+        }
+        if(ID%m.getTamX()!=m.getTamX()-1 && !m.esAccesible(ID, ID+1)){
+            p=new Pared(this, m.getSala((ID/m.getTamX()), ID%m.getTamX()+1));
+        }
+        return p;
     }
 }

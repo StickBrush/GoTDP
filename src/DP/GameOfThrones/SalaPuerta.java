@@ -8,8 +8,8 @@ import DP.ED.Cola;
 /**
  * Implementación de la sala de la puerta
  *
- * @version 2.0
- * @author Juan Luis Herrera González Curso: 2º (Grupo Grande A) EC2
+ * @version 3.0
+ * @author Juan Luis Herrera González Curso: 2º (Grupo Grande A) EC3
  */
 public class SalaPuerta extends Sala {
 
@@ -31,9 +31,8 @@ public class SalaPuerta extends Sala {
      * Inserta una puerta en la sala
      *
      * @param p Puerta a insertar
-     * @throws NotKingsLandingException
      */
-    public void insertarPuerta(Puerta p){
+    public void insertarPuerta(Puerta p) {
         this.p = p;
     }
 
@@ -62,6 +61,14 @@ public class SalaPuerta extends Sala {
         }
     }
 
+    /**
+     * Simula un turno
+     *
+     * @param i Coordenada i de la sala
+     * @param j Coordenada j de la sala
+     * @param m Mapa que contiene la sala
+     * @param movidos Identificadores de personajes que ya se movieron
+     */
     @Override
     public void simular(int i, int j, Mapa m, Arbol<Character> movidos) {
         Cola<Personaje> cAux = new Cola<>();
@@ -73,9 +80,9 @@ public class SalaPuerta extends Sala {
                 } catch (MovementException ex) {
                     cAux.encolar(p);
                 }
-            }
-            else
+            } else {
                 cAux.encolar(p);
+            }
         }
         for (Personaje p; !cAux.vacia(); cAux.desencolar()) {
             p = cAux.primero();

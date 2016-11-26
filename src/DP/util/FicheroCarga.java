@@ -28,14 +28,15 @@ public class FicheroCarga {
     private static BufferedReader bufferIn;
 
     /**
-     * Metodo para procesar el fichero. Sin excepciones
+     * Metodo para procesar el fichero
      *
-     * @param nombreFichero
-     * @param cargador
-     * @return 
-     * @throws java.io.FileNotFoundException
+     * @param nombreFichero Nombre del fichero a procesar
+     * @param cargador Cargador usado para procesar
+     * @return Mapa creado con los personajes en la lista
+     * @throws java.io.FileNotFoundException No se encontró archivo
+     * @throws java.io.IOException Error de E/S
      */
-    public static Mapa procesarFichero(String nombreFichero, Cargador cargador) throws FileNotFoundException, IOException {
+    public static Mapa procesarFichero(String nombreFichero, Cargador cargador) throws FileNotFoundException, IOException{
         //**String vCampos[]=new String[MAXCAMPOS];
         List<String> vCampos = new ArrayList<String>();
         List<Personaje> personajes = new ArrayList<>();

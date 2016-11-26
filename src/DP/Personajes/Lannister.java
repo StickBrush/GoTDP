@@ -8,8 +8,8 @@ import DP.GameOfThrones.Sala;
 /**
  * Implementación de la clase Lannister
  *
- * @version 2.0
- * @author Juan Luis Herrera González Curso: 2º (Grupo Grande A) EC2
+ * @version 3.0
+ * @author Juan Luis Herrera González Curso: 2º (Grupo Grande A) EC3
  */
 public class Lannister extends Defensor {
         /**
@@ -42,29 +42,25 @@ public class Lannister extends Defensor {
             this.llaves.addData(llavesGen[i]);
         }
     }
-    
+    /**
+     * Devuelve la sala de inicio del Lannister
+     * @param m Mapa que contiene al Lannister
+     * @return Sala de inicio del Lannister
+     */
     @Override
     public Integer init(Mapa m) {
         return (m.getTamX()*m.getTamY())-1;
     }
     
-        @Override
+    /**
+     * Interacción Lannister-sala
+     * @param s Sala con la que interactuar
+     */
+    @Override
     public void interactuarSala(Sala s) {
         if(!llaves.isEmpty()){
             s.nuevaLlave(llaves.getTop());
             llaves.removeData();
-        }
-    }
-    /**
-     * Devuelve concatenadas todas las llaves
-     *
-     * @return Todas las llaves concatenadas
-     */
-    public String getLlaves() {
-        if (llaves != null) {
-            return getAllLlaves("");
-        } else {
-            return "";
         }
     }
 
@@ -84,7 +80,10 @@ public class Lannister extends Defensor {
         }
         return aux;
     }
-    
+    /**
+     * Método toString del Lannister
+     * @return Lannister casteado a String
+     */
         @Override
         public String toString(){
         String aux="";

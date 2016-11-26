@@ -5,8 +5,8 @@ import DP.ED.Arbol;
 /**
  * Implementación de la puerta
  *
- * @version 2.0
- * @author Juan Luis Herrera González Curso: 2º (Grupo Grande A) EC2
+ * @version 3.0
+ * @author Juan Luis Herrera González Curso: 2º (Grupo Grande A) EC3
  */
 public class Puerta {
 

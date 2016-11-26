@@ -3,8 +3,8 @@ package DP.Personajes;
 /**
  * Implementación de la clase Targaryen
  *
- * @version 2.0
- * @author Juan Luis Herrera González Curso: 2º (Grupo Grande A) EC2
+ * @version 3.0
+ * @author Juan Luis Herrera González Curso: 2º (Grupo Grande A) EC3
  */
 public class Targaryen extends Atacante {
 

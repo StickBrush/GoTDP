@@ -1,6 +1,7 @@
 package DP.util;
 
 import DP.Exceptions.MapSizeException;
+import DP.GameOfThrones.Dir;
 import java.util.List;
 import DP.GameOfThrones.Mapa;
 import DP.Personajes.*;
@@ -29,7 +30,6 @@ public class Cargador {
     /**
      * constructor parametrizado
      *
-     * @param e referencia a la instancia del patrón Singleton
      */
     public Cargador() {
         mapeo = new DatoMapeo[NUMELTOSCONF];
@@ -68,7 +68,7 @@ public class Cargador {
      * @param numCampos número de atributos que tendrá la instancia
      * @param vCampos array que contiene los valores de cada atributo de la
      * instancia
-     * @return
+     * @return Objeto creado
      */
     public Object crear(String elto, int numCampos, List<String> vCampos) {
         //Si existe elemento y el n�mero de campos es correcto, procesarlo... si no, error
@@ -102,10 +102,11 @@ public class Cargador {
     }
 
     /**
-     * método que crea una instancia de la clase Planta
+     * método que crea una instancia de la clase Mapa
      *
      * @param numCampos número de atributos que tendrá la instancia
      * @param vCampos array que contiene los valores de cada atributo
+     * @return Mapa creado
      */
     private Mapa crearMapa(int numCampos, List<String> vCampos) {
         Mapa m = null;
@@ -128,9 +129,13 @@ public class Cargador {
      *
      * @param numCampos número de atributos que tendrá la instancia
      * @param vCampos array que contiene los valores de cada atributo
+     * @return Stark creado
      */
     private Stark crearStark(int numCampos, List<String> vCampos) {
-        return new Stark(vCampos.get(1), (char) vCampos.get(2).charAt(0), Integer.parseInt(vCampos.get(3)));
+        Stark s = new Stark(vCampos.get(1), (char) vCampos.get(2).charAt(0), Integer.parseInt(vCampos.get(3)));
+        Dir[] ruta = {Dir.S, Dir.S, Dir.E, Dir.E, Dir.N, Dir.E, Dir.N, Dir.E, Dir.S, Dir.E, Dir.S, Dir.S, Dir.O, Dir.S, Dir.E, Dir.S};
+        s.setRuta(ruta);
+        return s;
     }
 
     /**
@@ -138,9 +143,13 @@ public class Cargador {
      *
      * @param numCampos número de atributos que tendrá la instancia
      * @param vCampos array que contiene los valores de cada atributo
+     * @return Targaryen creado
      */
     private Targaryen crearTargaryen(int numCampos, List<String> vCampos) {
-        return new Targaryen(vCampos.get(1), (char) vCampos.get(2).charAt(0), Integer.parseInt(vCampos.get(3)));
+        Targaryen t = new Targaryen(vCampos.get(1), (char) vCampos.get(2).charAt(0), Integer.parseInt(vCampos.get(3)));
+        Dir[] ruta = {Dir.E, Dir.S, Dir.S, Dir.S, Dir.O, Dir.S, Dir.E, Dir.E, Dir.N, Dir.E, Dir.S, Dir.S, Dir.E, Dir.E};
+        t.setRuta(ruta);
+        return t;
     }
 
     /**
@@ -148,19 +157,27 @@ public class Cargador {
      *
      * @param numCampos número de atributos que tendrá la instancia
      * @param vCampos array que contiene los valores de cada atributo
+     * @return Lannister creado
      */
     private Lannister crearLannister(int numCampos, List<String> vCampos) {
-        return new Lannister(vCampos.get(1), (char) vCampos.get(2).charAt(0), Integer.parseInt(vCampos.get(3)));
+        Lannister l = new Lannister(vCampos.get(1), (char) vCampos.get(2).charAt(0), Integer.parseInt(vCampos.get(3)));
+        Dir[] ruta = {Dir.N, Dir.N, Dir.O, Dir.N, Dir.N, Dir.O, Dir.S, Dir.O, Dir.O, Dir.N, Dir.N, Dir.O, Dir.S, Dir.S, Dir.S, Dir.S, Dir.S, Dir.E, Dir.E, Dir.E, Dir.E, Dir.E};
+        l.setRuta(ruta);
+        return l;
     }
 
     /**
-     * método que crea una instancia de la clase White Walker
+     * método que crea una instancia de la clase CaminanteBlanco
      *
      * @param numCampos número de atributos que tendrá la instancia
      * @param vCampos array que contiene los valores de cada atributo
+     * @return Caminante creado
      */
     private CaminanteBlanco crearCaminante(int numCampos, List<String> vCampos) {
-        return new CaminanteBlanco(vCampos.get(1), (char) vCampos.get(2).charAt(0), Integer.parseInt(vCampos.get(3)));
+        CaminanteBlanco c = new CaminanteBlanco(vCampos.get(1), (char) vCampos.get(2).charAt(0), Integer.parseInt(vCampos.get(3)));
+        Dir[] ruta = {Dir.N, Dir.N, Dir.N, Dir.E, Dir.S, Dir.E, Dir.N, Dir.N, Dir.E, Dir.N, Dir.E, Dir.E, Dir.S, Dir.S, Dir.S, Dir.S, Dir.S};
+        c.setRuta(ruta);
+        return c;
     }
 
 }

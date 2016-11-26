@@ -1,5 +1,5 @@
 --Mapa
-MAPA#6#6#35#4#
+MAPA#3#3#8#4#
 --Personajes de la simulación
 LANNISTER#Tyrion#L#2#
 STARK#Eddard#S#1#

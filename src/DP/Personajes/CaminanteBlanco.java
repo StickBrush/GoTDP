@@ -7,8 +7,8 @@ import DP.GameOfThrones.Sala;
 /**
  * Implementación del Caminante Blanco
  *
- * @version 2.0
- * @author Juan Luis Herrera González Curso: 2º (Grupo Grande A) EC2
+ * @version 3.0
+ * @author Juan Luis Herrera González Curso: 2º (Grupo Grande A) EC3
  */
 public class CaminanteBlanco extends Defensor {
 
@@ -40,15 +40,6 @@ public class CaminanteBlanco extends Defensor {
     }
 
     /**
-     * Devuelve un string con los identificadores de los personajes capturados
-     *
-     * @return Peronajes capturados
-     */
-    public String getCapturados() {
-        return capturados("");
-    }
-
-    /**
      * Método privado que devuelve todos los capturados concatenados
      *
      * @param aux Parámetro para recursividad
@@ -65,6 +56,11 @@ public class CaminanteBlanco extends Defensor {
         return aux;
     }
 
+    /**
+     * Interacción caminante-sala
+     *
+     * @param s Sala con la que interactuar
+     */
     @Override
     public void interactuarSala(Sala s) {
         if (s.tienePersonaje()) {
@@ -73,11 +69,22 @@ public class CaminanteBlanco extends Defensor {
         }
     }
 
+    /**
+     * Devuelve la sala de inicio del caminante
+     *
+     * @param m Mapa que contiene al caminante
+     * @return Sala de inicio del caminante
+     */
     @Override
     public Integer init(Mapa m) {
         return (m.getTamY() - 1) * m.getTamX();
     }
 
+    /**
+     * Método toString del caminante
+     *
+     * @return CaminanteBlanco casteado a String
+     */
     @Override
     public String toString() {
         String aux = capturados("");

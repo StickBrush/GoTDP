@@ -9,8 +9,8 @@ import DP.GameOfThrones.Sala;
 /**
  * Implementación de la clase Personaje
  *
- * @version 2.0
- * @author Juan Luis Herrera González Curso: 2º (Grupo Grande A) EC2
+ * @version 3.0
+ * @author Juan Luis Herrera González Curso: 2º (Grupo Grande A) EC3
  */
 public abstract class Personaje {
 
@@ -93,6 +93,15 @@ public abstract class Personaje {
         }
     }
 
+    /**
+     * Mueve al personaje
+     *
+     * @param m Mapa que contiene al personaje
+     * @param i Coordenada i de la sala en la que está el personaje
+     * @param j Coordenada j de la sala en la que está el personaje
+     * @param turno Turno actual
+     * @throws MovementException El personaje no se pudo mover.
+     */
     public void mover(Mapa m, int i, int j, int turno) throws MovementException {
         if (!ruta.vacia() && this.turno <= turno) {
             Dir o = ruta.primero();
@@ -132,14 +141,75 @@ public abstract class Personaje {
         }
     }
 
+    /**
+     * Interacción personaje-sala
+     *
+     * @param s Sala con la que interactuar
+     */
     public abstract void interactuarSala(Sala s);
 
+    /**
+     * Interacción personaje-puerta
+     *
+     * @param m Mapa que contiene al personaje
+     * @param i Coordenada i de la sala de la puerta
+     * @param j Coordenada j de la sala de la puerta
+     * @throws MovementException El personaje no se pudo mover
+     */
     public abstract void interactuarPuerta(Mapa m, int i, int j) throws MovementException;
 
+    /**
+     * Devuelve la sala de inicio del personaje
+     *
+     * @param m Mapa que contiene al personaje
+     * @return Sala de inicio del personaje
+     */
     public abstract Integer init(Mapa m);
 
+    /**
+     * Método toString del personaje
+     *
+     * @return Personaje casteado a String
+     */
+    @Override
     public String toString() {
         String aux = tipo + ":" + ID;
         return aux;
+    }
+
+    /**
+     * Devuelve la ruta del personaje como string
+     *
+     * @return Ruta casteada a String
+     */
+    public String ruta() {
+        Cola<Dir> aux = new Cola<>();
+        String sol = "(ruta:" + this.ID;
+        Dir dAux;
+        while (!ruta.vacia()) {
+            dAux = ruta.primero();
+            ruta.desencolar();
+            aux.encolar(dAux);
+            switch (dAux) {
+                case N:
+                    sol = sol + "N ";
+                    break;
+                case S:
+                    sol = sol + "S ";
+                    break;
+                case E:
+                    sol = sol + "E ";
+                    break;
+                case O:
+                    sol = sol + "O ";
+                    break;
+            }
+        }
+        while (!aux.vacia()) {
+            dAux = aux.primero();
+            ruta.encolar(dAux);
+        }
+        sol = sol + ")\n";
+        return sol;
     }
 }

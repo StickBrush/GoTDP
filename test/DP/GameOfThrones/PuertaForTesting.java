@@ -1,13 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package DP.GameOfThrones;
 
 /**
- *
- * @author Solaire
+ * Puerta para pruebas
+ * @version 3.0
+ * @author Juan Luis Herrera González Curso: 2º (Grupo Grande A) EC3
  */
 public class PuertaForTesting extends Puerta {
     public PuertaForTesting(){

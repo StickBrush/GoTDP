@@ -9,8 +9,8 @@ import DP.GameOfThrones.Sala;
 /**
  * Implementación de los atacantes
  *
- * @version 2.0
- * @author Juan Luis Herrera González Curso: 2º (Grupo Grande A) EC2
+ * @version 3.0
+ * @author Juan Luis Herrera González Curso: 2º (Grupo Grande A) EC3
  */
 public abstract class Atacante extends Personaje {
 
@@ -32,6 +32,15 @@ public abstract class Atacante extends Personaje {
         llaves = new Stack<>();
     }
 
+    /**
+     * Interacción atacante-puerta
+     *
+     * @param m Mapa que contiene al personaje
+     * @param i Coordenada i de la sala de la puerta
+     * @param j Coordenada j de la sala de la puerta
+     * @throws MovementException El personaje no se pudo mover. Expection
+     * handling, se eliminará
+     */
     @Override
     public void interactuarPuerta(Mapa m, int i, int j) throws MovementException {
         if (!this.llaves.isEmpty()) {
@@ -41,6 +50,11 @@ public abstract class Atacante extends Personaje {
         throw new MovementException();
     }
 
+    /**
+     * Interacción atacante-sala
+     *
+     * @param s Sala con la que interactuar
+     */
     @Override
     public void interactuarSala(Sala s) {
         Llave aux = s.getLlave();
@@ -49,22 +63,15 @@ public abstract class Atacante extends Personaje {
         }
     }
 
+    /**
+     * ID de la sala de inicio
+     *
+     * @param m Mapa que contiene al personaje
+     * @return ID de la sala de inicio del atacante
+     */
     @Override
     public Integer init(Mapa m) {
         return 0;
-    }
-
-    /**
-     * Devuelve concatenadas todas las llaves
-     *
-     * @return Todas las llaves concatenadas
-     */
-    public String getLlaves() {
-        if (llaves != null) {
-            return getAllLlaves("");
-        } else {
-            return "";
-        }
     }
 
     /**
@@ -84,6 +91,11 @@ public abstract class Atacante extends Personaje {
         return aux;
     }
 
+    /**
+     * Método toString del atacante
+     *
+     * @return Atacante casteado a String
+     */
     @Override
     public String toString() {
         String aux = "";
