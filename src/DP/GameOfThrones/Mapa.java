@@ -225,7 +225,10 @@ public class Mapa {
         } else {
             sol = sol + ("(puerta:cerrada:" + profComb + ":" + (((SalaPuerta) salas[iPuerta][jPuerta]).getPuerta().llavesCerr()) + ":" + (((SalaPuerta) salas[iPuerta][jPuerta]).getPuerta().llavesProb()) + ")") + "\n";
         }
-        sol = sol + structureString();
+        List<String> structure = structureString();
+        for (int i = 0; i < structure.size(); i++) {
+            sol = sol + structure.get(i) + "\n";
+        }
         for (int i = 0; i < tamY; i++) {
             for (int j = 0; j < tamX; j++) {
                 if (salas[i][j].tieneLlave()) {
@@ -364,9 +367,9 @@ public class Mapa {
      * Inserta al mapa todos los personajes de la lista
      */
     public void dumpPersonajes() {
-        while (!personajes.estaVacia()) {
-            insertarPersonaje(personajes.getFirst());
-            personajes.delete(0);
+        for (int i = 0; i < personajes.size(); i++) {
+            Personaje p = personajes.get(i);
+            this.insertarPersonaje(p);
         }
     }
 
@@ -438,7 +441,7 @@ public class Mapa {
     }
 
     /**
-     * Programa principal - EC2
+     * Programa principal - EC3
      *
      * @param args Argumentos de línea de comandos
      */

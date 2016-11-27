@@ -208,6 +208,7 @@ public abstract class Personaje {
         while (!aux.vacia()) {
             dAux = aux.primero();
             ruta.encolar(dAux);
+            aux.desencolar();
         }
         sol = sol + ")\n";
         return sol;
