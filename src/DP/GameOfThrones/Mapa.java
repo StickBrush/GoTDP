@@ -449,8 +449,13 @@ public class Mapa {
         int numLlaves = 15;
         Cargador cargador = new Cargador();
         Mapa m = null;
+        String ficheroInicio;
+        if(args.length>0)
+            ficheroInicio=args[0];
+        else
+            ficheroInicio="inicio.txt";
         try {
-            m = FicheroCarga.procesarFichero("inicio.txt", cargador); //Cargamos el mapa de fichero
+            m = FicheroCarga.procesarFichero(ficheroInicio, cargador); //Cargamos el mapa de fichero
         } catch (IOException ex) {
             System.err.println("Error al cargar inicio.txt. Creando mapa por defecto...");
             try {
