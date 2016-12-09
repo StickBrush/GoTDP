@@ -61,6 +61,8 @@ public class Mapa {
      */
     private List<Personaje> personajes;
 
+    private static Mapa instance=null;
+    
     /**
      * Constructor parametrizado de Mapa
      *
@@ -71,7 +73,7 @@ public class Mapa {
      * @throws DP.Exceptions.MapSizeException Se intentó crear el mapa con
      * dimensiones no válidas
      */
-    public Mapa(int salaPuerta, int X, int Y, int profComb) throws MapSizeException {
+    private Mapa(int salaPuerta, int X, int Y, int profComb) throws MapSizeException {
         personajes = new List<>();
         laberinto = new Grafo();
         tamX = X;
@@ -102,6 +104,12 @@ public class Mapa {
         generarParedes(paredes);
         Kruskal(paredes);
         crearAtajos();
+    }
+    
+    public static Mapa getInstance(int salaPuerta, int X, int Y, int profComb) throws MapSizeException{
+        if(instance==null)
+            instance=new Mapa(salaPuerta, X, Y, profComb);
+        return instance;
     }
 
     /**
@@ -465,7 +473,7 @@ public class Mapa {
             }
         }
         //Log del mapa
-        Logger logger = new Logger();
+        Logger logger = Logger.getInstance();
         logger.logMapa(m);
         logger.logRutas(m);
         m.distribuirLlaves();
@@ -486,7 +494,7 @@ public class Mapa {
         }
 
         //Creación, configuración e inserción de la puerta
-        Puerta p = new Puerta();
+        Puerta p = Puerta.getInstance();
         p.configurar(combLlaves);
         m.insertarPuerta(p);
         m.dumpPersonajes();

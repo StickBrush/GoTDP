@@ -19,7 +19,7 @@ public class PuertaTest {
 
     @Before
     public void setUp() {
-        instance = new PuertaForTesting();
+        instance = PuertaForTesting.getInstance();
     }
 
     /**

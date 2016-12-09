@@ -31,13 +31,20 @@ public class Puerta {
      */
     protected int altura;
 
+    private static Puerta instance=null;
     /**
      * Constructor parametrizado de Puerta
      */
-    public Puerta() {
+    protected Puerta() {
         comb = new Arbol<Llave>();
         probadas = new Arbol<Llave>();
         abierta = false;
+    }
+    
+    public static Puerta getInstance(){
+        if(instance==null)
+            instance=new Puerta();
+        return instance;
     }
 
     /**

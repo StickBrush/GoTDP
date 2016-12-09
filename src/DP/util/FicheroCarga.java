@@ -64,7 +64,7 @@ public class FicheroCarga {
             System.err.println("ERROR:No se dieron parámetros para el mapa");
             System.err.println("Creando mapa por defecto...");
             try {
-                m = new Mapa(35, 6, 6, 4);
+                m = Mapa.getInstance(35, 6, 6, 4);
             } catch (MapSizeException w) {
                 System.err.println("Esto no pasará");
             }

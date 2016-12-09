@@ -22,11 +22,13 @@ public class Logger {
      * Estado del logger
      */
     private boolean funcional;
+    
+    private static Logger instance=null;
 
     /**
      * Constructor por defecto del Logger
      */
-    public Logger() {
+    private Logger() {
         funcional = true;
         try {
             logger = new BufferedWriter(new FileWriter("registro.log"));
@@ -34,6 +36,12 @@ public class Logger {
             System.err.println("IOException en Logger. Se continuará sin log.");
             funcional = false;
         }
+    }
+    
+    public static Logger getInstance(){
+        if(instance==null)
+            instance=new Logger();
+        return instance;
     }
 
     /**
