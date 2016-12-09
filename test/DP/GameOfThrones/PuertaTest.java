@@ -19,6 +19,7 @@ public class PuertaTest {
 
     @Before
     public void setUp() {
+        PuertaForTesting.forceNull();
         instance = PuertaForTesting.getInstance();
     }
 

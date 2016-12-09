@@ -19,6 +19,10 @@ public class PuertaForTesting extends Puerta {
         return instance;
     }
     
+    public static void forceNull(){
+        instance=null;
+    }
+    
     public int getAltura(){
         return this.altura;
     }
