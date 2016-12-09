@@ -29,7 +29,7 @@ public abstract class Personaje {
     /**
      * Ruta a seguir por el personaje
      */
-    private Cola<Dir> ruta;
+    protected Cola<Dir> ruta;
     /**
      * Número de llaves del personaje
      */
@@ -92,6 +92,8 @@ public abstract class Personaje {
             ruta.encolar(vRuta[i]);
         }
     }
+    
+    public abstract void autoRuta(Mapa m);
 
     /**
      * Mueve al personaje

@@ -1,5 +1,6 @@
 package DP.ED;
 
+import DP.GameOfThrones.Dir;
 import java.util.LinkedHashSet;
 import java.util.Set;
 import java.util.Queue;
@@ -351,7 +352,7 @@ public class Grafo {
      *
      * @param origen es el primer nodo
      * @param destino es el segundo nodo
-     * @return No retorna ningun valor
+     * @return Siguiente nodo
      */
     public int siguiente(int origen, int destino) {
         int sig = -1; // Si no hay camino posible
@@ -426,6 +427,42 @@ public class Grafo {
                 prof(x, visitados);
             }
         }
+    }
+
+    public Cola<Dir> movStark(Integer kingsLanding) {
+        return UtilityKnife.integerToDir(profMenor(0, new LinkedHashSet<Integer>(), kingsLanding));
+    }
+
+    private Set<Integer> profMenor(int origen, Set<Integer> visitados, int destino) {
+        Set<Integer> Ady = new LinkedHashSet<>();
+        int x;
+        visitados.add(origen);
+        if (origen == destino) {
+            return visitados;
+        } else {
+            this.adyacentes(origen, Ady);
+            while (!Ady.isEmpty()) {
+                x = Ady.iterator().next();
+                Ady.remove(x);
+                if (!visitados.contains(x)) {
+                    Set<Integer> sol = profMenor(x, visitados, destino);
+                    if (sol != null) {
+                        return sol;
+                    }
+                }
+            }
+        }
+        visitados.remove(origen);
+        return null;
+    }
+
+    public Set<Integer> caminoMinimo(int origen, int destino) {
+        Set<Integer> res = new LinkedHashSet<>();
+        while (origen != destino) {
+            res.add(origen);
+            origen = this.siguiente(origen, destino);
+        }
+        return res;
     }
 
     /**

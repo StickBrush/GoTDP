@@ -1,9 +1,11 @@
 package DP.util;
 
+import DP.ED.Cola;
 import DP.ED.Grafo;
 import java.util.Set;
 import java.util.Iterator;
 import DP.ED.List;
+import DP.GameOfThrones.Dir;
 import java.util.LinkedHashSet;
 import java.util.Arrays;
 
@@ -124,5 +126,25 @@ public abstract class UtilityKnife {
         pared = pared || !g.adyacente(paredes[1], paredes[3]);
         pared = pared || !g.adyacente(paredes[2], paredes[3]);
         return pared;
+    }
+
+    public static Cola<Dir> integerToDir(Set<Integer> s) {
+        Cola<Dir> result = new Cola<>();
+        Iterator<Integer> i = s.iterator();
+        Integer last = i.next();
+        while (i.hasNext()) {
+            Integer act = i.next();
+            if (last - act == -1) {
+                result.encolar(Dir.E);
+            } else if (last - act == 1) {
+                result.encolar(Dir.O);
+            } else if (last - act < -1) {
+                result.encolar(Dir.S);
+            } else {
+                result.encolar(Dir.N);
+            }
+            last=act;
+        }
+        return result;
     }
 }

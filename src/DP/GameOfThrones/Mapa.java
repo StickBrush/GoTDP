@@ -194,6 +194,9 @@ public class Mapa {
         return laberinto.adyacente(IDS1, IDS2);
     }
 
+    public Grafo getLaberinto(){
+        return laberinto;
+    }
     public void distribuirLlaves() {
         int numLlavesGenerar = 45;
         List<Integer> salasLlaves = UtilityKnife.sortByFrequence(iPuerta * tamX + jPuerta, laberinto, tamX * tamY);
@@ -218,13 +221,16 @@ public class Mapa {
         }
     }
 
+    public Integer getKingsLanding(){
+        return (iPuerta*tamX + jPuerta);
+    }
     /**
      * Devuelve la información del Mapa
      *
      * @return Información del Mapa
      */
     public String infoMapa() {
-        int SalaPuerta = iPuerta * tamY + tamX;
+        int SalaPuerta = iPuerta * tamX + jPuerta;
         String sol;
         sol = "(turno:" + turno + ")" + "\n";
         sol = sol + "(mapa:" + SalaPuerta + ")" + "\n";

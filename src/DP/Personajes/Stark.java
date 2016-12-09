@@ -1,5 +1,7 @@
 package DP.Personajes;
 
+import DP.GameOfThrones.Mapa;
+
 /**
  * Implementación de la clase Stark
  *
@@ -17,6 +19,11 @@ public class Stark extends Atacante {
      */
     public Stark(String nombre, char ID, int turno) {
         super(nombre, "Stark", ID, turno);
+    }
+
+    @Override
+    public void autoRuta(Mapa m) {
+        ruta=m.getLaberinto().movStark(m.getKingsLanding());
     }
 
 }

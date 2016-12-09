@@ -1,5 +1,7 @@
 package DP.Personajes;
 
+import DP.GameOfThrones.Mapa;
+
 /**
  * Implementación de la clase Targaryen
  *
@@ -17,6 +19,11 @@ public class Targaryen extends Atacante {
      */
     public Targaryen(String nombre, char ID,int turno) {
         super(nombre, "Targaryen", ID, turno);
+    }
+
+    @Override
+    public void autoRuta(Mapa m) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

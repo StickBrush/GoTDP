@@ -1,9 +1,13 @@
 package DP.Personajes;
 
+import DP.ED.Cola;
 import DP.ED.Stack;
+import DP.Exceptions.MovementException;
+import DP.GameOfThrones.Dir;
 import DP.GameOfThrones.Llave;
 import DP.GameOfThrones.Mapa;
 import DP.GameOfThrones.Sala;
+import DP.util.UtilityKnife;
 
 /**
  * Implementación de la clase Lannister
@@ -91,5 +95,31 @@ public class Lannister extends Defensor {
             aux=getAllLlaves("");
         aux = tipo + ":" + ID +":" + aux;
         return aux;
+    }
+
+    @Override
+    public void autoRuta(Mapa m) {
+        Cola<Dir>[] subrutas= new Cola[4];
+        Integer SE=m.getTamX()*m.getTamY()-1;
+        Integer NE=m.getTamX()-1;
+        Integer NO=0;
+        Integer SO=(m.getTamY()-1)*m.getTamX();
+        subrutas[0]=UtilityKnife.integerToDir(m.getLaberinto().caminoMinimo(SE, NE));
+        subrutas[1]=UtilityKnife.integerToDir(m.getLaberinto().caminoMinimo(NE, NO));
+        subrutas[2]=UtilityKnife.integerToDir(m.getLaberinto().caminoMinimo(NO, SO));
+        subrutas[3]=UtilityKnife.integerToDir(m.getLaberinto().caminoMinimo(SO, SE));
+        for(Cola<Dir> aux : subrutas){
+            while(!aux.vacia()){
+                ruta.encolar(aux.primero());
+                aux.desencolar();
+            }
+        }
+    }
+    
+    @Override
+    public void mover(Mapa m, int i, int j, int turno) throws MovementException {
+        Dir x=ruta.primero();
+        super.mover(m, i, j, turno);
+        ruta.encolar(x);
     }
 }
