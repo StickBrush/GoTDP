@@ -164,13 +164,5 @@ public class SalaTest {
         instance.setKruskal(5);
         assertEquals(Integer.valueOf(5), instance.getKruskal());
     }
-
-    /**
-     * Test of vecinoNoAccesible method, of class Sala.
-     */
-    @Test
-    public void testVecinoNoAccesible() {
-        fail("TODO");
-    }
     
 }

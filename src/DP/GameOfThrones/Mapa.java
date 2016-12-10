@@ -61,7 +61,7 @@ public class Mapa {
      */
     private List<Personaje> personajes;
 
-    private static Mapa instance=null;
+    protected static Mapa instance=null;
     
     /**
      * Constructor parametrizado de Mapa
@@ -104,6 +104,10 @@ public class Mapa {
         generarParedes(paredes);
         Kruskal(paredes);
         crearAtajos();
+    }
+    
+    protected Mapa(){
+        //Solo para pruebas
     }
     
     public static Mapa getInstance(int salaPuerta, int X, int Y, int profComb) throws MapSizeException{

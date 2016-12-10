@@ -235,13 +235,13 @@ public class Sala {
         if (ID / m.getTamX() != 0 && !m.esAccesible(ID, ID - m.getTamX())) {
             p = new Pared(this, m.getSala((ID / m.getTamX()) - 1, ID % m.getTamX()));
         }
-        if (ID / m.getTamX() != m.getTamY() - 1 && !m.esAccesible(ID, ID + m.getTamX())) {
+        if (ID / m.getTamX() != m.getTamY() - 1 && !m.esAccesible(ID, ID + m.getTamX()) && p==null) {
             p = new Pared(this, m.getSala((ID / m.getTamX()) + 1, ID % m.getTamX()));
         }
-        if (ID % m.getTamX() != 0 && !m.esAccesible(ID, ID - 1)) {
+        if (ID % m.getTamX() != 0 && !m.esAccesible(ID, ID - 1) && p==null) {
             p = new Pared(this, m.getSala((ID / m.getTamX()), ID % m.getTamX() - 1));
         }
-        if (ID % m.getTamX() != m.getTamX() - 1 && !m.esAccesible(ID, ID + 1)) {
+        if (ID % m.getTamX() != m.getTamX() - 1 && !m.esAccesible(ID, ID + 1) && p==null) {
             p = new Pared(this, m.getSala((ID / m.getTamX()), ID % m.getTamX() + 1));
         }
         return p;
