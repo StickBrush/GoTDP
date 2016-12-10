@@ -92,7 +92,7 @@ public abstract class Personaje {
             ruta.encolar(vRuta[i]);
         }
     }
-    
+
     public abstract void autoRuta(Mapa m);
 
     /**
@@ -102,9 +102,10 @@ public abstract class Personaje {
      * @param i Coordenada i de la sala en la que está el personaje
      * @param j Coordenada j de la sala en la que está el personaje
      * @param turno Turno actual
+     * @return True si el personaje se movió, false si no
      * @throws MovementException El personaje no se pudo mover.
      */
-    public void mover(Mapa m, int i, int j, int turno) throws MovementException {
+    public boolean mover(Mapa m, int i, int j, int turno) throws MovementException {
         if (!ruta.vacia() && this.turno <= turno) {
             Dir o = ruta.primero();
             ruta.desencolar();
@@ -112,35 +113,44 @@ public abstract class Personaje {
                 case N:
                     if (i - 1 > 0 && m.esAccesible(i * m.getTamX() + j, (i - 1) * m.getTamX() + j)) {
                         m.getSala(i - 1, j).nuevoPersonaje(this, false);
-                    } else {
+                        return true;
+                    } else if (i - 1 < 0) {
                         throw new MovementException();
+                    } else {
+                        return false;
                     }
-                    break;
                 case S:
                     if (i + 1 < m.getTamY() && m.esAccesible(i * m.getTamX() + j, (i + 1) * m.getTamX() + j)) {
                         m.getSala(i + 1, j).nuevoPersonaje(this, false);
-                    } else {
+                        return true;
+                    } else if (i + 1 > m.getTamY()) {
                         throw new MovementException();
+                    } else {
+                        return false;
                     }
-                    break;
                 case O:
                     if (j - 1 > 0 && m.esAccesible(i * m.getTamX() + j, i * m.getTamX() + j - 1)) {
                         m.getSala(i, j - 1).nuevoPersonaje(this, false);
-                    } else {
+                        return true;
+                    } else if (j - 1 < 0) {
                         throw new MovementException();
+                    } else {
+                        return false;
                     }
-                    break;
                 case E:
                     if (j + 1 < m.getTamX() && m.esAccesible(i * m.getTamX() + j, i * m.getTamX() + j + 1)) {
                         m.getSala(i, j + 1).nuevoPersonaje(this, false);
-                    } else {
+                        return true;
+                    } else if (j + 1 > m.getTamX()) {
                         throw new MovementException();
+                    } else {
+                        return false;
                     }
-                    break;
             }
         } else {
-            throw new MovementException();
+            return false;
         }
+        return false;
     }
 
     /**
@@ -157,8 +167,9 @@ public abstract class Personaje {
      * @param i Coordenada i de la sala de la puerta
      * @param j Coordenada j de la sala de la puerta
      * @throws MovementException El personaje no se pudo mover
+     * @return True si el personaje se movió, false si no.
      */
-    public abstract void interactuarPuerta(Mapa m, int i, int j) throws MovementException;
+    public abstract boolean interactuarPuerta(Mapa m, int i, int j) throws MovementException;
 
     /**
      * Devuelve la sala de inicio del personaje

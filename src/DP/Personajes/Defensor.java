@@ -32,9 +32,9 @@ public abstract class Defensor extends Personaje {
      * @throws MovementException El defensor no pudo moverse.
      */
     @Override
-    public void interactuarPuerta(Mapa m, int i, int j) throws MovementException {
+    public boolean interactuarPuerta(Mapa m, int i, int j) throws MovementException {
         m.getPuerta().cerrar();
-        this.mover(m, i, j, m.getTurno());
+        return this.mover(m, i, j, m.getTurno());
     }
 
     /**

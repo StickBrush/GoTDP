@@ -17,15 +17,17 @@ import org.junit.Before;
  * @author Solaire
  */
 public class SalaPuertaTest {
-    
+
     private SalaPuerta instance;
+
     public SalaPuertaTest() {
     }
 
     @Before
-    public void setUp(){
-        instance=new SalaPuerta(0);
+    public void setUp() {
+        instance = new SalaPuerta(0);
     }
+
     /**
      * Test of insertarPuerta method, of class SalaPuerta.
      */
@@ -44,7 +46,7 @@ public class SalaPuertaTest {
         Puerta expResult = null;
         Puerta result = instance.getPuerta();
         assertEquals(expResult, result);
-        result=PuertaForTesting.getInstance();
+        result = PuertaForTesting.getInstance();
         instance.insertarPuerta(result);
         assertSame(result, instance.getPuerta());
     }
@@ -56,7 +58,7 @@ public class SalaPuertaTest {
     public void testNuevoPersonaje() {
         Personaje pe = new Stark("", 'T', 0);
         boolean reinsert = false;
-        Puerta p=PuertaForTesting.getInstance();
+        Puerta p = PuertaForTesting.getInstance();
         instance.insertarPuerta(p);
         boolean expResult = false;
         boolean result = instance.nuevoPersonaje(pe, reinsert);
@@ -65,12 +67,4 @@ public class SalaPuertaTest {
         assertTrue(instance.nuevoPersonaje(pe, reinsert));
     }
 
-    /**
-     * Test of simular method, of class SalaPuerta.
-     */
-    @Test
-    public void testSimular() {
-        fail("TODO");
-    }
-    
 }
