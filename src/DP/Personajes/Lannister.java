@@ -98,16 +98,17 @@ public class Lannister extends Defensor {
     }
 
     @Override
-    public void autoRuta(Mapa m) {
+    public void autoRuta() {
         Cola<Dir>[] subrutas= new Cola[4];
+        Mapa m=Mapa.getInstance();
         Integer SE=m.getTamX()*m.getTamY()-1;
         Integer NE=m.getTamX()-1;
         Integer NO=0;
         Integer SO=(m.getTamY()-1)*m.getTamX();
-        subrutas[0]=UtilityKnife.integerToDir(m.getLaberinto().caminoMinimo(SE, NE));
-        subrutas[1]=UtilityKnife.integerToDir(m.getLaberinto().caminoMinimo(NE, NO));
-        subrutas[2]=UtilityKnife.integerToDir(m.getLaberinto().caminoMinimo(NO, SO));
-        subrutas[3]=UtilityKnife.integerToDir(m.getLaberinto().caminoMinimo(SO, SE));
+        subrutas[0]=UtilityKnife.integerToDir(m.getLaberintoActualizado().caminoMinimo(SE, NE));
+        subrutas[1]=UtilityKnife.integerToDir(m.getLaberintoActualizado().caminoMinimo(NE, NO));
+        subrutas[2]=UtilityKnife.integerToDir(m.getLaberintoActualizado().caminoMinimo(NO, SO));
+        subrutas[3]=UtilityKnife.integerToDir(m.getLaberintoActualizado().caminoMinimo(SO, SE));
         for(Cola<Dir> aux : subrutas){
             while(!aux.vacia()){
                 ruta.encolar(aux.primero());

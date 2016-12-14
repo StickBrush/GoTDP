@@ -42,60 +42,76 @@ public class FengShuiEngine {
                     if (salaAct % aux.getTamX() < aux.getTamX() - 1 && aux.esAccesible(salaAct, salaAct + castDirToInt(E))) {
                         ruta.encolar(E);
                         orientacion = E;
+                        salaAct += castDirToInt(E);
                     } else if (salaAct / aux.getTamX() > 0 && aux.esAccesible(salaAct, salaAct + castDirToInt(N))) {
                         ruta.encolar(N);
                         orientacion = N;
+                        salaAct += castDirToInt(N);
                     } else if (salaAct % aux.getTamX() > 0 && aux.esAccesible(salaAct, salaAct + castDirToInt(O))) {
                         ruta.encolar(O);
                         orientacion = O;
+                        salaAct += castDirToInt(O);
                     } else {
                         ruta.encolar(S);
                         orientacion = S;
+                        salaAct += castDirToInt(S);
                     }
                     break;
                 case S:
                     if (salaAct % aux.getTamX() > 0 && aux.esAccesible(salaAct, salaAct + castDirToInt(O))) {
                         ruta.encolar(O);
                         orientacion = O;
+                        salaAct += castDirToInt(O);
                     } else if (salaAct / aux.getTamX() < aux.getTamY() - 1 && aux.esAccesible(salaAct, salaAct + castDirToInt(S))) {
                         ruta.encolar(S);
                         orientacion = S;
+                        salaAct += castDirToInt(S);
                     } else if (salaAct % aux.getTamX() < aux.getTamX() - 1 && aux.esAccesible(salaAct, salaAct + castDirToInt(E))) {
                         ruta.encolar(E);
                         orientacion = E;
+                        salaAct += castDirToInt(E);
                     } else {
                         ruta.encolar(N);
                         orientacion = N;
+                        salaAct += castDirToInt(N);
                     }
                     break;
                 case O:
                     if (salaAct / aux.getTamX() > 0 && aux.esAccesible(salaAct, salaAct + castDirToInt(N))) {
                         ruta.encolar(N);
                         orientacion = N;
+                        salaAct += castDirToInt(N);
                     } else if (salaAct % aux.getTamX() > 0 && aux.esAccesible(salaAct, salaAct + castDirToInt(O))) {
                         ruta.encolar(O);
                         orientacion = O;
+                        salaAct += castDirToInt(O);
                     } else if (salaAct / aux.getTamX() < aux.getTamY() - 1 && aux.esAccesible(salaAct, salaAct + castDirToInt(S))) {
                         ruta.encolar(S);
                         orientacion = S;
+                        salaAct += castDirToInt(S);
                     } else {
                         ruta.encolar(E);
                         orientacion = E;
+                        salaAct += castDirToInt(E);
                     }
                     break;
                 case E:
                     if (salaAct / aux.getTamX() < aux.getTamY() - 1 && aux.esAccesible(salaAct, salaAct + castDirToInt(S))) {
                         ruta.encolar(S);
                         orientacion = S;
+                        salaAct += castDirToInt(S);
                     } else if (salaAct % aux.getTamX() < aux.getTamX() - 1 && aux.esAccesible(salaAct, salaAct + castDirToInt(E))) {
                         ruta.encolar(E);
                         orientacion = E;
+                        salaAct += castDirToInt(E);
                     } else if (salaAct / aux.getTamX() > 0 && aux.esAccesible(salaAct, salaAct + castDirToInt(N))) {
                         ruta.encolar(N);
                         orientacion = N;
+                        salaAct += castDirToInt(N);
                     } else {
                         ruta.encolar(O);
                         orientacion = O;
+                        salaAct += castDirToInt(O);
                     }
                     break;
             }

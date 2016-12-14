@@ -133,8 +133,6 @@ public class Cargador {
      */
     private Stark crearStark(int numCampos, List<String> vCampos) {
         Stark s = new Stark(vCampos.get(1), (char) vCampos.get(2).charAt(0), Integer.parseInt(vCampos.get(3)));
-        Dir[] ruta = {Dir.S, Dir.S, Dir.E, Dir.E, Dir.N, Dir.E, Dir.N, Dir.E, Dir.S, Dir.E, Dir.S, Dir.S, Dir.O, Dir.S, Dir.E, Dir.S};
-        s.setRuta(ruta);
         return s;
     }
 
@@ -147,8 +145,6 @@ public class Cargador {
      */
     private Targaryen crearTargaryen(int numCampos, List<String> vCampos) {
         Targaryen t = new Targaryen(vCampos.get(1), (char) vCampos.get(2).charAt(0), Integer.parseInt(vCampos.get(3)));
-        Dir[] ruta = {Dir.E, Dir.S, Dir.S, Dir.S, Dir.O, Dir.S, Dir.E, Dir.E, Dir.N, Dir.E, Dir.S, Dir.S, Dir.E, Dir.E};
-        t.setRuta(ruta);
         return t;
     }
 
@@ -161,8 +157,6 @@ public class Cargador {
      */
     private Lannister crearLannister(int numCampos, List<String> vCampos) {
         Lannister l = new Lannister(vCampos.get(1), (char) vCampos.get(2).charAt(0), Integer.parseInt(vCampos.get(3)));
-        Dir[] ruta = {Dir.N, Dir.N, Dir.O, Dir.N, Dir.N, Dir.O, Dir.S, Dir.O, Dir.O, Dir.N, Dir.N, Dir.O, Dir.S, Dir.S, Dir.S, Dir.S, Dir.S, Dir.E, Dir.E, Dir.E, Dir.E, Dir.E};
-        l.setRuta(ruta);
         return l;
     }
 
@@ -175,8 +169,6 @@ public class Cargador {
      */
     private CaminanteBlanco crearCaminante(int numCampos, List<String> vCampos) {
         CaminanteBlanco c = new CaminanteBlanco(vCampos.get(1), (char) vCampos.get(2).charAt(0), Integer.parseInt(vCampos.get(3)));
-        Dir[] ruta = {Dir.N, Dir.N, Dir.N, Dir.E, Dir.S, Dir.E, Dir.N, Dir.N, Dir.E, Dir.N, Dir.E, Dir.E, Dir.S, Dir.S, Dir.S, Dir.S, Dir.S};
-        c.setRuta(ruta);
         return c;
     }
 

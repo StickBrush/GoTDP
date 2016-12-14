@@ -462,6 +462,7 @@ public class Grafo {
             res.add(origen);
             origen = this.siguiente(origen, destino);
         }
+        res.add(origen);
         return res;
     }
 

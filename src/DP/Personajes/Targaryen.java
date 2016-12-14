@@ -1,6 +1,7 @@
 package DP.Personajes;
 
 import DP.GameOfThrones.Mapa;
+import DP.GameOfThrones.FengShuiEngine;
 
 /**
  * Implementación de la clase Targaryen
@@ -22,8 +23,9 @@ public class Targaryen extends Atacante {
     }
 
     @Override
-    public void autoRuta(Mapa m) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void autoRuta() {
+        FengShuiEngine E=new FengShuiEngine();
+        ruta=E.wallFollower(Mapa.getInstance().getKingsLanding());
     }
 
 }

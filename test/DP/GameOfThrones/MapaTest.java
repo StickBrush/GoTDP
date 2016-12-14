@@ -61,11 +61,11 @@ public class MapaTest {
      * Test of getLaberinto method, of class Mapa.
      */
     @Test
-    public void testGetLaberinto() throws MapSizeException {
+    public void testGetLaberintoActualizado() throws MapSizeException {
         System.out.println("getLaberinto");
         Mapa instance = Mapa.getInstance(5, 5, 5, 5);
         Grafo expResult = null;
-        Grafo result = instance.getLaberinto();
+        Grafo result = instance.getLaberintoActualizado();
         assertNotEquals(expResult, result);
     }
 

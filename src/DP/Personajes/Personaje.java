@@ -93,7 +93,7 @@ public abstract class Personaje {
         }
     }
 
-    public abstract void autoRuta(Mapa m);
+    public abstract void autoRuta();
 
     /**
      * Mueve al personaje
@@ -197,7 +197,7 @@ public abstract class Personaje {
      */
     public String ruta() {
         Cola<Dir> aux = new Cola<>();
-        String sol = "(ruta:" + this.ID;
+        String sol = "(ruta:" + this.ID+":";
         Dir dAux;
         while (!ruta.vacia()) {
             dAux = ruta.primero();

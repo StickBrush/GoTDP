@@ -181,6 +181,7 @@ public class Mapa {
      * @param p Personaje a añadir
      */
     public void nuevoPersonaje(Personaje p) {
+        p.autoRuta();
         personajes.addLast(p);
     }
 
@@ -205,7 +206,9 @@ public class Mapa {
         return laberinto.adyacente(IDS1, IDS2);
     }
 
-    public Grafo getLaberinto() {
+    public Grafo getLaberintoActualizado() {
+        laberinto.warshall();
+        laberinto.floyd();
         return laberinto;
     }
 
@@ -269,7 +272,7 @@ public class Mapa {
             }
         }
         sol = sol + "(miembrostrono)\n";
-        sol = sol + "(nuevorey:" + trono.showPersonajes(turno) + ")+\n";
+        sol = sol + "(nuevorey:" + trono.showPersonajes(turno) + ")\n";
         return sol;
     }
 
@@ -520,12 +523,15 @@ public class Mapa {
         m.dumpPersonajes();
         //Simulación
         boolean abierta = false;
+        logger.logInfoMapa(m);
+        System.out.println("Simulando...");
         for (int i = 0; i < 50 && !abierta; i++) {
             m.simularTurno();
             logger.logInfoMapa(m);
             abierta = m.puertaAbierta();
         }
         logger.endLogger();
+        System.out.println("Simulación finalizada");
     }
 
 }

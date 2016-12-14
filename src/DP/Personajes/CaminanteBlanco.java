@@ -97,16 +97,17 @@ public class CaminanteBlanco extends Defensor {
     }
 
         @Override
-    public void autoRuta(Mapa m) {
+    public void autoRuta() {
         Cola<Dir>[] subrutas= new Cola[4];
+        Mapa m=Mapa.getInstance();
         Integer SE=m.getTamX()*m.getTamY()-1;
         Integer NE=m.getTamX()-1;
         Integer NO=0;
         Integer SO=(m.getTamY()-1)*m.getTamX();
-        subrutas[0]=UtilityKnife.integerToDir(m.getLaberinto().caminoMinimo(SO, NO));
-        subrutas[1]=UtilityKnife.integerToDir(m.getLaberinto().caminoMinimo(NO, NE));
-        subrutas[2]=UtilityKnife.integerToDir(m.getLaberinto().caminoMinimo(NE, SE));
-        subrutas[3]=UtilityKnife.integerToDir(m.getLaberinto().caminoMinimo(SE, SO));
+        subrutas[0]=UtilityKnife.integerToDir(m.getLaberintoActualizado().caminoMinimo(SO, NO));
+        subrutas[1]=UtilityKnife.integerToDir(m.getLaberintoActualizado().caminoMinimo(NO, NE));
+        subrutas[2]=UtilityKnife.integerToDir(m.getLaberintoActualizado().caminoMinimo(NE, SE));
+        subrutas[3]=UtilityKnife.integerToDir(m.getLaberintoActualizado().caminoMinimo(SE, SO));
         for(Cola<Dir> aux : subrutas){
             while(!aux.vacia()){
                 ruta.encolar(aux.primero());

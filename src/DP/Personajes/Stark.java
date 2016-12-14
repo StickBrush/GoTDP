@@ -22,8 +22,8 @@ public class Stark extends Atacante {
     }
 
     @Override
-    public void autoRuta(Mapa m) {
-        ruta=m.getLaberinto().movStark(m.getKingsLanding());
+    public void autoRuta() {
+        ruta=Mapa.getInstance().getLaberintoActualizado().movStark(Mapa.getInstance().getKingsLanding());
     }
 
 }
