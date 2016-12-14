@@ -105,7 +105,8 @@ public abstract class Personaje {
      * @return True si el personaje se movió, false si no
      * @throws MovementException El personaje no se pudo mover.
      */
-    public boolean mover(Mapa m, int i, int j, int turno) throws MovementException {
+    public boolean mover(int i, int j, int turno) throws MovementException {
+        Mapa m = Mapa.getInstance();
         if (!ruta.vacia() && this.turno <= turno) {
             Dir o = ruta.primero();
             ruta.desencolar();
@@ -169,7 +170,7 @@ public abstract class Personaje {
      * @throws MovementException El personaje no se pudo mover
      * @return True si el personaje se movió, false si no.
      */
-    public abstract boolean interactuarPuerta(Mapa m, int i, int j) throws MovementException;
+    public abstract boolean interactuarPuerta(int i, int j) throws MovementException;
 
     /**
      * Devuelve la sala de inicio del personaje
@@ -177,7 +178,7 @@ public abstract class Personaje {
      * @param m Mapa que contiene al personaje
      * @return Sala de inicio del personaje
      */
-    public abstract Integer init(Mapa m);
+    public abstract Integer init();
 
     /**
      * Método toString del personaje

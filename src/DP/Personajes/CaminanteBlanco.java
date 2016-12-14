@@ -80,7 +80,8 @@ public class CaminanteBlanco extends Defensor {
      * @return Sala de inicio del caminante
      */
     @Override
-    public Integer init(Mapa m) {
+    public Integer init() {
+        Mapa m = Mapa.getInstance();
         return (m.getTamY() - 1) * m.getTamX();
     }
 
@@ -117,9 +118,9 @@ public class CaminanteBlanco extends Defensor {
     }
     
     @Override
-    public boolean mover(Mapa m, int i, int j, int turno) throws MovementException {
+    public boolean mover(int i, int j, int turno) throws MovementException {
         Dir x=ruta.primero();
-        boolean b=super.mover(m, i, j, turno);
+        boolean b=super.mover(i, j, turno);
         ruta.encolar(x);
         return b;
     }

@@ -49,8 +49,9 @@ public class Logger {
      *
      * @param m Mapa a registrar
      */
-    public void logMapa(Mapa m) {
+    public void logMapa() {
         if (funcional) {
+            Mapa m = Mapa.getInstance();
             try {
                 List<String> structure = m.structureString();
                 for (int i = 0; i < structure.size(); i++) {
@@ -68,8 +69,9 @@ public class Logger {
      *
      * @param m Mapa a registrar
      */
-    public void logInfoMapa(Mapa m) {
+    public void logInfoMapa() {
         if (funcional) {
+            Mapa m = Mapa.getInstance();
             try {
                 logger.write(m.infoMapa());
             } catch (IOException ex) {
@@ -84,8 +86,9 @@ public class Logger {
      *
      * @param m Mapa a registrar
      */
-    public void logRutas(Mapa m) {
+    public void logRutas() {
         if (funcional) {
+            Mapa m = Mapa.getInstance();
             try {
                 logger.write(m.rutas());
             } catch (IOException ex) {

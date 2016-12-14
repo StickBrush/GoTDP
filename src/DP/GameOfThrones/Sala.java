@@ -145,7 +145,8 @@ public class Sala {
         return saux;
     }
 
-    public void simular(int i, int j, Mapa m, Arbol<Character> movidos) {
+    public void simular(int i, int j, Arbol<Character> movidos) {
+        Mapa m = Mapa.getInstance();
         Cola<Personaje> cAux = new Cola<>();
         boolean moved = false;
         for (Personaje p; this.tienePersonaje(); personajes.desencolar()) {
@@ -153,7 +154,7 @@ public class Sala {
             try {
                 if (!movidos.pertenece(p.getID())) {
                     movidos.insertar(p.getID());
-                    moved = p.mover(m, i, j, m.getTurno());
+                    moved = p.mover(i, j, m.getTurno());
                     if (!moved) {
                         cAux.encolar(p);
                     }
@@ -230,7 +231,8 @@ public class Sala {
         return aux;
     }
 
-    public Pared vecinoNoAccesible(Mapa m) {
+    public Pared vecinoNoAccesible() {
+        Mapa m = Mapa.getInstance();
         Pared p = null;
         if (ID / m.getTamX() != 0 && !m.esAccesible(ID, ID - m.getTamX())) {
             p = new Pared(this, m.getSala((ID / m.getTamX()) - 1, ID % m.getTamX()));

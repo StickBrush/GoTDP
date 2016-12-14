@@ -42,7 +42,8 @@ public abstract class Atacante extends Personaje {
      * @return False, los atacantes jamás se mueven
      */
     @Override
-    public boolean interactuarPuerta(Mapa m, int i, int j) throws MovementException {
+    public boolean interactuarPuerta(int i, int j) throws MovementException {
+        Mapa m = Mapa.getInstance();
         if (!this.llaves.isEmpty()) {
             m.getPuerta().abrir(this.llaves.getTop());
             this.llaves.removeData();
@@ -70,7 +71,7 @@ public abstract class Atacante extends Personaje {
      * @return ID de la sala de inicio del atacante
      */
     @Override
-    public Integer init(Mapa m) {
+    public Integer init() {
         return 0;
     }
 

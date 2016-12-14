@@ -341,7 +341,7 @@ public class Mapa {
         for (int i = 0; i < tamY; i++) {
             for (int j = 0; j < tamX; j++) {
                 salaAux = salas[i][j];
-                salaAux.simular(i, j, this, personajesMovidos);
+                salaAux.simular(i, j, personajesMovidos);
             }
         }
         turno++;
@@ -362,8 +362,8 @@ public class Mapa {
      * @param p Personaje al que insertar
      */
     public void insertarPersonaje(Personaje p) {
-        int i = p.init(this) / tamX;
-        int j = p.init(this) % tamX;
+        int i = p.init() / tamX;
+        int j = p.init() % tamX;
         salas[i][j].nuevoPersonaje(p, true);
     }
 
@@ -422,7 +422,7 @@ public class Mapa {
                 checked++;
                 comprobadas.add(pos);
                 Sala comprobar = salas[pos / tamX][pos % tamX];
-                Pared aux = comprobar.vecinoNoAccesible(this); //Tomamos el vecino no accesible
+                Pared aux = comprobar.vecinoNoAccesible(); //Tomamos el vecino no accesible
                 if (aux != null) { //Si existe...
                     laberinto.nuevoArco(aux.getSala1().getID(), aux.getSala2().getID()); //Tiramos la pared
                     if (aux.horizontal()) { //Comprobamos que se podía tirar
@@ -497,8 +497,8 @@ public class Mapa {
         }
         //Log del mapa
         Logger logger = Logger.getInstance();
-        logger.logMapa(m);
-        logger.logRutas(m);
+        logger.logMapa();
+        logger.logRutas();
         m.distribuirLlaves();
 
         //Creación de la lista de identificadores
@@ -523,11 +523,11 @@ public class Mapa {
         m.dumpPersonajes();
         //Simulación
         boolean abierta = false;
-        logger.logInfoMapa(m);
+        logger.logInfoMapa();
         System.out.println("Simulando...");
         for (int i = 0; i < 50 && !abierta; i++) {
             m.simularTurno();
-            logger.logInfoMapa(m);
+            logger.logInfoMapa();
             abierta = m.puertaAbierta();
         }
         logger.endLogger();

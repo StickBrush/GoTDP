@@ -36,7 +36,6 @@ public class FengShuiEngine {
         Cola<Dir> ruta = new Cola<>();
         Mapa aux = Mapa.getInstance();
         while (salaAct != kingsLanding) {
-            Dir[] check;
             switch (orientacion) {
                 case N:
                     if (salaAct % aux.getTamX() < aux.getTamX() - 1 && aux.esAccesible(salaAct, salaAct + castDirToInt(E))) {

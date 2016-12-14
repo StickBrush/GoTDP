@@ -70,14 +70,15 @@ public class SalaPuerta extends Sala {
      * @param movidos Identificadores de personajes que ya se movieron
      */
     @Override
-    public void simular(int i, int j, Mapa m, Arbol<Character> movidos) {
+    public void simular(int i, int j, Arbol<Character> movidos) {
+        Mapa m=Mapa.getInstance();
         Cola<Personaje> cAux = new Cola<>();
         boolean moved=false;
         for (Personaje p; this.tienePersonaje(); personajes.desencolar()) {
             p = personajes.primero();
             if (!movidos.pertenece(p.getID())) {
                 try {
-                    moved=p.interactuarPuerta(m, i, j);
+                    moved=p.interactuarPuerta(i, j);
                     if(!moved)
                         cAux.encolar(p);
                 } catch (MovementException ex) {

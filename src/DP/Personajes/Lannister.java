@@ -52,7 +52,8 @@ public class Lannister extends Defensor {
      * @return Sala de inicio del Lannister
      */
     @Override
-    public Integer init(Mapa m) {
+    public Integer init() {
+        Mapa m = Mapa.getInstance();
         return (m.getTamX()*m.getTamY())-1;
     }
     
@@ -118,9 +119,9 @@ public class Lannister extends Defensor {
     }
     
     @Override
-    public boolean mover(Mapa m, int i, int j, int turno) throws MovementException {
+    public boolean mover(int i, int j, int turno) throws MovementException {
         Dir x=ruta.primero();
-        boolean b=super.mover(m, i, j, turno);
+        boolean b=super.mover(i, j, turno);
         ruta.encolar(x);
         return b;
     }
