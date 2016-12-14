@@ -48,9 +48,7 @@ public abstract class UtilityKnife {
                 }
             }
             if (may != -1) {
-                if (inMay != kingsLanding && inMay != 0) {
-                    sorted.addLast(inMay);
-                }
+                sorted.addLast(inMay);
                 freq[inMay] = -1;
             } else {
                 fin = true;

@@ -61,8 +61,8 @@ public class Mapa {
      */
     private List<Personaje> personajes;
 
-    private static Mapa instance=null;
-    
+    private static Mapa instance = null;
+
     /**
      * Constructor parametrizado de Mapa
      *
@@ -105,10 +105,22 @@ public class Mapa {
         Kruskal(paredes);
         crearAtajos();
     }
-    
-    public static Mapa getInstance(int salaPuerta, int X, int Y, int profComb) throws MapSizeException{
-        if(instance==null)
-            instance=new Mapa(salaPuerta, X, Y, profComb);
+
+    public static Mapa getInstance(int salaPuerta, int X, int Y, int profComb) throws MapSizeException {
+        if (instance == null) {
+            instance = new Mapa(salaPuerta, X, Y, profComb);
+        }
+        return instance;
+    }
+
+    public static Mapa getInstance() {
+        if (instance == null) {
+            try {
+                instance = new Mapa(35, 6, 6, 4);
+            } catch (MapSizeException ex) {
+                System.err.println("Esto no pasará");
+            }
+        }
         return instance;
     }
 
@@ -194,9 +206,10 @@ public class Mapa {
         return laberinto.adyacente(IDS1, IDS2);
     }
 
-    public Grafo getLaberinto(){
+    public Grafo getLaberinto() {
         return laberinto;
     }
+
     public void distribuirLlaves() {
         int numLlavesGenerar = 45;
         List<Integer> salasLlaves = UtilityKnife.sortByFrequence(iPuerta * tamX + jPuerta, laberinto, tamX * tamY);
@@ -221,9 +234,10 @@ public class Mapa {
         }
     }
 
-    public Integer getKingsLanding(){
-        return (iPuerta*tamX + jPuerta);
+    public Integer getKingsLanding() {
+        return (iPuerta * tamX + jPuerta);
     }
+
     /**
      * Devuelve la información del Mapa
      *
@@ -464,10 +478,11 @@ public class Mapa {
         Cargador cargador = new Cargador();
         Mapa m = null;
         String ficheroInicio;
-        if(args.length>0)
-            ficheroInicio=args[0];
-        else
-            ficheroInicio="inicio.txt";
+        if (args.length > 0) {
+            ficheroInicio = args[0];
+        } else {
+            ficheroInicio = "inicio.txt";
+        }
         try {
             m = FicheroCarga.procesarFichero(ficheroInicio, cargador); //Cargamos el mapa de fichero
         } catch (IOException ex) {
