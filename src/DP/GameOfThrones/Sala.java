@@ -26,7 +26,7 @@ public class Sala {
      * Identificador de la sala
      */
     private Integer ID;
-    
+
     private Integer Kruskal;
 
     /**
@@ -38,7 +38,7 @@ public class Sala {
         llaves = new ListaOrdenada<Llave>();
         personajes = new Cola<Personaje>();
         this.ID = ID;
-        Kruskal=ID;
+        Kruskal = ID;
     }
 
     /**
@@ -147,12 +147,16 @@ public class Sala {
 
     public void simular(int i, int j, Mapa m, Arbol<Character> movidos) {
         Cola<Personaje> cAux = new Cola<>();
+        boolean moved = false;
         for (Personaje p; this.tienePersonaje(); personajes.desencolar()) {
             p = personajes.primero();
             try {
                 if (!movidos.pertenece(p.getID())) {
                     movidos.insertar(p.getID());
-                    p.mover(m, i, j, m.getTurno());
+                    moved = p.mover(m, i, j, m.getTurno());
+                    if (!moved) {
+                        cAux.encolar(p);
+                    }
                 } else {
                     cAux.encolar(p);
                 }
@@ -173,11 +177,11 @@ public class Sala {
      * @return Personajes concatenados
      */
     public String showPersonajes(int turno) {
-        String sol="";
+        String sol = "";
         if (this.tienePersonaje()) {
             Cola<Personaje> caux = new Cola<Personaje>();
             while (this.tienePersonaje()) {
-                sol=sol+"(" + personajes.primero().toString() + ":" + ID + ":" + turno +")\n";
+                sol = sol + "(" + personajes.primero().toString() + ":" + ID + ":" + turno + ")\n";
                 caux.encolar(personajes.primero());
                 personajes.desencolar();
             }
@@ -188,53 +192,57 @@ public class Sala {
         }
         return sol;
     }
-    
-    public void setKruskal(Integer nuevo){
-        Kruskal=nuevo;
+
+    public void setKruskal(Integer nuevo) {
+        Kruskal = nuevo;
     }
-    
-    public Integer getKruskal(){
+
+    public Integer getKruskal() {
         return Kruskal;
     }
-    
-    public String showSala(Mapa m){
-        String aux="";
-        switch(personajes.numEl()){
+
+    public String showSala(Mapa m) {
+        String aux = "";
+        switch (personajes.numEl()) {
             case 0: //Si no hay personajes
-                if(ID/m.getTamX()==m.getTamY()-1 || !m.esAccesible(ID, ID+m.getTamX())) //Si hay pared sur (o límite de mapa)
-                    aux=aux+"_";
-                else
-                    aux=aux+" ";
+                if (ID / m.getTamX() == m.getTamY() - 1 || !m.esAccesible(ID, ID + m.getTamX())) //Si hay pared sur (o límite de mapa)
+                {
+                    aux = aux + "_";
+                } else {
+                    aux = aux + " ";
+                }
                 break;
             case 1: //Si hay un personaje
-                aux=aux+personajes.primero().getID();
+                aux = aux + personajes.primero().getID();
                 break;
             default: //Si hay varios personajes
-                aux=aux+personajes.numEl();
+                aux = aux + personajes.numEl();
                 break;
         }
-        if(ID%(m.getTamX())!=m.getTamX()-1){ //Si no estoy en el límite derecho
-            if(!m.esAccesible(ID, ID+1)) //Si hay pared este (NO límite mapa)
-                aux=aux+"|";
-            else
-                aux=aux+" ";
+        if (ID % (m.getTamX()) != m.getTamX() - 1) { //Si no estoy en el límite derecho
+            if (!m.esAccesible(ID, ID + 1)) //Si hay pared este (NO límite mapa)
+            {
+                aux = aux + "|";
+            } else {
+                aux = aux + " ";
+            }
         }
         return aux;
     }
-    
-    public Pared vecinoNoAccesible(Mapa m){
-        Pared p=null;
-        if(ID/m.getTamX()!=0 && !m.esAccesible(ID, ID-m.getTamX())){
-            p=new Pared(this, m.getSala((ID/m.getTamX())-1, ID%m.getTamX()));
+
+    public Pared vecinoNoAccesible(Mapa m) {
+        Pared p = null;
+        if (ID / m.getTamX() != 0 && !m.esAccesible(ID, ID - m.getTamX())) {
+            p = new Pared(this, m.getSala((ID / m.getTamX()) - 1, ID % m.getTamX()));
         }
-        if(ID/m.getTamX()!=m.getTamY()-1 && !m.esAccesible(ID, ID+m.getTamX())){
-            p=new Pared(this, m.getSala((ID/m.getTamX())+1, ID%m.getTamX()));
+        if (ID / m.getTamX() != m.getTamY() - 1 && !m.esAccesible(ID, ID + m.getTamX()) && p==null) {
+            p = new Pared(this, m.getSala((ID / m.getTamX()) + 1, ID % m.getTamX()));
         }
-        if(ID%m.getTamX()!=0 && !m.esAccesible(ID, ID-1)){
-            p=new Pared(this, m.getSala((ID/m.getTamX()), ID%m.getTamX()-1));
+        if (ID % m.getTamX() != 0 && !m.esAccesible(ID, ID - 1) && p==null) {
+            p = new Pared(this, m.getSala((ID / m.getTamX()), ID % m.getTamX() - 1));
         }
-        if(ID%m.getTamX()!=m.getTamX()-1 && !m.esAccesible(ID, ID+1)){
-            p=new Pared(this, m.getSala((ID/m.getTamX()), ID%m.getTamX()+1));
+        if (ID % m.getTamX() != m.getTamX() - 1 && !m.esAccesible(ID, ID + 1) && p==null) {
+            p = new Pared(this, m.getSala((ID / m.getTamX()), ID % m.getTamX() + 1));
         }
         return p;
     }

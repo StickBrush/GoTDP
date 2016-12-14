@@ -61,8 +61,7 @@ public class Mapa {
      */
     private List<Personaje> personajes;
 
-    private static Mapa instance = null;
-
+    protected static Mapa instance=null;
     /**
      * Constructor parametrizado de Mapa
      *

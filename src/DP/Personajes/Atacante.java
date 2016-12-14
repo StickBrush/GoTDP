@@ -38,16 +38,16 @@ public abstract class Atacante extends Personaje {
      * @param m Mapa que contiene al personaje
      * @param i Coordenada i de la sala de la puerta
      * @param j Coordenada j de la sala de la puerta
-     * @throws MovementException El personaje no se pudo mover. Expection
-     * handling, se eliminará
+     * @throws MovementException El personaje no se pudo mover.
+     * @return False, los atacantes jamás se mueven
      */
     @Override
-    public void interactuarPuerta(Mapa m, int i, int j) throws MovementException {
+    public boolean interactuarPuerta(Mapa m, int i, int j) throws MovementException {
         if (!this.llaves.isEmpty()) {
             m.getPuerta().abrir(this.llaves.getTop());
             this.llaves.removeData();
         }
-        throw new MovementException();
+        return false;
     }
 
     /**

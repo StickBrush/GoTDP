@@ -117,9 +117,10 @@ public class Lannister extends Defensor {
     }
     
     @Override
-    public void mover(Mapa m, int i, int j, int turno) throws MovementException {
+    public boolean mover(Mapa m, int i, int j, int turno) throws MovementException {
         Dir x=ruta.primero();
-        super.mover(m, i, j, turno);
+        boolean b=super.mover(m, i, j, turno);
         ruta.encolar(x);
+        return b;
     }
 }
