@@ -72,7 +72,7 @@ public class Mapa {
      * @throws DP.Exceptions.MapSizeException Se intentó crear el mapa con
      * dimensiones no válidas
      */
-    private Mapa(int salaPuerta, int X, int Y, int profComb) throws MapSizeException {
+    protected Mapa(int salaPuerta, int X, int Y, int profComb) throws MapSizeException {
         personajes = new List<>();
         laberinto = new Grafo();
         tamX = X;
@@ -422,7 +422,7 @@ public class Mapa {
                 checked++;
                 comprobadas.add(pos);
                 Sala comprobar = salas[pos / tamX][pos % tamX];
-                Pared aux = comprobar.vecinoNoAccesible(); //Tomamos el vecino no accesible
+                Pared aux = comprobar.vecinoNoAccesible(this); //Tomamos el vecino no accesible
                 if (aux != null) { //Si existe...
                     laberinto.nuevoArco(aux.getSala1().getID(), aux.getSala2().getID()); //Tiramos la pared
                     if (aux.horizontal()) { //Comprobamos que se podía tirar

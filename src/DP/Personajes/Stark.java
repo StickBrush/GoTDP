@@ -1,6 +1,7 @@
 package DP.Personajes;
 
 import DP.GameOfThrones.Mapa;
+import DP.util.UtilityKnife;
 
 /**
  * Implementación de la clase Stark
@@ -23,7 +24,7 @@ public class Stark extends Atacante {
 
     @Override
     public void autoRuta() {
-        ruta=Mapa.getInstance().getLaberintoActualizado().movStark(Mapa.getInstance().getKingsLanding());
+        ruta=UtilityKnife.integerToDir(Mapa.getInstance().getLaberintoActualizado().profundidad(Mapa.getInstance().getKingsLanding()));
     }
 
 }

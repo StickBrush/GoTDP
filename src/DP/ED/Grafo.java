@@ -1,11 +1,9 @@
 package DP.ED;
 
-import DP.GameOfThrones.Dir;
 import java.util.LinkedHashSet;
 import java.util.Set;
 import java.util.Queue;
 import java.util.LinkedList;
-import DP.util.UtilityKnife;
 
 /**
  * @file grafo.h Declaracion de la clase grafo
@@ -396,44 +394,11 @@ public class Grafo {
         }
     }
 
-    /**
-     * Recorrido en profundidad del grafo
-     */
-    public void profundidad() {
-        if (!esVacio()) {
-            Set<Integer> visitados = new LinkedHashSet<Integer>();
-            this.warshall();
-            this.floyd();
-            prof(nodos[0], visitados);
-        }
+    public Set<Integer> profundidad(int destino) {
+        return profundidad(0, new LinkedHashSet<Integer>(), destino);
     }
 
-    /**
-     * Recorrido en profundidad del grafo
-     *
-     * @param origen Nodo actual
-     * @param visitados Nodos visitados hasta ahora
-     */
-    private void prof(int origen, Set<Integer> visitados) {
-        Set<Integer> Ady = new LinkedHashSet<>();
-        int x;
-        visitados.add(origen);
-        System.out.println(origen);
-        this.adyacentes(origen, Ady);
-        while (!Ady.isEmpty()) {
-            x = Ady.iterator().next();
-            Ady.remove(x);
-            if (!visitados.contains(x)) {
-                prof(x, visitados);
-            }
-        }
-    }
-
-    public Cola<Dir> movStark(Integer kingsLanding) {
-        return UtilityKnife.integerToDir(profMenor(0, new LinkedHashSet<Integer>(), kingsLanding));
-    }
-
-    private Set<Integer> profMenor(int origen, Set<Integer> visitados, int destino) {
+    private Set<Integer> profundidad(int origen, Set<Integer> visitados, int destino) {
         Set<Integer> Ady = new LinkedHashSet<>();
         int x;
         visitados.add(origen);
@@ -445,7 +410,7 @@ public class Grafo {
                 x = Ady.iterator().next();
                 Ady.remove(x);
                 if (!visitados.contains(x)) {
-                    Set<Integer> sol = profMenor(x, visitados, destino);
+                    Set<Integer> sol = profundidad(x, visitados, destino);
                     if (sol != null) {
                         return sol;
                     }
@@ -483,6 +448,12 @@ public class Grafo {
 
     }
 
+    private static Set<Integer> setCopy(Set<Integer> original) {
+        Set<Integer> nuevo = new LinkedHashSet<>();
+        nuevo.addAll(original);
+        return nuevo;
+    }
+
     /**
      * Generador de todos los caminos
      *
@@ -496,7 +467,7 @@ public class Grafo {
         int x;
         visitados.add(origen);
         if (origen == destino) {
-            caminos.add(UtilityKnife.setCopy(visitados));
+            caminos.add(setCopy(visitados));
         } else {
             this.adyacentes(origen, Ady);
             while (!Ady.isEmpty()) {

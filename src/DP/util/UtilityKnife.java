@@ -6,7 +6,6 @@ import java.util.Set;
 import java.util.Iterator;
 import DP.ED.List;
 import DP.GameOfThrones.Dir;
-import java.util.LinkedHashSet;
 import java.util.Arrays;
 
 /**
@@ -95,18 +94,6 @@ public abstract class UtilityKnife {
             i = comb(divDer, i, aux);
         }
         return i;
-    }
-
-    /**
-     * Devuelve una copia del Set dado
-     *
-     * @param original Set original
-     * @return Copia de original
-     */
-    public static Set<Integer> setCopy(Set<Integer> original) {
-        Set<Integer> nuevo = new LinkedHashSet<>();
-        nuevo.addAll(original);
-        return nuevo;
     }
 
     /**

@@ -231,8 +231,7 @@ public class Sala {
         return aux;
     }
 
-    public Pared vecinoNoAccesible() {
-        Mapa m = Mapa.getInstance();
+    public Pared vecinoNoAccesible(Mapa m) {
         Pared p = null;
         if (ID / m.getTamX() != 0 && !m.esAccesible(ID, ID - m.getTamX())) {
             p = new Pared(this, m.getSala((ID / m.getTamX()) - 1, ID % m.getTamX()));

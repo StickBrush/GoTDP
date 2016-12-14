@@ -5,11 +5,17 @@
  */
 package DP.GameOfThrones;
 
+import DP.Exceptions.MapSizeException;
+
 /**
  *
  * @author StickBrush
  */
 public class MapaForTesting extends Mapa {
+    
+    private MapaForTesting(int a, int b, int c, int d) throws MapSizeException{
+        super(a,b,c,d);
+    }
 
     public void forceNull(){
         instance=null;
