@@ -7,12 +7,12 @@ import static DP.GameOfThrones.Dir.*;
  *
  * @author Solaire
  */
-public class FengShuiEngine {
+public class WallFollowingEngine {
 
     private Dir orientacion;
     private int salaAct;
 
-    public FengShuiEngine() {
+    public WallFollowingEngine() {
         salaAct = 0;
         orientacion = S;
     }

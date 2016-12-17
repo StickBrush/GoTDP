@@ -41,6 +41,10 @@ public class Sala {
         Kruskal = ID;
     }
 
+    public Sala() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
     /**
      * Añade una nueva llave
      *
@@ -202,7 +206,8 @@ public class Sala {
         return Kruskal;
     }
 
-    public String showSala(Mapa m) {
+    public String showSala() {
+        Mapa m = Mapa.getInstance();
         String aux = "";
         switch (personajes.numEl()) {
             case 0: //Si no hay personajes

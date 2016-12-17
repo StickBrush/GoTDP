@@ -9,6 +9,8 @@ import java.io.IOException;
 import DP.util.UtilityKnife;
 import DP.util.GenAleatorios;
 import DP.util.Logger;
+import java.util.Arrays;
+import java.util.Iterator;
 import java.util.Set;
 import java.util.LinkedHashSet;
 
@@ -59,7 +61,7 @@ public class Mapa {
     /**
      * Personajes del mapa
      */
-    private List<Personaje> personajes;
+    protected List<Personaje> personajes;
 
     protected static Mapa instance=null;
     /**
@@ -80,7 +82,7 @@ public class Mapa {
         if (X <= 0 || Y <= 0) {
             throw new MapSizeException();
         }
-        turno = 1;
+        turno = 0;
         this.profComb = profComb;
         salas = new Sala[tamY][tamX];
         int contador = 0;
@@ -102,9 +104,11 @@ public class Mapa {
         List<Pared> paredes = new List<>();
         generarParedes(paredes);
         Kruskal(paredes);
-        crearAtajos();
     }
-
+    
+    protected Mapa(){
+    }
+    
     public static Mapa getInstance(int salaPuerta, int X, int Y, int profComb) throws MapSizeException {
         if (instance == null) {
             instance = new Mapa(salaPuerta, X, Y, profComb);
@@ -115,7 +119,7 @@ public class Mapa {
     public static Mapa getInstance() {
         if (instance == null) {
             try {
-                instance = new Mapa(35, 6, 6, 4);
+                instance = new Mapa(35, 6, 6, 5);
             } catch (MapSizeException ex) {
                 System.err.println("Esto no pasará");
             }
@@ -158,7 +162,6 @@ public class Mapa {
     private void generarParedes(List<Pared> paredes) {
         for (int i = 0; i < tamY; i++) {
             for (int j = 0; j < tamX; j++) {
-                int ID = i * tamX + j;
                 if (i != 0) {
                     paredes.addLast(new Pared(salas[i][j], salas[i - 1][j]));
                 }
@@ -181,7 +184,6 @@ public class Mapa {
      * @param p Personaje a añadir
      */
     public void nuevoPersonaje(Personaje p) {
-        p.autoRuta();
         personajes.addLast(p);
     }
 
@@ -214,7 +216,7 @@ public class Mapa {
 
     public void distribuirLlaves() {
         int numLlavesGenerar = 45;
-        List<Integer> salasLlaves = UtilityKnife.sortByFrequence(iPuerta * tamX + jPuerta, laberinto, tamX * tamY);
+        List<Integer> salasLlaves = sortByFrequence();
         Llave[] llavesGen = new Llave[numLlavesGenerar];
         int idLlave = 0;
         for (int i = 0; i < numLlavesGenerar; i++) {
@@ -236,6 +238,23 @@ public class Mapa {
         }
     }
 
+     /**
+     * Devuelve si hay pared o no
+     *
+     * @param g Grafo sobre el que comprobar
+     * @param paredes Identificadores de las salas a comprobar
+     * @return True si hay paredes internas entre las salas, false si no
+     */
+    private boolean hayPared(int[] paredes) {
+        boolean pared;
+        Arrays.sort(paredes);
+        pared = !laberinto.adyacente(paredes[0], paredes[1]);
+        pared = pared || !laberinto.adyacente(paredes[0], paredes[2]);
+        pared = pared || !laberinto.adyacente(paredes[1], paredes[3]);
+        pared = pared || !laberinto.adyacente(paredes[2], paredes[3]);
+        return pared;
+    }
+    
     public Integer getKingsLanding() {
         return (iPuerta * tamX + jPuerta);
     }
@@ -361,7 +380,7 @@ public class Mapa {
      *
      * @param p Personaje al que insertar
      */
-    public void insertarPersonaje(Personaje p) {
+    private void insertarPersonaje(Personaje p) {
         int i = p.init() / tamX;
         int j = p.init() % tamX;
         salas[i][j].nuevoPersonaje(p, true);
@@ -384,7 +403,7 @@ public class Mapa {
         for (int i = 0; i < tamY; i++) {
             total = total + "|";
             for (int j = 0; j < tamX; j++) {
-                total = total + salas[i][j].showSala(this);
+                total = total + salas[i][j].showSala();
             }
             total = total + "|";
             structure.addLast(total);
@@ -399,20 +418,61 @@ public class Mapa {
     public void dumpPersonajes() {
         for (int i = 0; i < personajes.size(); i++) {
             Personaje p = personajes.get(i);
+            p.autoRuta();
             this.insertarPersonaje(p);
         }
     }
 
     /**
+     * Devuelve, ordenadas por frecuencia, las salas de mayor tránsito
+     *
+     * @param kingsLanding Identificador de King's Landing
+     * @param laberinto Laberinto de salas
+     * @param size Tamaño total del mapa
+     * @return Lista de salas ordenadas por frecuencia de tránsito
+     */
+    private List<Integer> sortByFrequence() {
+        int kingsLanding= iPuerta * tamX + jPuerta;
+        int size=tamX*tamY;
+        Set<Set<Integer>> caminos = laberinto.caminos(0, kingsLanding);
+        int[] freq = new int[size];
+        List<Integer> sorted = new List<>();
+        Iterator<Set<Integer>> it = caminos.iterator();
+        while (it.hasNext()) {
+            Iterator<Integer> iter = it.next().iterator();
+            while (iter.hasNext()) {
+                freq[iter.next()]++;
+            }
+        }
+        boolean fin = false;
+        for (int i = 0; i < freq.length && !fin; i++) {
+            int inMay = 0;
+            int may = freq[0];
+            for (int j = 0; j < freq.length; j++) {
+                if (freq[j] > may) {
+                    inMay = j;
+                    may = freq[j];
+                }
+            }
+            if (may != -1) {
+                sorted.addLast(inMay);
+                freq[inMay] = -1;
+            } else {
+                fin = true;
+            }
+        }
+        return sorted;
+    }
+    
+    /**
      * Crea atajos en el mapa
      */
-    private void crearAtajos() {
+    public void crearAtajos() {
         Double a = (tamX * tamY) * 0.05; //Calculamos el 5% de las salas, es decir, las paredes a tirar
-        Integer i = a.intValue();
+        Integer i=0;
+        if(a>=1)
+            i = a.intValue();
         int checked = 0;
-        if (i < 1) {
-            i = 1; //Garantizamos que tiramos al menos una pared (para garantizar multiplicidad de caminos)
-        }
         Set<Integer> comprobadas = new LinkedHashSet<>(); //Salas ya comprobadas
         boolean tirable;
         for (; i > 0 && checked < tamX * tamY; i--) { //Pararemos, bien si ya creamos suficientes atajos, bien si no se puede
@@ -428,31 +488,31 @@ public class Mapa {
                     if (aux.horizontal()) { //Comprobamos que se podía tirar
                         if (aux.getSala1().getID() % tamX < tamX - 1) {
                             int[] ids = {aux.getSala1().getID(), aux.getSala1().getID() + 1, aux.getSala2().getID(), aux.getSala2().getID() + 1};
-                            tirable = tirable && UtilityKnife.hayPared(laberinto, ids);
+                            tirable = tirable && hayPared(ids);
                         }
                         if (aux.getSala1().getID() % tamX > 0) {
                             int[] ids = {aux.getSala1().getID(), aux.getSala1().getID() - 1, aux.getSala2().getID(), aux.getSala2().getID() - 1};
-                            tirable = tirable && UtilityKnife.hayPared(laberinto, ids);
+                            tirable = tirable && hayPared(ids);
                         }
                     } else {
                         if (aux.getSala1().getID() / tamX < tamY - 1) {
                             int[] ids = {aux.getSala1().getID(), aux.getSala1().getID() + tamX, aux.getSala2().getID(), aux.getSala2().getID() + tamX};
-                            tirable = tirable && UtilityKnife.hayPared(laberinto, ids);
+                            tirable = tirable && hayPared(ids);
                         }
                         if (aux.getSala1().getID() / tamX > 0) {
                             int[] ids = {aux.getSala1().getID(), aux.getSala1().getID() - tamX, aux.getSala2().getID(), aux.getSala2().getID() - tamX};
-                            tirable = tirable && UtilityKnife.hayPared(laberinto, ids);
+                            tirable = tirable && hayPared(ids);
                         }
                     }
                     if (!tirable) { //Si no se podía, la restauramos
                         laberinto.borraArco(aux.getSala1().getID(), aux.getSala2().getID());
-                        i++; //No hemos tirado nada
+                        i++;
                     }
                 } else {
-                    i++; //Si no había vecino, no hemos tirado nada
+                    i++;
                 }
             } else {
-                i++; //Si ya la comprobamos, no hemos tirado nada
+                i++;
             }
         }
     }
@@ -498,9 +558,8 @@ public class Mapa {
         //Log del mapa
         Logger logger = Logger.getInstance();
         logger.logMapa();
-        logger.logRutas();
+        m.crearAtajos();
         m.distribuirLlaves();
-
         //Creación de la lista de identificadores
         int j = 1;
         Integer[] listaLlaves = new Integer[numLlaves];
@@ -521,6 +580,7 @@ public class Mapa {
         p.configurar(combLlaves);
         m.insertarPuerta(p);
         m.dumpPersonajes();
+        logger.logRutas();
         //Simulación
         boolean abierta = false;
         logger.logInfoMapa();

@@ -5,7 +5,6 @@
  */
 package DP.GameOfThrones;
 
-import DP.ED.Grafo;
 import DP.ED.List;
 import DP.Exceptions.MapSizeException;
 import DP.Personajes.Personaje;
@@ -16,112 +15,124 @@ import org.junit.Before;
 
 /**
  *
- * @author StickBrush
+ * @author Solaire
  */
-public class MapaTest {
-    private MapaForTesting instance;
+public class MapaTest extends Mapa {
+
+    private MapaTest(int a, int b, int c, int d) throws MapSizeException {
+        super(a, b, c, d);
+    }
     
-    public MapaTest() {
+    public MapaTest(){
     }
 
     @Before
-    public void setUp(){
-        instance.forceNull();
+    public void setUp() {
+        instance = null;
     }
+
     /**
      * Test of getInstance method, of class Mapa.
      */
     @Test
-    public void testGetInstance() throws MapSizeException {
+    public void testGetInstance_4args() {
         int salaPuerta = 0;
         int X = 0;
         int Y = 0;
         int profComb = 0;
+        boolean expResult = false;
+        try {
+            Mapa result = Mapa.getInstance(salaPuerta, X, Y, profComb);
+        } catch (MapSizeException ex) {
+            expResult = true;
+        }
+        assertTrue(expResult);
+    }
+
+    /**
+     * Test of getInstance method, of class Mapa.
+     */
+    @Test
+    public void testGetInstance_0args() {
         Mapa expResult = null;
-        Mapa result = Mapa.getInstance(salaPuerta, X, Y, profComb);
-        assertNotEquals(expResult, result);
-        expResult=Mapa.getInstance(salaPuerta, X, Y, profComb);
-        assertSame(expResult, result);
+        try {
+            expResult = Mapa.getInstance(35, 6, 6, 4);
+        } catch (MapSizeException ex) {
+            fail("Excepción en argumentos controlados");
+        }
+        Mapa result = Mapa.getInstance();
+        assertEquals(expResult, result);
+    }
+
+    /**
+     * Test of nuevoPersonaje method, of class Mapa.
+     */
+    @Test
+    public void testNuevoPersonaje() {
+        Personaje p = new Stark("", 'T', 0);
+        MapaTest.getInstance();
+        instance.nuevoPersonaje(p);
+        assertSame(p, instance.personajes.get(0));
     }
 
     /**
      * Test of esAccesible method, of class Mapa.
      */
     @Test
-    public void testEsAccesible() throws MapSizeException {
+    public void testEsAccesible() {
         int IDS1 = 0;
         int IDS2 = 1;
-        Mapa instance=Mapa.getInstance(5, 5, 5, 5);
-        boolean expResult = false;
+        MapaTest.getInstance();
+        instance.getLaberintoActualizado().nuevoArco(0, 1);
+        boolean expResult = true;
         boolean result = instance.esAccesible(IDS1, IDS2);
         assertEquals(expResult, result);
-    }
-
-    /**
-     * Test of getLaberinto method, of class Mapa.
-     */
-    @Test
-    public void testGetLaberintoActualizado() throws MapSizeException {
-        System.out.println("getLaberinto");
-        Mapa instance = Mapa.getInstance(5, 5, 5, 5);
-        Grafo expResult = null;
-        Grafo result = instance.getLaberintoActualizado();
-        assertNotEquals(expResult, result);
+        expResult = false;
+        instance.getLaberintoActualizado().borraArco(0, 1);
+        result = instance.esAccesible(IDS1, IDS2);
+        assertEquals(expResult, result);
     }
 
     /**
      * Test of distribuirLlaves method, of class Mapa.
      */
     @Test
-    public void testDistribuirLlaves() throws MapSizeException {
-        Mapa instance = Mapa.getInstance(5, 5, 5, 5);
+    public void testDistribuirLlaves() {
+        MapaTest.getInstance();
         instance.distribuirLlaves();
-        assertFalse(instance.getSala(0, 0).tieneLlave());
-    }
-    /**
-     * Test of simularTurno method, of class Mapa.
-     */
-    @Test
-    public void testSimularTurno() {
-        System.out.println("simularTurno");
-        Mapa instance = null;
-        instance.simularTurno();
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of puertaAbierta method, of class Mapa.
-     */
-    @Test
-    public void testPuertaAbierta() {
-        System.out.println("puertaAbierta");
-        Mapa instance = null;
-        boolean expResult = false;
-        boolean result = instance.puertaAbierta();
-        assertEquals(expResult, result);
-        fail("The test case is a prototype.");
+        List<Integer> salas = new List<>();
+        salas.addLast(0);
+        salas.addLast(1);
+        salas.addLast(2);
+        salas.addLast(8);
+        salas.addLast(14);
+        salas.addLast(15);
+        salas.addLast(21);
+        salas.addLast(27);
+        salas.addLast(28);
+        int x = 0;
+        for (int i = 0; i < instance.getTamY(); i++) {
+            for (int j = 0; j < instance.getTamX(); j++) {
+                if (salas.contains(x)) {
+                    assertTrue(instance.getSala(i, j).tieneLlave());
+                } else {
+                    assertFalse(instance.getSala(i, j).tieneLlave());
+                }
+                x++;
+            }
+        }
     }
 
-    /**
-     * Test of insertarPersonaje method, of class Mapa.
-     */
-    @Test
-    public void testInsertarPersonaje() throws MapSizeException {
-        System.out.println("insertarPersonaje");
-        Personaje p = new Stark("", 'T', 0);
-        Mapa instance = Mapa.getInstance(5, 5, 5, 5);        
-        instance.insertarPersonaje(p);
-        assertTrue(instance.getSala(0, 0).tienePersonaje());
-    }
     /**
      * Test of dumpPersonajes method, of class Mapa.
      */
     @Test
-    public void testDumpPersonajes() throws MapSizeException {
-        Mapa instance = Mapa.getInstance(5, 5, 5, 5);
-        instance.nuevoPersonaje(new Stark("", 'T', 0));
+    public void testDumpPersonajes() {
+        MapaTest.getInstance();
+        Personaje p = new Stark("", 'T', 0);
+        instance.nuevoPersonaje(p);
         instance.dumpPersonajes();
-        assertTrue(instance.getSala(0, 0).tienePersonaje());
+        assertSame(p, instance.getSala(0, 0).primero());
     }
-    
+
 }

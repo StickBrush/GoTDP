@@ -98,7 +98,6 @@ public abstract class Personaje {
     /**
      * Mueve al personaje
      *
-     * @param m Mapa que contiene al personaje
      * @param i Coordenada i de la sala en la que está el personaje
      * @param j Coordenada j de la sala en la que está el personaje
      * @param turno Turno actual

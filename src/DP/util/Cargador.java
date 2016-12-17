@@ -1,7 +1,6 @@
 package DP.util;
 
 import DP.Exceptions.MapSizeException;
-import DP.GameOfThrones.Dir;
 import java.util.List;
 import DP.GameOfThrones.Mapa;
 import DP.Personajes.*;
@@ -116,7 +115,7 @@ public class Cargador {
             System.err.println("Tamaño del mapa inválido");
             System.err.println("Creando mapa por defecto...");
             try {
-                m = Mapa.getInstance(35, 5, 5, 4);
+                m = Mapa.getInstance(35, 6, 6, 5);
             } catch (MapSizeException w) {
                 System.err.println("Esto no pasará");
             }

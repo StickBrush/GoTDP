@@ -5,7 +5,6 @@
  */
 package DP.GameOfThrones;
 
-import DP.ED.Arbol;
 import DP.Personajes.Personaje;
 import DP.Personajes.Stark;
 import org.junit.Test;
@@ -62,7 +61,6 @@ public class SalaTest {
      */
     @Test
     public void testTienePersonaje() {
-        System.out.println("tienePersonaje");
         boolean expResult = false;
         boolean result = instance.tienePersonaje();
         assertEquals(expResult, result);
@@ -76,7 +74,6 @@ public class SalaTest {
      */
     @Test
     public void testPrimero() {
-        System.out.println("primero");
         Personaje expResult;
         Personaje result;
         expResult=new Stark("", 'T', 0);
@@ -93,7 +90,6 @@ public class SalaTest {
      */
     @Test
     public void testEliminarLlave() {
-        System.out.println("eliminarLlave");
         instance.nuevaLlave(new Llave(0));
         instance.eliminarLlave();
         assertEquals(null, instance.getLlave());
@@ -104,7 +100,6 @@ public class SalaTest {
      */
     @Test
     public void testTieneLlave() {
-        System.out.println("tieneLlave");
         boolean expResult = false;
         boolean result = instance.tieneLlave();
         assertEquals(expResult, result);
@@ -129,19 +124,11 @@ public class SalaTest {
      */
     @Test
     public void testGetID() {
-        System.out.println("getID");
         Integer expResult = 0;
         Integer result = instance.getID();
         assertEquals(expResult, result);
     }
 
-    /**
-     * Test of simular method, of class Sala.
-     */
-    @Test
-    public void testSimular() {
-        fail("TODO");
-    }
 
     /**
      * Test of setKruskal method, of class Sala.

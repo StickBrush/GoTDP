@@ -103,4 +103,8 @@ public class List<tipoDato> {
     public void removeLast() {
         l.removeLast();
     }
+    
+    public boolean contains(tipoDato Data){
+        return l.contains(Data);
+    }
 }
