@@ -126,7 +126,6 @@ public class Mapa {
         }
         return instance;
     }
-
     /**
      * Algoritmo de Kruskal
      *
@@ -356,6 +355,7 @@ public class Mapa {
      */
     public void simularTurno() {
         Sala salaAux;
+        turno++;
         Arbol<Character> personajesMovidos = new Arbol<Character>(); //Evita mover varias veces el mismo personaje.
         for (int i = 0; i < tamY; i++) {
             for (int j = 0; j < tamX; j++) {
@@ -363,7 +363,6 @@ public class Mapa {
                 salaAux.simular(i, j, personajesMovidos);
             }
         }
-        turno++;
     }
 
     /**

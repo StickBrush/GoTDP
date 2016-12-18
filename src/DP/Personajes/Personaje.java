@@ -111,7 +111,7 @@ public abstract class Personaje {
             ruta.desencolar();
             switch (o) {
                 case N:
-                    if (i - 1 > 0 && m.esAccesible(i * m.getTamX() + j, (i - 1) * m.getTamX() + j)) {
+                    if (i - 1 >= 0 && m.esAccesible(i * m.getTamX() + j, (i - 1) * m.getTamX() + j)) {
                         m.getSala(i - 1, j).nuevoPersonaje(this, false);
                         return true;
                     } else if (i - 1 < 0) {
@@ -123,16 +123,16 @@ public abstract class Personaje {
                     if (i + 1 < m.getTamY() && m.esAccesible(i * m.getTamX() + j, (i + 1) * m.getTamX() + j)) {
                         m.getSala(i + 1, j).nuevoPersonaje(this, false);
                         return true;
-                    } else if (i + 1 > m.getTamY()) {
+                    } else if (i + 1 >= m.getTamY()) {
                         throw new MovementException();
                     } else {
                         return false;
                     }
                 case O:
-                    if (j - 1 > 0 && m.esAccesible(i * m.getTamX() + j, i * m.getTamX() + j - 1)) {
+                    if (j - 1 >= 0 && m.esAccesible(i * m.getTamX() + j, i * m.getTamX() + j - 1)) {
                         m.getSala(i, j - 1).nuevoPersonaje(this, false);
                         return true;
-                    } else if (j - 1 < 0) {
+                    } else if (j - 1 <= 0) {
                         throw new MovementException();
                     } else {
                         return false;
