@@ -6,8 +6,8 @@ import java.util.PriorityQueue;
 /**
  * Implementación de la Lista Ordenada
  *
- * @version 2.0
- * @author Juan Luis Herrera González Curso: 2º (Grupo Grande A) EC2
+ * @version 4.0
+ * @author Juan Luis Herrera González Curso: 2º (Grupo Grande A) EC4
  * @param <tipoDato> Tipo de dato de la lista ordenada. Debe ser comparable.
  */
 public class ListaOrdenada<tipoDato> {

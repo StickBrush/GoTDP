@@ -7,8 +7,8 @@ import org.junit.Before;
 /**
  * Pruebas de la Llave
  *
- * @version 3.0
- * @author Juan Luis Herrera González Curso: 2º (Grupo Grande A) EC3
+ * @version 4.0
+ * @author Juan Luis Herrera González Curso: 2º (Grupo Grande A) EC4
  */
 public class LlaveTest {
 
@@ -20,7 +20,7 @@ public class LlaveTest {
     }
 
     /**
-     * Test of identificar method, of class Llave.
+     * Prueba del método identificar , de la clase Llave.
      */
     @Test
     public void testIdentificar() {
@@ -30,7 +30,7 @@ public class LlaveTest {
     }
 
     /**
-     * Test of compareTo method, of class Llave.
+     * Prueba del método compareTo , de la clase Llave.
      */
     @Test
     public void testCompareTo() {
@@ -47,7 +47,7 @@ public class LlaveTest {
     }
 
     /**
-     * Test of equals method, of class Llave.
+     * Prueba del método equals , de la clase Llave.
      */
     @Test
     public void testEquals() {
@@ -61,7 +61,7 @@ public class LlaveTest {
     }
 
     /**
-     * Test of toString method, of class Llave.
+     * Prueba del método toString , de la clase Llave.
      */
     @Test
     public void testToString() {

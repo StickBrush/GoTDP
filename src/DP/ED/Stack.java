@@ -4,10 +4,7 @@ package DP.ED;
  * Implementation of the method for the Stack class.
  *
  * @version 2.0
- * @author
- * <br> Profesores DP <b>
- * Program Development</b><br>
- * 16/17 Course
+ * @author Profesores DP Program Development 16/17 Course
  */
 public class Stack<tipoDato> {
 

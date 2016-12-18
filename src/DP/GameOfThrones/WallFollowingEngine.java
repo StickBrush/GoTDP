@@ -4,19 +4,36 @@ import DP.ED.Cola;
 import static DP.GameOfThrones.Dir.*;
 
 /**
+ * Implementación del algoritmo del Wall Follower
  *
- * @author Solaire
+ * @version 4.0
+ * @author Juan Luis Herrera González Curso: 2º (Grupo Grande A) EC4
  */
 public class WallFollowingEngine {
 
+    /**
+     * Orientación hacia la que mira el WallFollowingEngine
+     */
     private Dir orientacion;
+    /**
+     * Sala actual
+     */
     private int salaAct;
 
+    /**
+     * Constructor por defecto del WallFollowingEngine
+     */
     public WallFollowingEngine() {
         salaAct = 0;
         orientacion = S;
     }
 
+    /**
+     * Convierte de Dir a int
+     *
+     * @param d Dir a convertir
+     * @return int con el incremento correspondiente
+     */
     private int castDirToInt(Dir d) {
         switch (d) {
             case N:
@@ -32,9 +49,15 @@ public class WallFollowingEngine {
         }
     }
 
-    public Cola<Dir> wallFollower(int kingsLanding) {
+    /**
+     * Algoritmo Wall Follower
+     *
+     * @return Ruta con el Wall Follower
+     */
+    public Cola<Dir> wallFollower() {
         Cola<Dir> ruta = new Cola<>();
         Mapa aux = Mapa.getInstance();
+        int kingsLanding = aux.getKingsLanding();
         while (salaAct != kingsLanding) {
             switch (orientacion) {
                 case N:

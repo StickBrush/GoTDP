@@ -1,32 +1,28 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package DP.Personajes;
 
 import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
- *
- * @author Solaire
+ * Pruebas del Targaryen
+ * @version 4.0
+ * @author Juan Luis Herrera González Curso: 2º (Grupo Grande A) EC4
  */
 public class TargaryenTest {
-    
+
     public TargaryenTest() {
     }
 
     /**
-     * Test of autoRuta method, of class Targaryen.
+     * Test del método autoRuta , de la clase Targaryen.
      */
     @Test
     public void testAutoRuta() {
         Targaryen instance = new Targaryen("", 'T', 0);
         instance.autoRuta();
-        String expResult="(ruta:T:E E S O O E S O E N E S E S O O O S E O N E E S N E S S O O O E E E E O N E E S )\n";
-        String result=instance.ruta();
+        String expResult = "(ruta:T:E E S O O E S O E N E S E S O O O S E O N E E S N E S S O O O E E E E O N E E S )\n";
+        String result = instance.ruta();
         assertEquals(expResult, result);
     }
-    
+
 }

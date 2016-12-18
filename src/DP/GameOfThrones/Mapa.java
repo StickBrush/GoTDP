@@ -17,8 +17,8 @@ import java.util.LinkedHashSet;
 /**
  * Implementación del mapa
  *
- * @version 3.0
- * @author Juan Luis Herrera González Curso: 2º (Grupo Grande A) EC3
+ * @version 4.0
+ * @author Juan Luis Herrera González Curso: 2º (Grupo Grande A) EC4
  */
 public class Mapa {
 
@@ -63,7 +63,11 @@ public class Mapa {
      */
     protected List<Personaje> personajes;
 
-    protected static Mapa instance=null;
+    /**
+     * Instancia (patrón Singleton)
+     */
+    protected static Mapa instance = null;
+
     /**
      * Constructor parametrizado de Mapa
      *
@@ -105,10 +109,24 @@ public class Mapa {
         generarParedes(paredes);
         Kruskal(paredes);
     }
-    
-    protected Mapa(){
+
+    /**
+     * Método de uso exclusivo en las pruebas
+     */
+    protected Mapa() {
     }
-    
+
+    /**
+     * Método getInstance del patrón Singleton
+     *
+     * @param salaPuerta Sala de la puerta
+     * @param X Número de filas
+     * @param Y Número de columnas
+     * @param profComb Profundidad de la combinación
+     * @return Instancia única de mapa
+     * @throws MapSizeException Se intentó conseguir un mapa de dimensiones no
+     * válidas
+     */
     public static Mapa getInstance(int salaPuerta, int X, int Y, int profComb) throws MapSizeException {
         if (instance == null) {
             instance = new Mapa(salaPuerta, X, Y, profComb);
@@ -116,6 +134,12 @@ public class Mapa {
         return instance;
     }
 
+    /**
+     * Método getInstance del patrón Singleton sin parámetros
+     *
+     * @return Instancia única de mapa. De no haberla creado, se crea por
+     * defecto.
+     */
     public static Mapa getInstance() {
         if (instance == null) {
             try {
@@ -126,6 +150,7 @@ public class Mapa {
         }
         return instance;
     }
+
     /**
      * Algoritmo de Kruskal
      *
@@ -207,12 +232,20 @@ public class Mapa {
         return laberinto.adyacente(IDS1, IDS2);
     }
 
+    /**
+     * Actualiza y devuelve el laberinto
+     *
+     * @return Laberinto actualizado
+     */
     public Grafo getLaberintoActualizado() {
         laberinto.warshall();
         laberinto.floyd();
         return laberinto;
     }
 
+    /**
+     * Distribuye las llaves por el mapa
+     */
     public void distribuirLlaves() {
         int numLlavesGenerar = 45;
         List<Integer> salasLlaves = sortByFrequence();
@@ -237,7 +270,7 @@ public class Mapa {
         }
     }
 
-     /**
+    /**
      * Devuelve si hay pared o no
      *
      * @param g Grafo sobre el que comprobar
@@ -253,7 +286,12 @@ public class Mapa {
         pared = pared || !laberinto.adyacente(paredes[2], paredes[3]);
         return pared;
     }
-    
+
+    /**
+     * Devuelve el ID de King's Landing
+     *
+     * @return ID de King's Landing
+     */
     public Integer getKingsLanding() {
         return (iPuerta * tamX + jPuerta);
     }
@@ -360,7 +398,7 @@ public class Mapa {
         for (int i = 0; i < tamY; i++) {
             for (int j = 0; j < tamX; j++) {
                 salaAux = salas[i][j];
-                salaAux.simular(i, j, personajesMovidos);
+                salaAux.simular(personajesMovidos);
             }
         }
     }
@@ -431,8 +469,8 @@ public class Mapa {
      * @return Lista de salas ordenadas por frecuencia de tránsito
      */
     private List<Integer> sortByFrequence() {
-        int kingsLanding= iPuerta * tamX + jPuerta;
-        int size=tamX*tamY;
+        int kingsLanding = iPuerta * tamX + jPuerta;
+        int size = tamX * tamY;
         Set<Set<Integer>> caminos = laberinto.caminos(0, kingsLanding);
         int[] freq = new int[size];
         List<Integer> sorted = new List<>();
@@ -462,56 +500,62 @@ public class Mapa {
         }
         return sorted;
     }
-    
+
+    /**
+     * Método que tira y comprueba una pared.
+     *
+     * @param aux Pared a tirar
+     * @return True si se puede tirar. False si no.
+     */
+    private boolean paredTirable(Pared aux) {
+        boolean tirable = true;
+        laberinto.nuevoArco(aux.getSala1().getID(), aux.getSala2().getID()); //Tiramos la pared
+        if (aux.horizontal()) { //Comprobamos que se podía tirar
+            if (aux.getSala1().getID() % tamX < tamX - 1) {
+                int[] ids = {aux.getSala1().getID(), aux.getSala1().getID() + 1, aux.getSala2().getID(), aux.getSala2().getID() + 1};
+                tirable = tirable && hayPared(ids);
+            }
+            if (aux.getSala1().getID() % tamX > 0) {
+                int[] ids = {aux.getSala1().getID(), aux.getSala1().getID() - 1, aux.getSala2().getID(), aux.getSala2().getID() - 1};
+                tirable = tirable && hayPared(ids);
+            }
+        } else {
+            if (aux.getSala1().getID() / tamX < tamY - 1) {
+                int[] ids = {aux.getSala1().getID(), aux.getSala1().getID() + tamX, aux.getSala2().getID(), aux.getSala2().getID() + tamX};
+                tirable = tirable && hayPared(ids);
+            }
+            if (aux.getSala1().getID() / tamX > 0) {
+                int[] ids = {aux.getSala1().getID(), aux.getSala1().getID() - tamX, aux.getSala2().getID(), aux.getSala2().getID() - tamX};
+                tirable = tirable && hayPared(ids);
+            }
+        }
+        return tirable;
+    }
+
     /**
      * Crea atajos en el mapa
      */
     public void crearAtajos() {
         Double a = (tamX * tamY) * 0.05; //Calculamos el 5% de las salas, es decir, las paredes a tirar
-        Integer i=0;
-        if(a>=1)
-            i = a.intValue();
-        int checked = 0;
-        Set<Integer> comprobadas = new LinkedHashSet<>(); //Salas ya comprobadas
+        Integer i = 0;
+        i = a.intValue();
         boolean tirable;
-        for (; i > 0 && checked < tamX * tamY; i--) { //Pararemos, bien si ya creamos suficientes atajos, bien si no se puede
+        while (i > 0) { //Pararemos, bien si ya creamos suficientes atajos, bien si no se puede
             tirable = true; //Asumimos que podemos tirar la pared
             int pos = GenAleatorios.generarNumero(tamX * tamY); //Tomamos sala al azar
-            if (!comprobadas.contains(pos)) { //Si no la hemos comprobado ya...
-                checked++;
-                comprobadas.add(pos);
-                Sala comprobar = salas[pos / tamX][pos % tamX];
-                Pared aux = comprobar.vecinoNoAccesible(this); //Tomamos el vecino no accesible
-                if (aux != null) { //Si existe...
-                    laberinto.nuevoArco(aux.getSala1().getID(), aux.getSala2().getID()); //Tiramos la pared
-                    if (aux.horizontal()) { //Comprobamos que se podía tirar
-                        if (aux.getSala1().getID() % tamX < tamX - 1) {
-                            int[] ids = {aux.getSala1().getID(), aux.getSala1().getID() + 1, aux.getSala2().getID(), aux.getSala2().getID() + 1};
-                            tirable = tirable && hayPared(ids);
-                        }
-                        if (aux.getSala1().getID() % tamX > 0) {
-                            int[] ids = {aux.getSala1().getID(), aux.getSala1().getID() - 1, aux.getSala2().getID(), aux.getSala2().getID() - 1};
-                            tirable = tirable && hayPared(ids);
-                        }
-                    } else {
-                        if (aux.getSala1().getID() / tamX < tamY - 1) {
-                            int[] ids = {aux.getSala1().getID(), aux.getSala1().getID() + tamX, aux.getSala2().getID(), aux.getSala2().getID() + tamX};
-                            tirable = tirable && hayPared(ids);
-                        }
-                        if (aux.getSala1().getID() / tamX > 0) {
-                            int[] ids = {aux.getSala1().getID(), aux.getSala1().getID() - tamX, aux.getSala2().getID(), aux.getSala2().getID() - tamX};
-                            tirable = tirable && hayPared(ids);
-                        }
-                    }
+            Sala comprobar = salas[pos / tamX][pos % tamX];
+            Set<Pared> aux = comprobar.vecinoNoAccesible(); //Tomamos el vecino no accesible
+            Iterator<Pared> it = aux.iterator();
+            if (it.hasNext()) {
+                while (it.hasNext() && i > 0) {
+                    Pared p = it.next();
+                    tirable = paredTirable(p);
                     if (!tirable) { //Si no se podía, la restauramos
-                        laberinto.borraArco(aux.getSala1().getID(), aux.getSala2().getID());
-                        i++;
+                        laberinto.borraArco(p.getSala1().getID(), p.getSala2().getID());
+                    } else {
+                        i--;
                     }
-                } else {
-                    i++;
                 }
-            } else {
-                i++;
             }
         }
     }
@@ -584,7 +628,7 @@ public class Mapa {
         boolean abierta = false;
         logger.logInfoMapa();
         System.out.println("Simulando...");
-        for (int i = 0; i < 50 && !abierta; i++) {
+        for (int i = 0; i < 100 && !abierta; i++) {
             m.simularTurno();
             logger.logInfoMapa();
             abierta = m.puertaAbierta();

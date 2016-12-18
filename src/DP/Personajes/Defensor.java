@@ -6,8 +6,8 @@ import DP.GameOfThrones.Mapa;
 /**
  * Implementación de los Defensores
  *
- * @version 3.0
- * @author Juan Luis Herrera González Curso: 2º (Grupo Grande A) EC3
+ * @version 4.0
+ * @author Juan Luis Herrera González Curso: 2º (Grupo Grande A) EC4
  */
 public abstract class Defensor extends Personaje {
 
@@ -26,22 +26,20 @@ public abstract class Defensor extends Personaje {
     /**
      * Interacción defensor-puerta
      *
-     * @param m Mapa que contiene al defensor
-     * @param i Coordenada i de la sala de la puerta
-     * @param j Coordenada j de la sala de la puerta
      * @throws MovementException El defensor no pudo moverse.
      */
     @Override
-    public boolean interactuarPuerta(int i, int j) throws MovementException {
+    public boolean interactuarPuerta() throws MovementException {
         Mapa m = Mapa.getInstance();
+        int i = m.getKingsLanding() / m.getTamX();
+        int j = m.getKingsLanding() % m.getTamX();
         m.getPuerta().cerrar();
-        return this.mover(i, j, m.getTurno());
+        return this.mover(i, j);
     }
 
     /**
      * Devuelve la sala de inicio del defensor
      *
-     * @param m Mapa que contiene al defensor
      * @return Sala de inicio del defensor
      */
     @Override

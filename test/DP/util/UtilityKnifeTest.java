@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package DP.util;
 
 import DP.ED.Cola;
@@ -15,20 +10,21 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
- *
- * @author Solaire
+ * Pruebas del UtilityKnife
+ * @version 4.0
+ * @author Juan Luis Herrera González Curso: 2º (Grupo Grande A) EC4
  */
 public class UtilityKnifeTest {
-    
+
     public UtilityKnifeTest() {
     }
 
     /**
-     * Test of nuevaCombinacion method, of class UtilityKnife.
+     * Test del método nuevaCombinacion , de la clase UtilityKnife.
      */
     @Test
     public void testNuevaCombinacion() {
-        int j=1;
+        int j = 1;
         Integer[] listaLlaves = new Integer[15];
         for (int i = 0; i < listaLlaves.length; i++) {
             listaLlaves[i] = j;
@@ -40,13 +36,13 @@ public class UtilityKnifeTest {
     }
 
     /**
-     * Test of integerToDir method, of class UtilityKnife.
+     * Test del método integerToDir , de la clase UtilityKnife.
      */
     @Test
     public void testIntegerToDir() {
         System.out.println("integerToDir");
         Set<Integer> s = new LinkedHashSet<>();
-        Integer[] ruta={0, 1, 7, 8, 9, 15, 21, 20, 14};
+        Integer[] ruta = {0, 1, 7, 8, 9, 15, 21, 20, 14};
         s.addAll(Arrays.asList(ruta));
         Cola<Dir> expResult = new Cola<>();
         expResult.encolar(E);
@@ -59,11 +55,11 @@ public class UtilityKnifeTest {
         expResult.encolar(N);
         Cola<Dir> result = UtilityKnife.integerToDir(s);
         assertEquals(expResult.numEl(), result.numEl());
-        while(!expResult.vacia()){
+        while (!expResult.vacia()) {
             assertEquals(expResult.primero(), result.primero());
             expResult.desencolar();
             result.desencolar();
         }
     }
-    
+
 }

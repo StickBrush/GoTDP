@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package DP.Personajes;
 
 import DP.GameOfThrones.Llave;
@@ -13,33 +8,33 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
- *
- * @author Solaire
+ * Pruebas del Defensor
+ * @version 4.0
+ * @author Juan Luis Herrera González Curso: 2º (Grupo Grande A) EC4
  */
 public class DefensorTest {
-    
+
     public DefensorTest() {
     }
 
     /**
-     * Test of interactuarPuerta method, of class Defensor.
+     * Test del método interactuarPuerta , de la clase Defensor.
      */
     @Test
     public void testInteractuarPuerta() throws Exception {
         Mapa.getInstance().insertarPuerta(PuertaForTesting.getInstance());
         PuertaForTesting.getInstance().forceOpen();
-        Llave[] l={new Llave(0)};
+        Llave[] l = {new Llave(0)};
         PuertaForTesting.getInstance().configurar(l);
         int i = 5;
         int j = 5;
         Defensor instance = new DefensorImpl();
         boolean expResult = false;
-        boolean result = instance.interactuarPuerta(i, j);
+        boolean result = instance.interactuarPuerta();
         assertEquals(expResult, result);
         assertFalse(PuertaForTesting.getInstance().estaAbierta());
     }
-    
-    
+
     public class DefensorImpl extends Defensor {
 
         public DefensorImpl() {
@@ -61,5 +56,5 @@ public class DefensorTest {
             throw new UnsupportedOperationException("Not supported yet.");
         }
     }
-    
+
 }

@@ -6,8 +6,8 @@ import DP.util.UtilityKnife;
 /**
  * Implementación de la clase Stark
  *
- * @version 3.0
- * @author Juan Luis Herrera González Curso: 2º (Grupo Grande A) EC3
+ * @version 4.0
+ * @author Juan Luis Herrera González Curso: 2º (Grupo Grande A) EC4
  */
 public class Stark extends Atacante {
 
@@ -22,9 +22,12 @@ public class Stark extends Atacante {
         super(nombre, "Stark", ID, turno);
     }
 
+    /**
+     * Cálculo automático de la ruta
+     */
     @Override
     public void autoRuta() {
-        ruta=UtilityKnife.integerToDir(Mapa.getInstance().getLaberintoActualizado().profundidad(Mapa.getInstance().getKingsLanding()));
+        ruta = UtilityKnife.integerToDir(Mapa.getInstance().getLaberintoActualizado().profundidad(Mapa.getInstance().getKingsLanding()));
     }
 
 }

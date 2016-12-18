@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package DP.GameOfThrones;
 
 import org.junit.Test;
@@ -10,8 +5,9 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 
 /**
- *
- * @author Solaire
+ * Pruebas de la Puerta
+ * @version 4.0
+ * @author Juan Luis Herrera González Curso: 2º (Grupo Grande A) EC4
  */
 public class PuertaTest {
 
@@ -24,7 +20,7 @@ public class PuertaTest {
     }
 
     /**
-     * Test of setAltura method, of class Puerta.
+     * Test del método setAltura , de la clase Puerta.
      */
     @Test
     public void testSetAltura() {
@@ -34,7 +30,7 @@ public class PuertaTest {
     }
 
     /**
-     * Test of cerrar method, of class Puerta.
+     * Test del método cerrar , de la clase Puerta.
      */
     @Test
     public void testCerrar() {
@@ -47,7 +43,7 @@ public class PuertaTest {
     }
 
     /**
-     * Test of abrir method, of class Puerta.
+     * Test del método abrir , de la clase Puerta.
      */
     @Test
     public void testAbrir() {
@@ -62,7 +58,7 @@ public class PuertaTest {
     }
 
     /**
-     * Test of llavesCerr method, of class Puerta.
+     * Test del método llavesCerr , de la clase Puerta.
      */
     @Test
     public void testLlavesCerr() {
@@ -77,7 +73,7 @@ public class PuertaTest {
     }
 
     /**
-     * Test of llavesProb method, of class Puerta.
+     * Test del método llavesProb , de la clase Puerta.
      */
     @Test
     public void testLlavesProb() {

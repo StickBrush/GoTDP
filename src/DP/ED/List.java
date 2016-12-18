@@ -5,8 +5,9 @@ import java.util.LinkedList;
 /**
  * Implementación de la Lista
  *
- * @version 2.0
- * @author Juan Luis Herrera González Curso: 2º (Grupo Grande A) EC2
+ * @version 4.0
+ * @author Juan Luis Herrera González Curso: 2º (Grupo Grande A) EC4
+ * @param <tipoDato> Tipo de dato de la lista
  */
 public class List<tipoDato> {
 
@@ -85,7 +86,7 @@ public class List<tipoDato> {
      */
     public void delete(Integer pos) {
         l.remove((int) pos);
-     }
+    }
 
     /**
      * Método que añade un dato al final
@@ -103,8 +104,14 @@ public class List<tipoDato> {
     public void removeLast() {
         l.removeLast();
     }
-    
-    public boolean contains(tipoDato Data){
+
+    /**
+     * Devuelve si Data está en la lista
+     *
+     * @param Data Dato a comprobar
+     * @return True si el dato está, false si no
+     */
+    public boolean contains(tipoDato Data) {
         return l.contains(Data);
     }
 }

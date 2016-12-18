@@ -2,32 +2,56 @@ package DP.GameOfThrones;
 
 /**
  * Puerta para pruebas
- * @version 3.0
- * @author Juan Luis Herrera González Curso: 2º (Grupo Grande A) EC3
+ *
+ * @version 4.0
+ * @author Juan Luis Herrera González Curso: 2º (Grupo Grande A) EC4
  */
 public class PuertaForTesting extends Puerta {
-    
-    private static PuertaForTesting instance=null;
-    
-    private PuertaForTesting(){
+
+    /**
+     * Instancia (patrón Singleton)
+     */
+    private static PuertaForTesting instance = null;
+
+    /**
+     * Constructor por defecto de PuertaForTesting
+     */
+    private PuertaForTesting() {
         super();
     }
-    
-    public static PuertaForTesting getInstance(){
-        if(instance==null)
-            instance=new PuertaForTesting();
+
+    /**
+     * GetInstance de PuertaForTesting
+     *
+     * @return Instancia única
+     */
+    public static PuertaForTesting getInstance() {
+        if (instance == null) {
+            instance = new PuertaForTesting();
+        }
         return instance;
     }
-    
-    public static void forceNull(){
-        instance=null;
+
+    /**
+     * Fuerza la instancia a null
+     */
+    public static void forceNull() {
+        instance = null;
     }
-    
-    public int getAltura(){
+
+    /**
+     * Devuelve la altura
+     *
+     * @return Altura
+     */
+    public int getAltura() {
         return this.altura;
     }
-    
-    public void forceOpen(){
-        this.abierta=true;
+
+    /**
+     * Abre la puerta
+     */
+    public void forceOpen() {
+        this.abierta = true;
     }
 }

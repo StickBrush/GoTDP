@@ -88,11 +88,14 @@ public abstract class Personaje {
      * @param vRuta Ruta a seguir por el personaje
      */
     public void setRuta(Dir[] vRuta) {
-        for (int i = 0; i < vRuta.length; i++) {
-            ruta.encolar(vRuta[i]);
+        for (Dir vRuta1 : vRuta) {
+            ruta.encolar(vRuta1);
         }
     }
 
+    /**
+     * Cálculo automático de la ruta
+     */
     public abstract void autoRuta();
 
     /**
@@ -100,13 +103,12 @@ public abstract class Personaje {
      *
      * @param i Coordenada i de la sala en la que está el personaje
      * @param j Coordenada j de la sala en la que está el personaje
-     * @param turno Turno actual
      * @return True si el personaje se movió, false si no
      * @throws MovementException El personaje no se pudo mover.
      */
-    public boolean mover(int i, int j, int turno) throws MovementException {
+    public boolean mover(int i, int j) throws MovementException {
         Mapa m = Mapa.getInstance();
-        if (!ruta.vacia() && this.turno <= turno) {
+        if (!ruta.vacia() && this.turno <= m.getTurno()) {
             Dir o = ruta.primero();
             ruta.desencolar();
             switch (o) {
@@ -163,18 +165,14 @@ public abstract class Personaje {
     /**
      * Interacción personaje-puerta
      *
-     * @param m Mapa que contiene al personaje
-     * @param i Coordenada i de la sala de la puerta
-     * @param j Coordenada j de la sala de la puerta
      * @throws MovementException El personaje no se pudo mover
      * @return True si el personaje se movió, false si no.
      */
-    public abstract boolean interactuarPuerta(int i, int j) throws MovementException;
+    public abstract boolean interactuarPuerta() throws MovementException;
 
     /**
      * Devuelve la sala de inicio del personaje
      *
-     * @param m Mapa que contiene al personaje
      * @return Sala de inicio del personaje
      */
     public abstract Integer init();
@@ -197,7 +195,7 @@ public abstract class Personaje {
      */
     public String ruta() {
         Cola<Dir> aux = new Cola<>();
-        String sol = "(ruta:" + this.ID+":";
+        String sol = "(ruta:" + this.ID + ":";
         Dir dAux;
         while (!ruta.vacia()) {
             dAux = ruta.primero();

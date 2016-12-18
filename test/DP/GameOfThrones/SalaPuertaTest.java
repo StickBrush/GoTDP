@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package DP.GameOfThrones;
 
 import DP.Personajes.Personaje;
@@ -12,8 +7,9 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 
 /**
- *
- * @author Solaire
+ * Pruebas de la SalaPuerta
+ * @version 4.0
+ * @author Juan Luis Herrera González Curso: 2º (Grupo Grande A) EC4
  */
 public class SalaPuertaTest {
 
@@ -28,7 +24,7 @@ public class SalaPuertaTest {
     }
 
     /**
-     * Test of insertarPuerta method, of class SalaPuerta.
+     * Test del método insertarPuerta , de la clase SalaPuerta.
      */
     @Test
     public void testInsertarPuerta() {
@@ -38,7 +34,7 @@ public class SalaPuertaTest {
     }
 
     /**
-     * Test of getPuerta method, of class SalaPuerta.
+     * Test del método getPuerta , de la clase SalaPuerta.
      */
     @Test
     public void testGetPuerta() {
@@ -51,7 +47,7 @@ public class SalaPuertaTest {
     }
 
     /**
-     * Test of nuevoPersonaje method, of class SalaPuerta.
+     * Test del método nuevoPersonaje , de la clase SalaPuerta.
      */
     @Test
     public void testNuevoPersonaje() {

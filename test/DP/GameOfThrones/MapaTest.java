@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package DP.GameOfThrones;
 
 import DP.ED.List;
@@ -14,16 +9,17 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 
 /**
- *
- * @author Solaire
+ * Pruebas del Mapa
+ * @version 4.0
+ * @author Juan Luis Herrera González Curso: 2º (Grupo Grande A) EC4
  */
 public class MapaTest extends Mapa {
 
     private MapaTest(int a, int b, int c, int d) throws MapSizeException {
         super(a, b, c, d);
     }
-    
-    public MapaTest(){
+
+    public MapaTest() {
     }
 
     @Before
@@ -32,7 +28,7 @@ public class MapaTest extends Mapa {
     }
 
     /**
-     * Test of getInstance method, of class Mapa.
+     * Test del método getInstance , de la clase Mapa.
      */
     @Test
     public void testGetInstance_4args() {
@@ -50,7 +46,7 @@ public class MapaTest extends Mapa {
     }
 
     /**
-     * Test of getInstance method, of class Mapa.
+     * Test del método getInstance , de la clase Mapa.
      */
     @Test
     public void testGetInstance_0args() {
@@ -65,7 +61,7 @@ public class MapaTest extends Mapa {
     }
 
     /**
-     * Test of nuevoPersonaje method, of class Mapa.
+     * Test del método nuevoPersonaje , de la clase Mapa.
      */
     @Test
     public void testNuevoPersonaje() {
@@ -76,7 +72,7 @@ public class MapaTest extends Mapa {
     }
 
     /**
-     * Test of esAccesible method, of class Mapa.
+     * Test del método esAccesible , de la clase Mapa.
      */
     @Test
     public void testEsAccesible() {
@@ -94,7 +90,7 @@ public class MapaTest extends Mapa {
     }
 
     /**
-     * Test of distribuirLlaves method, of class Mapa.
+     * Test del método distribuirLlaves , de la clase Mapa.
      */
     @Test
     public void testDistribuirLlaves() {
@@ -124,7 +120,7 @@ public class MapaTest extends Mapa {
     }
 
     /**
-     * Test of dumpPersonajes method, of class Mapa.
+     * Test del método dumpPersonajes , de la clase Mapa.
      */
     @Test
     public void testDumpPersonajes() {

@@ -7,10 +7,7 @@ import java.util.LinkedList;
 
 /**
  * @file grafo.h Declaracion de la clase grafo
- * @author
- * <b> Profesores DP </b><br>
- * <b> Asignatura Desarrollo de Programas</b><br>
- * <b> Curso 11/12 </b>
+ * @author Profesores DP Asignatura Desarrollo de Programa Curso 11/12
  */
 public class Grafo {
 
@@ -394,10 +391,24 @@ public class Grafo {
         }
     }
 
+    /**
+     * Recorrido en profundidad del grafo
+     *
+     * @param destino Nodo hasta el que recorrer
+     * @return Recorrido en profundidad
+     */
     public Set<Integer> profundidad(int destino) {
         return profundidad(0, new LinkedHashSet<Integer>(), destino);
     }
 
+    /**
+     * Recorre en profundidad el grafo
+     *
+     * @param origen Nodo origen
+     * @param visitados Nodos visitados
+     * @param destino Nodo destino
+     * @return Recorrido en profundidad
+     */
     private Set<Integer> profundidad(int origen, Set<Integer> visitados, int destino) {
         Set<Integer> Ady = new LinkedHashSet<>();
         int x;
@@ -421,6 +432,13 @@ public class Grafo {
         return null;
     }
 
+    /**
+     * Hace el camino mínimo del grafo
+     *
+     * @param origen Nodo origen
+     * @param destino Nodo destino
+     * @return Camino mínimo de origen a destino
+     */
     public Set<Integer> caminoMinimo(int origen, int destino) {
         Set<Integer> res = new LinkedHashSet<>();
         while (origen != destino) {
@@ -448,6 +466,12 @@ public class Grafo {
 
     }
 
+    /**
+     * Copia un set
+     *
+     * @param original Set original
+     * @return Set copia
+     */
     private static Set<Integer> setCopy(Set<Integer> original) {
         Set<Integer> nuevo = new LinkedHashSet<>();
         nuevo.addAll(original);

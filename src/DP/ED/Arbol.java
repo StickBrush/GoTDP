@@ -4,9 +4,8 @@ package DP.ED;
  * Implementacion de arbol binario de busqueda.
  *
  * @version 2.0
- * @author <br>Asignatura Desarrollo de Programas
- * <b> Profesores DP </b><br>
- * Curso 14/15
+ * @author Asignatura Desarrollo de Programas Profesores DP Curso 14/15
+ * @param <tipoDato> Tipo de dato que contendrá el árbol
  */
 public class Arbol<tipoDato extends Comparable<tipoDato>> {
 
@@ -108,11 +107,9 @@ public class Arbol<tipoDato extends Comparable<tipoDato>> {
                     hIzq = aux = new Arbol<tipoDato>();
                 }
             } else // dato > datoRaiz
-            {
-                if ((aux = getHijoDer()) == null) {
+             if ((aux = getHijoDer()) == null) {
                     hDer = aux = new Arbol<tipoDato>();
                 }
-            }
             resultado = aux.insertar(dato);
         } else {
             resultado = false;
@@ -161,13 +158,11 @@ public class Arbol<tipoDato extends Comparable<tipoDato>> {
             } else if (dato.compareTo(this.datoRaiz) > 0 && hDer != null) { // dato>datoRaiz
                 hDer = hDer.borrarOrden(dato);
             } else // En este caso el dato es datoRaiz
-            {
-                if (hIzq == null && hDer == null) {
+             if (hIzq == null && hDer == null) {
                     esVacio = true;
                 } else {
                     borrarOrden(dato);
                 }
-            }
         }
     }
 

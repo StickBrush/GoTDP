@@ -36,7 +36,7 @@ public class FicheroCarga {
      * @throws java.io.FileNotFoundException No se encontró archivo
      * @throws java.io.IOException Error de E/S
      */
-    public static Mapa procesarFichero(String nombreFichero, Cargador cargador) throws FileNotFoundException, IOException{
+    public static Mapa procesarFichero(String nombreFichero, Cargador cargador) throws FileNotFoundException, IOException {
         //**String vCampos[]=new String[MAXCAMPOS];
         List<String> vCampos = new ArrayList<String>();
         List<Personaje> personajes = new ArrayList<>();

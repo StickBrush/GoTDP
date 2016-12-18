@@ -5,8 +5,8 @@ import DP.ED.Arbol;
 /**
  * Implementación de la puerta
  *
- * @version 3.0
- * @author Juan Luis Herrera González Curso: 2º (Grupo Grande A) EC3
+ * @version 4.0
+ * @author Juan Luis Herrera González Curso: 2º (Grupo Grande A) EC4
  */
 public class Puerta {
 
@@ -31,7 +31,11 @@ public class Puerta {
      */
     protected int altura;
 
-    private static Puerta instance=null;
+    /**
+     * Instancia (patrón Singleton)
+     */
+    private static Puerta instance = null;
+
     /**
      * Constructor parametrizado de Puerta
      */
@@ -40,10 +44,16 @@ public class Puerta {
         probadas = new Arbol<Llave>();
         abierta = false;
     }
-    
-    public static Puerta getInstance(){
-        if(instance==null)
-            instance=new Puerta();
+
+    /**
+     * Método getInstancia del patrón Singleton
+     *
+     * @return Instancia única de puerta
+     */
+    public static Puerta getInstance() {
+        if (instance == null) {
+            instance = new Puerta();
+        }
         return instance;
     }
 
@@ -63,8 +73,8 @@ public class Puerta {
      */
     public void configurar(Llave[] combinacion) {
         this.combinacion = combinacion;
-        for (int i = 0; i < combinacion.length; i++) {
-            comb.insertar(combinacion[i]);
+        for (Llave combinacion1 : combinacion) {
+            comb.insertar(combinacion1);
         }
     }
 

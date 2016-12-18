@@ -1,19 +1,16 @@
 package DP.util;
 
 import DP.ED.Cola;
-import DP.ED.Grafo;
 import java.util.Set;
 import java.util.Iterator;
-import DP.ED.List;
 import DP.GameOfThrones.Dir;
-import java.util.Arrays;
 
 /**
  * Clase Utility, tiene toda clase de utilidades para otras clases. No es
  * instanciable
  *
- * @version 3.0
- * @author Juan Luis Herrera González Curso: 2º (Grupo Grande A) EC3
+ * @version 4.0
+ * @author Juan Luis Herrera González Curso: 2º (Grupo Grande A) EC4
  */
 public abstract class UtilityKnife {
 
@@ -57,6 +54,12 @@ public abstract class UtilityKnife {
         return i;
     }
 
+    /**
+     * Transforma una ruta de ID de salas en una ruta de direcciones
+     *
+     * @param s Ruta de ID
+     * @return Ruta de direcciones
+     */
     public static Cola<Dir> integerToDir(Set<Integer> s) {
         Cola<Dir> result = new Cola<>();
         Iterator<Integer> i = s.iterator();
@@ -72,7 +75,7 @@ public abstract class UtilityKnife {
             } else {
                 result.encolar(Dir.N);
             }
-            last=act;
+            last = act;
         }
         return result;
     }

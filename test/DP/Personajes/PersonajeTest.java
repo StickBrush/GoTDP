@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package DP.Personajes;
 
 import DP.Exceptions.MovementException;
@@ -13,33 +8,33 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
- *
- * @author Solaire
+ * Pruebas del Personaje
+ * @version 4.0
+ * @author Juan Luis Herrera González Curso: 2º (Grupo Grande A) EC4
  */
 public class PersonajeTest {
-    
+
     public PersonajeTest() {
     }
 
     /**
-     * Test of mover method, of class Personaje.
+     * Test del método mover , de la clase Personaje.
      */
     @Test
     public void testMover() throws Exception {
         int i = 0;
         int j = 0;
-        int turno = 6;
         Personaje instance = new PersonajeImpl();
         Mapa.getInstance().nuevoPersonaje(instance);
         Mapa.getInstance().dumpPersonajes();
         boolean expResult = true;
-        boolean result = instance.mover(i, j, turno);
+        boolean result = instance.mover(i, j);
         assertEquals(expResult, result);
-        assertTrue(Mapa.getInstance().getSala(i, j+1).tienePersonaje());
+        assertTrue(Mapa.getInstance().getSala(i, j + 1).tienePersonaje());
     }
-    
+
     /**
-     * Test of toString method, of class Personaje.
+     * Test del método toString , de la clase Personaje.
      */
     @Test
     public void testToString() {
@@ -50,7 +45,7 @@ public class PersonajeTest {
     }
 
     /**
-     * Test of ruta method, of class Personaje.
+     * Test del método ruta , de la clase Personaje.
      */
     @Test
     public void testRuta() {
@@ -69,20 +64,21 @@ public class PersonajeTest {
         }
 
         public void autoRuta() {
-            Dir[] ruta={Dir.E};
+            Dir[] ruta = {Dir.E};
             setRuta(ruta);
         }
 
         public void interactuarSala(Sala s) {
         }
 
-        public boolean interactuarPuerta(int i, int j) throws MovementException {
-            return false;
-        }
-
         public Integer init() {
             return 0;
         }
+
+        @Override
+        public boolean interactuarPuerta() throws MovementException {
+            return false;
+        }
     }
-    
+
 }

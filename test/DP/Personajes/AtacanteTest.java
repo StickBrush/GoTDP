@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package DP.Personajes;
 
 import DP.Exceptions.MovementException;
@@ -14,38 +9,37 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
- *
- * @author Solaire
+ * Pruebas del Atacante
+ * @version 4.0
+ * @author Juan Luis Herrera González Curso: 2º (Grupo Grande A) EC4
  */
 public class AtacanteTest {
-    
+
     public AtacanteTest() {
     }
 
     /**
-     * Test of interactuarPuerta method, of class Atacante.
+     * Test del método interactuarPuerta , de la clase Atacante.
      */
     @Test
     public void testInteractuarPuerta() throws Exception {
         Mapa.getInstance().insertarPuerta(Puerta.getInstance());
         Puerta p = Puerta.getInstance();
-        Llave l=new Llave(0);
-        Llave[] combinacion={l};
+        Llave l = new Llave(0);
+        Llave[] combinacion = {l};
         p.configurar(combinacion);
-        int i = 5;
-        int j = 5;
         Atacante instance = new AtacanteImpl();
         Sala x = new Sala(-10);
         x.nuevaLlave(l);
         instance.interactuarSala(x);
         boolean expResult = false;
-        boolean result = instance.interactuarPuerta(i, j);
+        boolean result = instance.interactuarPuerta();
         assertEquals(expResult, result);
         assertTrue(p.estaAbierta());
     }
 
     /**
-     * Test of interactuarSala method, of class Atacante.
+     * Test del método interactuarSala , de la clase Atacante.
      */
     @Test
     public void testInteractuarSala() throws MovementException {
@@ -54,12 +48,12 @@ public class AtacanteTest {
         Atacante instance = new AtacanteImpl();
         instance.interactuarSala(s);
         Mapa.getInstance().insertarPuerta(Puerta.getInstance());
-        instance.interactuarPuerta(5, 5);
+        instance.interactuarPuerta();
         assertEquals(Puerta.getInstance().llavesProb(), 1);
     }
 
     /**
-     * Test of init method, of class Atacante.
+     * Test del método init , de la clase Atacante.
      */
     @Test
     public void testInit() {
@@ -70,7 +64,7 @@ public class AtacanteTest {
     }
 
     /**
-     * Test of toString method, of class Atacante.
+     * Test del método toString , de la clase Atacante.
      */
     @Test
     public void testToString() {
@@ -94,5 +88,5 @@ public class AtacanteTest {
             throw new UnsupportedOperationException();
         }
     }
-    
+
 }

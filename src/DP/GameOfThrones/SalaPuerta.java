@@ -8,8 +8,8 @@ import DP.ED.Cola;
 /**
  * Implementación de la sala de la puerta
  *
- * @version 3.0
- * @author Juan Luis Herrera González Curso: 2º (Grupo Grande A) EC3
+ * @version 4.0
+ * @author Juan Luis Herrera González Curso: 2º (Grupo Grande A) EC4
  */
 public class SalaPuerta extends Sala {
 
@@ -64,23 +64,23 @@ public class SalaPuerta extends Sala {
     /**
      * Simula un turno
      *
-     * @param i Coordenada i de la sala
-     * @param j Coordenada j de la sala
-     * @param m Mapa que contiene la sala
      * @param movidos Identificadores de personajes que ya se movieron
      */
     @Override
-    public void simular(int i, int j, Arbol<Character> movidos) {
-        Mapa m=Mapa.getInstance();
+    public void simular(Arbol<Character> movidos) {
+        Mapa m = Mapa.getInstance();
+        int i = m.getKingsLanding() / m.getTamX();
+        int j = m.getKingsLanding() % m.getTamX();
         Cola<Personaje> cAux = new Cola<>();
-        boolean moved=false;
+        boolean moved = false;
         for (Personaje p; this.tienePersonaje(); personajes.desencolar()) {
             p = personajes.primero();
             if (!movidos.pertenece(p.getID())) {
                 try {
-                    moved=p.interactuarPuerta(i, j);
-                    if(!moved)
+                    moved = p.interactuarPuerta();
+                    if (!moved) {
                         cAux.encolar(p);
+                    }
                 } catch (MovementException ex) {
                     cAux.encolar(p);
                 }

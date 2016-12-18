@@ -11,8 +11,8 @@ import DP.util.UtilityKnife;
 /**
  * Implementación del Caminante Blanco
  *
- * @version 3.0
- * @author Juan Luis Herrera González Curso: 2º (Grupo Grande A) EC3
+ * @version 4.0
+ * @author Juan Luis Herrera González Curso: 2º (Grupo Grande A) EC4
  */
 public class CaminanteBlanco extends Defensor {
 
@@ -76,7 +76,6 @@ public class CaminanteBlanco extends Defensor {
     /**
      * Devuelve la sala de inicio del caminante
      *
-     * @param m Mapa que contiene al caminante
      * @return Sala de inicio del caminante
      */
     @Override
@@ -97,30 +96,33 @@ public class CaminanteBlanco extends Defensor {
         return aux;
     }
 
-        @Override
+    /**
+     * Cálculo automático de la ruta
+     */
+    @Override
     public void autoRuta() {
-        Cola<Dir>[] subrutas= new Cola[4];
-        Mapa m=Mapa.getInstance();
-        Integer SE=m.getTamX()*m.getTamY()-1;
-        Integer NE=m.getTamX()-1;
-        Integer NO=0;
-        Integer SO=(m.getTamY()-1)*m.getTamX();
-        subrutas[0]=UtilityKnife.integerToDir(m.getLaberintoActualizado().caminoMinimo(SO, NO));
-        subrutas[1]=UtilityKnife.integerToDir(m.getLaberintoActualizado().caminoMinimo(NO, NE));
-        subrutas[2]=UtilityKnife.integerToDir(m.getLaberintoActualizado().caminoMinimo(NE, SE));
-        subrutas[3]=UtilityKnife.integerToDir(m.getLaberintoActualizado().caminoMinimo(SE, SO));
-        for(Cola<Dir> aux : subrutas){
-            while(!aux.vacia()){
+        Cola<Dir>[] subrutas = new Cola[4];
+        Mapa m = Mapa.getInstance();
+        Integer SE = m.getTamX() * m.getTamY() - 1;
+        Integer NE = m.getTamX() - 1;
+        Integer NO = 0;
+        Integer SO = (m.getTamY() - 1) * m.getTamX();
+        subrutas[0] = UtilityKnife.integerToDir(m.getLaberintoActualizado().caminoMinimo(SO, NO));
+        subrutas[1] = UtilityKnife.integerToDir(m.getLaberintoActualizado().caminoMinimo(NO, NE));
+        subrutas[2] = UtilityKnife.integerToDir(m.getLaberintoActualizado().caminoMinimo(NE, SE));
+        subrutas[3] = UtilityKnife.integerToDir(m.getLaberintoActualizado().caminoMinimo(SE, SO));
+        for (Cola<Dir> aux : subrutas) {
+            while (!aux.vacia()) {
                 ruta.encolar(aux.primero());
                 aux.desencolar();
             }
         }
     }
-    
+
     @Override
-    public boolean mover(int i, int j, int turno) throws MovementException {
-        Dir x=ruta.primero();
-        boolean b=super.mover(i, j, turno);
+    public boolean mover(int i, int j) throws MovementException {
+        Dir x = ruta.primero();
+        boolean b = super.mover(i, j);
         ruta.encolar(x);
         return b;
     }

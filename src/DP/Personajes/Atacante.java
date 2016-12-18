@@ -9,8 +9,8 @@ import DP.GameOfThrones.Sala;
 /**
  * Implementación de los atacantes
  *
- * @version 3.0
- * @author Juan Luis Herrera González Curso: 2º (Grupo Grande A) EC3
+ * @version 4.0
+ * @author Juan Luis Herrera González Curso: 2º (Grupo Grande A) EC4
  */
 public abstract class Atacante extends Personaje {
 
@@ -35,15 +35,14 @@ public abstract class Atacante extends Personaje {
     /**
      * Interacción atacante-puerta
      *
-     * @param m Mapa que contiene al personaje
-     * @param i Coordenada i de la sala de la puerta
-     * @param j Coordenada j de la sala de la puerta
      * @throws MovementException El personaje no se pudo mover.
      * @return False, los atacantes jamás se mueven
      */
     @Override
-    public boolean interactuarPuerta(int i, int j) throws MovementException {
+    public boolean interactuarPuerta() throws MovementException {
         Mapa m = Mapa.getInstance();
+        int i = m.getKingsLanding() / m.getTamX();
+        int j = m.getKingsLanding() % m.getTamX();
         if (!this.llaves.isEmpty()) {
             m.getPuerta().abrir(this.llaves.getTop());
             this.llaves.removeData();
@@ -67,7 +66,6 @@ public abstract class Atacante extends Personaje {
     /**
      * ID de la sala de inicio
      *
-     * @param m Mapa que contiene al personaje
      * @return ID de la sala de inicio del atacante
      */
     @Override

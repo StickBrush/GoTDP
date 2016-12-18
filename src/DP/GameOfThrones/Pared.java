@@ -1,10 +1,12 @@
 package DP.GameOfThrones;
 
+import java.util.Objects;
+
 /**
  * Clase pared, de uso exclusivo para la creación del laberinto
  *
- * @version 3.0
- * @author Juan Luis Herrera González Curso: 2º (Grupo Grande A) EC3
+ * @version 4.0
+ * @author Juan Luis Herrera González Curso: 2º (Grupo Grande A) EC4
  */
 public class Pared {
 
@@ -52,7 +54,7 @@ public class Pared {
      * @return True si se puede tirar la pared, false si no
      */
     public boolean tirable() {
-        return (s1.getKruskal() != s2.getKruskal());
+        return (!Objects.equals(s1.getKruskal(), s2.getKruskal()));
     }
 
     /**

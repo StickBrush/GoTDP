@@ -1,6 +1,5 @@
 package DP.Personajes;
 
-import DP.GameOfThrones.Mapa;
 import DP.GameOfThrones.WallFollowingEngine;
 
 /**
@@ -18,14 +17,17 @@ public class Targaryen extends Atacante {
      * @param ID Marca identificativa
      * @param turno Turno en el que empieza a moverse
      */
-    public Targaryen(String nombre, char ID,int turno) {
+    public Targaryen(String nombre, char ID, int turno) {
         super(nombre, "Targaryen", ID, turno);
     }
 
+    /**
+     * Cálculo automático de la ruta
+     */
     @Override
     public void autoRuta() {
-        WallFollowingEngine E=new WallFollowingEngine();
-        ruta=E.wallFollower(Mapa.getInstance().getKingsLanding());
+        WallFollowingEngine E = new WallFollowingEngine();
+        ruta = E.wallFollower();
     }
 
 }

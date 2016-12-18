@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package DP.GameOfThrones;
 
 import DP.ED.Cola;
@@ -12,20 +7,20 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
- *
- * @author Solaire
+ * Pruebas del WallFollowingEngine
+ * @version 4.0
+ * @author Juan Luis Herrera González Curso: 2º (Grupo Grande A) EC4
  */
 public class WallFollowingEngineTest {
-    
+
     public WallFollowingEngineTest() {
     }
 
     /**
-     * Test of wallFollower method, of class WallFollowingEngine.
+     * Test del método wallFollower , de la clase WallFollowingEngine.
      */
     @Test
     public void testWallFollower() throws MapSizeException {
-        int kingsLanding = 8;
         Mapa.getInstance(8, 3, 3, 5);
         WallFollowingEngine instance = new WallFollowingEngine();
         Cola<Dir> expResult = new Cola<>();
@@ -35,12 +30,12 @@ public class WallFollowingEngineTest {
         expResult.encolar(S);
         expResult.encolar(E);
         expResult.encolar(E);
-        Cola<Dir> result = instance.wallFollower(kingsLanding);
-        while(!result.vacia()){
+        Cola<Dir> result = instance.wallFollower();
+        while (!result.vacia()) {
             assertEquals(expResult.primero(), result.primero());
             expResult.desencolar();
             result.desencolar();
         }
     }
-    
+
 }

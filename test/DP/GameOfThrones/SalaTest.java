@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package DP.GameOfThrones;
 
 import DP.Personajes.Personaje;
@@ -12,22 +7,24 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 
 /**
- *
- * @author Solaire
+ * Pruebas de la Sala
+ * @version 4.0
+ * @author Juan Luis Herrera González Curso: 2º (Grupo Grande A) EC4
  */
 public class SalaTest {
-    
+
     private Sala instance;
+
     public SalaTest() {
     }
-    
+
     @Before
-    public void setUp(){
-        instance=new Sala(0);
+    public void setUp() {
+        instance = new Sala(0);
     }
 
     /**
-     * Test of nuevaLlave method, of class Sala.
+     * Test del método nuevaLlave , de la clase Sala.
      */
     @Test
     public void testNuevaLlaveGetLlave() {
@@ -38,7 +35,7 @@ public class SalaTest {
     }
 
     /**
-     * Test of nuevoPersonaje method, of class Sala.
+     * Test del método nuevoPersonaje , de la clase Sala.
      */
     @Test
     public void testNuevoPersonaje() {
@@ -51,13 +48,13 @@ public class SalaTest {
         assertEquals(null, instance.getLlave());
         Llave l = new Llave(0);
         instance.nuevaLlave(l);
-        result=instance.nuevoPersonaje(p, true);
+        result = instance.nuevoPersonaje(p, true);
         assertEquals(expResult, result);
         assertSame(l, instance.getLlave());
     }
 
     /**
-     * Test of tienePersonaje method, of class Sala.
+     * Test del método tienePersonaje , de la clase Sala.
      */
     @Test
     public void testTienePersonaje() {
@@ -70,23 +67,23 @@ public class SalaTest {
     }
 
     /**
-     * Test of primero method, of class Sala.
+     * Test del método primero , de la clase Sala.
      */
     @Test
     public void testPrimero() {
         Personaje expResult;
         Personaje result;
-        expResult=new Stark("", 'T', 0);
+        expResult = new Stark("", 'T', 0);
         instance.nuevoPersonaje(expResult, false);
         assertSame(expResult, instance.primero());
-        result=new Stark("", 't', 0);
+        result = new Stark("", 't', 0);
         instance.nuevoPersonaje(result, true);
         assertSame(expResult, instance.primero());
         assertNotSame(result, instance.primero());
     }
 
     /**
-     * Test of eliminarLlave method, of class Sala.
+     * Test del método eliminarLlave , de la clase Sala.
      */
     @Test
     public void testEliminarLlave() {
@@ -96,7 +93,7 @@ public class SalaTest {
     }
 
     /**
-     * Test of tieneLlave method, of class Sala.
+     * Test del método tieneLlave , de la clase Sala.
      */
     @Test
     public void testTieneLlave() {
@@ -108,7 +105,7 @@ public class SalaTest {
     }
 
     /**
-     * Test of desencolar method, of class Sala.
+     * Test del método desencolar , de la clase Sala.
      */
     @Test
     public void testDesencolar() {
@@ -120,7 +117,7 @@ public class SalaTest {
     }
 
     /**
-     * Test of getID method, of class Sala.
+     * Test del método getID , de la clase Sala.
      */
     @Test
     public void testGetID() {
@@ -129,9 +126,8 @@ public class SalaTest {
         assertEquals(expResult, result);
     }
 
-
     /**
-     * Test of setKruskal method, of class Sala.
+     * Test del método setKruskal , de la clase Sala.
      */
     @Test
     public void testSetKruskal() {
@@ -141,7 +137,7 @@ public class SalaTest {
     }
 
     /**
-     * Test of getKruskal method, of class Sala.
+     * Test del método getKruskal , de la clase Sala.
      */
     @Test
     public void testGetKruskal() {
@@ -151,5 +147,5 @@ public class SalaTest {
         instance.setKruskal(5);
         assertEquals(Integer.valueOf(5), instance.getKruskal());
     }
-    
+
 }

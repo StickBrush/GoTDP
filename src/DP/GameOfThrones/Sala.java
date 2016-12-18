@@ -5,12 +5,14 @@ import DP.Exceptions.MovementException;
 import DP.ED.ListaOrdenada;
 import DP.ED.Cola;
 import DP.ED.Arbol;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 /**
  * Implementación de la Sala
  *
- * @version 2.0
- * @author Juan Luis Herrera González Curso: 2º (Grupo Grande A) EC2
+ * @version 4.0
+ * @author Juan Luis Herrera González Curso: 2º (Grupo Grande A) EC4
  */
 public class Sala {
 
@@ -27,6 +29,9 @@ public class Sala {
      */
     private Integer ID;
 
+    /**
+     * Marca para Kruskal
+     */
     private Integer Kruskal;
 
     /**
@@ -41,10 +46,6 @@ public class Sala {
         Kruskal = ID;
     }
 
-    public Sala() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
     /**
      * Añade una nueva llave
      *
@@ -54,6 +55,11 @@ public class Sala {
         llaves.add(l);
     }
 
+    /**
+     * Devuelve la primera llave de la estructura, si existe
+     *
+     * @return Primera llave
+     */
     public Llave getLlave() {
         Llave aux = null;
         if (!llaves.estaVacia()) {
@@ -149,8 +155,15 @@ public class Sala {
         return saux;
     }
 
-    public void simular(int i, int j, Arbol<Character> movidos) {
+    /**
+     * Simula un turno en esta sala
+     *
+     * @param movidos Personajes que ya se han movido este turno
+     */
+    public void simular(Arbol<Character> movidos) {
         Mapa m = Mapa.getInstance();
+        int i = ID / m.getTamX();
+        int j = ID % m.getTamX();
         Cola<Personaje> cAux = new Cola<>();
         boolean moved = false;
         for (Personaje p; this.tienePersonaje(); personajes.desencolar()) {
@@ -158,7 +171,7 @@ public class Sala {
             try {
                 if (!movidos.pertenece(p.getID())) {
                     movidos.insertar(p.getID());
-                    moved = p.mover(i, j, m.getTurno());
+                    moved = p.mover(i, j);
                     if (!moved) {
                         cAux.encolar(p);
                     }
@@ -198,14 +211,29 @@ public class Sala {
         return sol;
     }
 
+    /**
+     * Setter de la marca para Kruskal
+     *
+     * @param nuevo Nueva marca
+     */
     public void setKruskal(Integer nuevo) {
         Kruskal = nuevo;
     }
 
+    /**
+     * Getter de la marca para Kruskal
+     *
+     * @return Marca para Kruskal
+     */
     public Integer getKruskal() {
         return Kruskal;
     }
 
+    /**
+     * Devuelve un string con la estructura de la sala
+     *
+     * @return Estructura de la sala
+     */
     public String showSala() {
         Mapa m = Mapa.getInstance();
         String aux = "";
@@ -236,20 +264,26 @@ public class Sala {
         return aux;
     }
 
-    public Pared vecinoNoAccesible(Mapa m) {
-        Pared p = null;
+    /**
+     * Devuelve una pared con el primer vecino no accesible
+     *
+     * @return Pared con vecino no accesible
+     */
+    public Set<Pared> vecinoNoAccesible() {
+        Mapa m = Mapa.getInstance();
+        Set<Pared> paredes=new LinkedHashSet<>();
         if (ID / m.getTamX() != 0 && !m.esAccesible(ID, ID - m.getTamX())) {
-            p = new Pared(this, m.getSala((ID / m.getTamX()) - 1, ID % m.getTamX()));
+            paredes.add(new Pared(this, m.getSala((ID / m.getTamX()) - 1, ID % m.getTamX())));
         }
-        if (ID / m.getTamX() != m.getTamY() - 1 && !m.esAccesible(ID, ID + m.getTamX()) && p==null) {
-            p = new Pared(this, m.getSala((ID / m.getTamX()) + 1, ID % m.getTamX()));
+        if (ID / m.getTamX() != m.getTamY() - 1 && !m.esAccesible(ID, ID + m.getTamX())) {
+            paredes.add(new Pared(this, m.getSala((ID / m.getTamX()) + 1, ID % m.getTamX())));
         }
-        if (ID % m.getTamX() != 0 && !m.esAccesible(ID, ID - 1) && p==null) {
-            p = new Pared(this, m.getSala((ID / m.getTamX()), ID % m.getTamX() - 1));
+        if (ID % m.getTamX() != 0 && !m.esAccesible(ID, ID - 1)) {
+            paredes.add(new Pared(this, m.getSala((ID / m.getTamX()), ID % m.getTamX() - 1)));
         }
-        if (ID % m.getTamX() != m.getTamX() - 1 && !m.esAccesible(ID, ID + 1) && p==null) {
-            p = new Pared(this, m.getSala((ID / m.getTamX()), ID % m.getTamX() + 1));
+        if (ID % m.getTamX() != m.getTamX() - 1 && !m.esAccesible(ID, ID + 1)) {
+            paredes.add(new Pared(this, m.getSala((ID / m.getTamX()), ID % m.getTamX() + 1)));
         }
-        return p;
+        return paredes;
     }
 }

@@ -9,8 +9,8 @@ import DP.ED.List;
 /**
  * Clase para crear el registro (log)
  *
- * @version 3.0
- * @author Juan Luis Herrera González Curso: 2º (Grupo Grande A) EC3
+ * @version 4.0
+ * @author Juan Luis Herrera González Curso: 2º (Grupo Grande A) EC4
  */
 public class Logger {
 
@@ -22,8 +22,11 @@ public class Logger {
      * Estado del logger
      */
     private boolean funcional;
-    
-    private static Logger instance=null;
+
+    /**
+     * Instancia (patrón Singleton)
+     */
+    private static Logger instance = null;
 
     /**
      * Constructor por defecto del Logger
@@ -37,17 +40,23 @@ public class Logger {
             funcional = false;
         }
     }
-    
-    public static Logger getInstance(){
-        if(instance==null)
-            instance=new Logger();
+
+    /**
+     * Método getInstance del patrón Singleton
+     *
+     * @return Instancia única de Logger (impide IOExceptions por tratar de
+     * escribir varias veces a la vez).
+     */
+    public static Logger getInstance() {
+        if (instance == null) {
+            instance = new Logger();
+        }
         return instance;
     }
 
     /**
      * Registra el mapa
      *
-     * @param m Mapa a registrar
      */
     public void logMapa() {
         if (funcional) {
@@ -67,7 +76,6 @@ public class Logger {
     /**
      * Registra la información del mapa
      *
-     * @param m Mapa a registrar
      */
     public void logInfoMapa() {
         if (funcional) {
@@ -84,7 +92,6 @@ public class Logger {
     /**
      * Registra las rutas de los personajes de un mapa
      *
-     * @param m Mapa a registrar
      */
     public void logRutas() {
         if (funcional) {
