@@ -199,7 +199,7 @@ public class Sala {
         if (this.tienePersonaje()) {
             Cola<Personaje> caux = new Cola<Personaje>();
             while (this.tienePersonaje()) {
-                sol = sol + "(" + personajes.primero().toString() + ":" + ID + ":" + turno + ")\n";
+                sol = sol + "(" + ID + ":" + turno + ":" + personajes.primero().toString() + ")\n";
                 caux.encolar(personajes.primero());
                 personajes.desencolar();
             }
@@ -271,7 +271,7 @@ public class Sala {
      */
     public Set<Pared> vecinoNoAccesible() {
         Mapa m = Mapa.getInstance();
-        Set<Pared> paredes=new LinkedHashSet<>();
+        Set<Pared> paredes = new LinkedHashSet<>();
         if (ID / m.getTamX() != 0 && !m.esAccesible(ID, ID - m.getTamX())) {
             paredes.add(new Pared(this, m.getSala((ID / m.getTamX()) - 1, ID % m.getTamX())));
         }

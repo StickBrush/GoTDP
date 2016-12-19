@@ -12,7 +12,6 @@ import DP.util.Logger;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.Set;
-import java.util.LinkedHashSet;
 
 /**
  * Implementación del mapa
@@ -307,9 +306,9 @@ public class Mapa {
         sol = "(turno:" + turno + ")" + "\n";
         sol = sol + "(mapa:" + SalaPuerta + ")" + "\n";
         if (puertaAbierta()) {
-            sol = sol + ("(puerta:abierta:" + profComb + ":" + (((SalaPuerta) salas[iPuerta][jPuerta]).getPuerta().llavesCerr()) + ":" + (((SalaPuerta) salas[iPuerta][jPuerta]).getPuerta().llavesProb()) + ")") + "\n";
+            sol = sol + ("(puerta:abierta:" + profComb + ":" + (Puerta.getInstance().cerradura()) + ":" + (Puerta.getInstance().probadas()) + ")") + "\n";
         } else {
-            sol = sol + ("(puerta:cerrada:" + profComb + ":" + (((SalaPuerta) salas[iPuerta][jPuerta]).getPuerta().llavesCerr()) + ":" + (((SalaPuerta) salas[iPuerta][jPuerta]).getPuerta().llavesProb()) + ")") + "\n";
+            sol = sol + ("(puerta:cerrada:" + profComb + ":" + (Puerta.getInstance().cerradura()) + ":" + (Puerta.getInstance().probadas()) + ")") + "\n";
         }
         List<String> structure = structureString();
         for (int i = 0; i < structure.size(); i++) {
@@ -327,8 +326,10 @@ public class Mapa {
                 sol = sol + salas[i][j].showPersonajes(turno);
             }
         }
-        sol = sol + "(miembrostrono)\n";
-        sol = sol + "(nuevorey:" + trono.showPersonajes(turno) + ")\n";
+        if (trono.tienePersonaje()) {
+            sol = sol + "(miembrostrono)\n";
+            sol = sol + "(nuevorey:" + trono.showPersonajes(turno);
+        }
         return sol;
     }
 
@@ -628,7 +629,7 @@ public class Mapa {
         boolean abierta = false;
         logger.logInfoMapa();
         System.out.println("Simulando...");
-        for (int i = 0; i < 100 && !abierta; i++) {
+        for (int i = 0; i < 99 && !abierta; i++) {
             m.simularTurno();
             logger.logInfoMapa();
             abierta = m.puertaAbierta();

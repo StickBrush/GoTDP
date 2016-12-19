@@ -8,6 +8,7 @@ import org.junit.Before;
 
 /**
  * Pruebas de la SalaPuerta
+ *
  * @version 4.0
  * @author Juan Luis Herrera González Curso: 2º (Grupo Grande A) EC4
  */

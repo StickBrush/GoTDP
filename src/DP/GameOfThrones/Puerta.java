@@ -142,4 +142,47 @@ public class Puerta {
     public int llavesProb() {
         return probadas.nodos();
     }
+
+    /**
+     * Devuelve todas las llaves de la cerradura
+     *
+     * @return Llaves de la cerradura
+     */
+    public String cerradura() {
+        String c;
+        c = mostrarLlaves(comb);
+        return c;
+    }
+
+    /**
+     * Devuelve las llaves probads
+     *
+     * @return Llaves probadas
+     */
+    public String probadas() {
+        String p;
+        p = mostrarLlaves(probadas);
+        return p;
+    }
+
+    /**
+     * Muestra las llaves de un árbol
+     *
+     * @param a Árbol a mostrar
+     * @return Árbol concatenado (inOrden)
+     */
+    private String mostrarLlaves(Arbol<Llave> a) {
+        String s = new String();
+        if (!a.vacio()) {
+            if (a.getHijoIzq() != null) {
+                s = s + mostrarLlaves(a.getHijoIzq());
+            }
+            s = s + a.getRaiz().toString() + " ";
+            if (a.getHijoDer() != null) {
+                s = s + mostrarLlaves(a.getHijoDer());
+            }
+        }
+        return s;
+    }
+
 }

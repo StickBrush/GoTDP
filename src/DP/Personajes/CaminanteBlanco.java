@@ -121,9 +121,12 @@ public class CaminanteBlanco extends Defensor {
 
     @Override
     public boolean mover(int i, int j) throws MovementException {
-        Dir x = ruta.primero();
+        Dir x=null;
+        if(turno<=Mapa.getInstance().getTurno())
+            x = ruta.primero();
         boolean b = super.mover(i, j);
-        ruta.encolar(x);
+        if(x!=null)
+            ruta.encolar(x);
         return b;
     }
 }

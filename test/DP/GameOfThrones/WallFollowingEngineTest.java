@@ -8,6 +8,7 @@ import static org.junit.Assert.*;
 
 /**
  * Pruebas del WallFollowingEngine
+ *
  * @version 4.0
  * @author Juan Luis Herrera González Curso: 2º (Grupo Grande A) EC4
  */
