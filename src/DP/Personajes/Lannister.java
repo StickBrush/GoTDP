@@ -34,7 +34,7 @@ public class Lannister extends Defensor {
         llaves = new Stack<Llave>();
         int numLlavesGenerar = 45;
         numLlaves = numLlavesGenerar;
-        for (int i = 1; i < 30; i+=2) {
+        for (int i = 1; i < 30; i += 2) {
             this.llaves.addData(new Llave(i));
         }
     }
@@ -57,7 +57,7 @@ public class Lannister extends Defensor {
      */
     @Override
     public void interactuarSala(Sala s) {
-        if (!llaves.isEmpty()) {
+        if (!llaves.isEmpty() && s.getID()%2 == 0) {
             s.nuevaLlave(llaves.getTop());
             llaves.removeData();
         }
@@ -133,6 +133,27 @@ public class Lannister extends Defensor {
             x = ruta.primero();
         }
         boolean b = super.mover(i, j);
+        if (x != null) {
+            ruta.encolar(x);
+        }
+        return b;
+    }
+
+    /**
+     * Mueve al personaje como si lo reinsertase
+     *
+     * @param i Coordenada i de la sala en la que está el personaje
+     * @param j Coordenada j de la sala en la que está el personaje
+     * @return True si el personaje se movió, false si no
+     * @throws MovementException El personaje no se pudo mover.
+     */
+    @Override
+    protected boolean reinsertar(int i, int j) throws MovementException {
+        Dir x = null;
+        if (turno <= Mapa.getInstance().getTurno()) {
+            x = ruta.primero();
+        }
+        boolean b = super.reinsertar(i, j);
         if (x != null) {
             ruta.encolar(x);
         }

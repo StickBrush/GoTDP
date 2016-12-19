@@ -55,7 +55,7 @@ public abstract class Defensor extends Personaje {
      * @return True si el personaje se movió, false si no
      * @throws MovementException El personaje no se pudo mover.
      */
-    private boolean reinsertar(int i, int j) throws MovementException {
+    protected boolean reinsertar(int i, int j) throws MovementException {
         Mapa m = Mapa.getInstance();
         if (!ruta.vacia() && this.turno <= m.getTurno()) {
             Dir o = ruta.primero();

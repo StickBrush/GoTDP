@@ -139,4 +139,25 @@ public class CaminanteBlanco extends Defensor {
         }
         return b;
     }
+
+    /**
+     * Mueve al personaje como si lo reinsertase
+     *
+     * @param i Coordenada i de la sala en la que está el personaje
+     * @param j Coordenada j de la sala en la que está el personaje
+     * @return True si el personaje se movió, false si no
+     * @throws MovementException El personaje no se pudo mover.
+     */
+    @Override
+    protected boolean reinsertar(int i, int j) throws MovementException {
+        Dir x = null;
+        if (turno <= Mapa.getInstance().getTurno()) {
+            x = ruta.primero();
+        }
+        boolean b = super.reinsertar(i, j);
+        if (x != null) {
+            ruta.encolar(x);
+        }
+        return b;
+    }
 }
