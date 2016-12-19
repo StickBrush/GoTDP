@@ -49,12 +49,12 @@ public class DefensorTest {
 
         @Override
         public void autoRuta() {
-            throw new UnsupportedOperationException("Not supported yet.");
+            throw new UnsupportedOperationException();
         }
 
         @Override
         public void interactuarSala(Sala s) {
-            throw new UnsupportedOperationException("Not supported yet.");
+            throw new UnsupportedOperationException();
         }
     }
 
