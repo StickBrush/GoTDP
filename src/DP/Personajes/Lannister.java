@@ -12,8 +12,8 @@ import DP.util.UtilityKnife;
 /**
  * Implementación de la clase Lannister
  *
- * @version 3.0
- * @author Juan Luis Herrera González Curso: 2º (Grupo Grande A) EC3
+ * @version 4.0
+ * @author Juan Luis Herrera González Curso: 2º (Grupo Grande A) EC4
  */
 public class Lannister extends Defensor {
 
@@ -138,9 +138,14 @@ public class Lannister extends Defensor {
      */
     @Override
     public boolean mover(int i, int j) throws MovementException {
-        Dir x = ruta.primero();
+        Dir x = null;
+        if (turno <= Mapa.getInstance().getTurno()) {
+            x = ruta.primero();
+        }
         boolean b = super.mover(i, j);
-        ruta.encolar(x);
+        if (x != null) {
+            ruta.encolar(x);
+        }
         return b;
     }
 }

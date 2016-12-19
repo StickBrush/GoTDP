@@ -119,14 +119,24 @@ public class CaminanteBlanco extends Defensor {
         }
     }
 
+    /**
+     * Movimiento del Caminante Blanco
+     *
+     * @param i Coordenada i de la sala
+     * @param j Coordenada j de la sala
+     * @return True si se pudo mover, false si no
+     * @throws MovementException Error al mover
+     */
     @Override
     public boolean mover(int i, int j) throws MovementException {
-        Dir x=null;
-        if(turno<=Mapa.getInstance().getTurno())
+        Dir x = null;
+        if (turno <= Mapa.getInstance().getTurno()) {
             x = ruta.primero();
+        }
         boolean b = super.mover(i, j);
-        if(x!=null)
+        if (x != null) {
             ruta.encolar(x);
+        }
         return b;
     }
 }

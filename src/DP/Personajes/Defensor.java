@@ -26,6 +26,7 @@ public abstract class Defensor extends Personaje {
     /**
      * Interacción defensor-puerta
      *
+     * @return False, los defensores no se mueven en estos casos
      * @throws MovementException El defensor no pudo moverse.
      */
     @Override

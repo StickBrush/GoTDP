@@ -272,8 +272,6 @@ public class Mapa {
     /**
      * Devuelve si hay pared o no
      *
-     * @param g Grafo sobre el que comprobar
-     * @param paredes Identificadores de las salas a comprobar
      * @return True si hay paredes internas entre las salas, false si no
      */
     private boolean hayPared(int[] paredes) {
@@ -575,7 +573,7 @@ public class Mapa {
     }
 
     /**
-     * Programa principal - EC3
+     * Programa principal - EC4
      *
      * @param args Argumentos de línea de comandos
      */

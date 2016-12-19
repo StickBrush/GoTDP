@@ -11,7 +11,7 @@ import static org.junit.Assert.*;
  * @author Solaire
  */
 public class LannisterTest {
-    
+
     public LannisterTest() {
     }
 
@@ -56,8 +56,8 @@ public class LannisterTest {
     public void testAutoRuta() {
         Lannister instance = new Lannister("", 'T', 0);
         instance.autoRuta();
-        String res=instance.ruta();
-        String expResult="(ruta:T:N O O N E N N E N S O S S O N O N N O O E E S S E S S S O O O E E E N E E S )\n";
+        String res = instance.ruta();
+        String expResult = "(ruta:T:N O O N E N N E N S O S S O N O N N O O E E S S E S S S O O O E E E N E E S )\n";
         assertEquals(expResult, res);
     }
 
@@ -74,9 +74,9 @@ public class LannisterTest {
         instance.setRuta(ruta);
         boolean result = instance.mover(i, j);
         assertEquals(expResult, result);
-        String res=instance.ruta();
-        String expRes="(ruta:T:S E E )\n";
+        String res = instance.ruta();
+        String expRes = "(ruta:T:S E E )\n";
         assertEquals(expRes, res);
     }
-    
+
 }

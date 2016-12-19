@@ -69,8 +69,6 @@ public class SalaPuerta extends Sala {
     @Override
     public void simular(Arbol<Character> movidos) {
         Mapa m = Mapa.getInstance();
-        int i = m.getKingsLanding() / m.getTamX();
-        int j = m.getKingsLanding() % m.getTamX();
         Cola<Personaje> cAux = new Cola<>();
         boolean moved = false;
         for (Personaje p; this.tienePersonaje(); personajes.desencolar()) {

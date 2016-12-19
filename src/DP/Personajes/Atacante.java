@@ -41,8 +41,6 @@ public abstract class Atacante extends Personaje {
     @Override
     public boolean interactuarPuerta() throws MovementException {
         Mapa m = Mapa.getInstance();
-        int i = m.getKingsLanding() / m.getTamX();
-        int j = m.getKingsLanding() % m.getTamX();
         if (!this.llaves.isEmpty()) {
             m.getPuerta().abrir(this.llaves.getTop());
             this.llaves.removeData();
