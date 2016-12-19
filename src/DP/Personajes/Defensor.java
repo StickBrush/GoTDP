@@ -1,6 +1,7 @@
 package DP.Personajes;
 
 import DP.Exceptions.MovementException;
+import DP.GameOfThrones.Dir;
 import DP.GameOfThrones.Mapa;
 
 /**
@@ -35,7 +36,7 @@ public abstract class Defensor extends Personaje {
         int i = m.getKingsLanding() / m.getTamX();
         int j = m.getKingsLanding() % m.getTamX();
         m.getPuerta().cerrar();
-        return this.mover(i, j);
+        return this.reinsertar(i, j);
     }
 
     /**
@@ -45,4 +46,61 @@ public abstract class Defensor extends Personaje {
      */
     @Override
     public abstract Integer init();
+    
+    /**
+     * Mueve al personaje como si lo reinsertase
+     *
+     * @param i Coordenada i de la sala en la que está el personaje
+     * @param j Coordenada j de la sala en la que está el personaje
+     * @return True si el personaje se movió, false si no
+     * @throws MovementException El personaje no se pudo mover.
+     */
+    private boolean reinsertar(int i, int j) throws MovementException {
+        Mapa m = Mapa.getInstance();
+        if (!ruta.vacia() && this.turno <= m.getTurno()) {
+            Dir o = ruta.primero();
+            ruta.desencolar();
+            switch (o) {
+                case N:
+                    if (i - 1 >= 0 && m.esAccesible(i * m.getTamX() + j, (i - 1) * m.getTamX() + j)) {
+                        m.getSala(i - 1, j).nuevoPersonaje(this, true);
+                        return true;
+                    } else if (i - 1 < 0) {
+                        throw new MovementException();
+                    } else {
+                        return false;
+                    }
+                case S:
+                    if (i + 1 < m.getTamY() && m.esAccesible(i * m.getTamX() + j, (i + 1) * m.getTamX() + j)) {
+                        m.getSala(i + 1, j).nuevoPersonaje(this, true);
+                        return true;
+                    } else if (i + 1 >= m.getTamY()) {
+                        throw new MovementException();
+                    } else {
+                        return false;
+                    }
+                case O:
+                    if (j - 1 >= 0 && m.esAccesible(i * m.getTamX() + j, i * m.getTamX() + j - 1)) {
+                        m.getSala(i, j - 1).nuevoPersonaje(this, true);
+                        return true;
+                    } else if (j - 1 <= 0) {
+                        throw new MovementException();
+                    } else {
+                        return false;
+                    }
+                case E:
+                    if (j + 1 < m.getTamX() && m.esAccesible(i * m.getTamX() + j, i * m.getTamX() + j + 1)) {
+                        m.getSala(i, j + 1).nuevoPersonaje(this, true);
+                        return true;
+                    } else if (j + 1 > m.getTamX()) {
+                        throw new MovementException();
+                    } else {
+                        return false;
+                    }
+            }
+        } else {
+            return false;
+        }
+        return false;
+    }
 }

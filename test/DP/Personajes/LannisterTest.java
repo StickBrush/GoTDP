@@ -44,7 +44,7 @@ public class LannisterTest {
     @Test
     public void testToString() {
         Lannister instance = new Lannister("", 'T', 0);
-        String expResult = "Lannister:T:0 1 1 2 3 3 4 5 5 6 7 7 8 9 9 10 11 11 12 13 13 14 15 15 16 17 17 18 19 19 20 21 21 22 23 23 24 25 25 26 27 27 28 29 29 ";
+        String expResult = "Lannister:T:29 27 25 23 21 19 17 15 13 11 9 7 5 3 1 ";
         String result = instance.toString();
         assertEquals(expResult, result);
     }
