@@ -68,7 +68,7 @@ public class Mapa {
     protected static Mapa instance = null;
 
     /**
-     * Constructor parametrizado de Mapa
+     * Constructor parametrizado de Mapa. PRE={X>0 && Y>0 && X*Y>salaPuerta}
      *
      * @param salaPuerta Sala de la puerta
      * @param X Número de columnas
@@ -116,7 +116,8 @@ public class Mapa {
     }
 
     /**
-     * Método getInstance del patrón Singleton
+     * Método getInstance del patrón Singleton PRE={X>0 && Y>0 &&
+     * X*Y>salaPuerta}
      *
      * @param salaPuerta Sala de la puerta
      * @param X Número de filas
@@ -332,7 +333,7 @@ public class Mapa {
     }
 
     /**
-     * Retorna la sala especificada del mapa
+     * Retorna la sala especificada del mapa. PRE={tamY>i && tamX>j}
      *
      * @param i Coordenada Y de la sala
      * @param j Coordenada X de la sala
@@ -379,7 +380,8 @@ public class Mapa {
     }
 
     /**
-     * Retorna la puerta del mapa
+     * Retorna la puerta del mapa PRE{(SalaPuerta)
+     * salas[iPuerta][jPuerta].p!=null}
      *
      * @return Puerta del trono
      */
@@ -403,7 +405,8 @@ public class Mapa {
     }
 
     /**
-     * Retorna el estado de la puerta
+     * Retorna el estado de la puerta. Debe existir una puerta. PRE{(SalaPuerta)
+     * salas[iPuerta][jPuerta].p!=null}
      *
      * @return True si la puerta está abierta, false si no
      */
@@ -573,7 +576,7 @@ public class Mapa {
     }
 
     /**
-     * Programa principal - EC4
+     * Programa principal - Enero
      *
      * @param args Argumentos de línea de comandos
      */

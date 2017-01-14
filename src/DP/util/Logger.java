@@ -106,7 +106,7 @@ public class Logger {
     }
 
     /**
-     * Termina el log
+     * Termina el log PRE={El Logger no ha sido ya cerrado}
      */
     public void endLogger() {
         try {

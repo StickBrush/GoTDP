@@ -43,7 +43,7 @@ public class Llave implements Comparable<Llave> {
     }
 
     /**
-     * Método equals
+     * Método equals.
      *
      * @param t Llave con la que comparar
      * @return True si son iguales, false si no.

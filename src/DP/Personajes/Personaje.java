@@ -40,7 +40,7 @@ public abstract class Personaje {
     protected int turno;
 
     /**
-     * Constructor parametrizado de Personaje
+     * Constructor parametrizado de Personaje PRE={ID no se puede repetir}
      *
      * @param nombre Nombre del personaje
      * @param tipo Tipo de personaje
@@ -53,6 +53,15 @@ public abstract class Personaje {
         this.ID = ID;
         ruta = new Cola<Dir>();
         this.turno = turno;
+    }
+
+    /**
+     * Devuelve el turo en el que empieza a moverse el personaje
+     *
+     * @return Turno en el que empieza a moverse el personaje.
+     */
+    public int turno() {
+        return this.turno;
     }
 
     /**
@@ -99,7 +108,7 @@ public abstract class Personaje {
     public abstract void autoRuta();
 
     /**
-     * Mueve al personaje
+     * Mueve al personaje PRE={Mapa.tamY>i && Mapa.tamX>j}
      *
      * @param i Coordenada i de la sala en la que está el personaje
      * @param j Coordenada j de la sala en la que está el personaje
@@ -156,14 +165,14 @@ public abstract class Personaje {
     }
 
     /**
-     * Interacción personaje-sala
+     * Interacción personaje-sala PRE={s!=null}
      *
      * @param s Sala con la que interactuar
      */
     public abstract void interactuarSala(Sala s);
 
     /**
-     * Interacción personaje-puerta
+     * Interacción personaje-puerta PRE={Mapa.salas[iPuerta][jPuerta].p!=null}
      *
      * @throws MovementException El personaje no se pudo mover
      * @return True si el personaje se movió, false si no.

@@ -115,17 +115,6 @@ public class Puerta {
     }
 
     /**
-     * Muestra el estado de la cerradura
-     */
-    public void mostrarCerradura() {
-        if (abierta) {
-            System.out.println("La puerta está abierta");
-        } else {
-            System.out.println("La puerta está cerrada");
-        }
-    }
-
-    /**
      * Devuelve el número de llaves en la cerradura
      *
      * @return Llaves en la cerradura

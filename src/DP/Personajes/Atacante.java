@@ -20,7 +20,7 @@ public abstract class Atacante extends Personaje {
     protected Stack<Llave> llaves;
 
     /**
-     * Constructor parametrizado de atacante
+     * Constructor parametrizado de atacante PRE={ID no se puede repetir}
      *
      * @param nombre Nombre del personaje
      * @param tipo Tipo de personaje
@@ -33,7 +33,7 @@ public abstract class Atacante extends Personaje {
     }
 
     /**
-     * Interacción atacante-puerta
+     * Interacción atacante-puerta PRE={Mapa.salas[iPuerta][jPuerta].p!=null}
      *
      * @throws MovementException El personaje no se pudo mover.
      * @return False, los atacantes jamás se mueven
@@ -49,7 +49,7 @@ public abstract class Atacante extends Personaje {
     }
 
     /**
-     * Interacción atacante-sala
+     * Interacción atacante-sala PRE={s!=null}
      *
      * @param s Sala con la que interactuar
      */

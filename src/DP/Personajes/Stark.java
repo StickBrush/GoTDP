@@ -12,7 +12,7 @@ import DP.util.UtilityKnife;
 public class Stark extends Atacante {
 
     /**
-     * Constructor parametrizado de Stark
+     * Constructor parametrizado de Stark PRE={ID no se puede repetir}
      *
      * @param nombre Nombre del Stark
      * @param ID Marca identificativa

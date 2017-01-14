@@ -4,6 +4,7 @@ import DP.Personajes.Personaje;
 import DP.Exceptions.MovementException;
 import DP.ED.Arbol;
 import DP.ED.Cola;
+import DP.Personajes.Atacante;
 
 /**
  * Implementación de la sala de la puerta
@@ -62,7 +63,7 @@ public class SalaPuerta extends Sala {
     }
 
     /**
-     * Simula un turno
+     * Simula un turno PRE={movidos!=null}
      *
      * @param movidos Identificadores de personajes que ya se movieron
      */
@@ -70,12 +71,17 @@ public class SalaPuerta extends Sala {
     public void simular(Arbol<Character> movidos) {
         Mapa m = Mapa.getInstance();
         Cola<Personaje> cAux = new Cola<>();
-        boolean moved = false;
+        boolean moved;
         for (Personaje p; this.tienePersonaje(); personajes.desencolar()) {
             p = personajes.primero();
             if (!movidos.pertenece(p.getID())) {
                 try {
-                    moved = p.interactuarPuerta();
+                    if (this.p.estaAbierta() && p instanceof Atacante) {
+                        m.getSalaTrono().nuevoPersonaje(p, true);
+                        moved = false;
+                    } else {
+                        moved = p.interactuarPuerta();
+                    }
                     if (!moved) {
                         cAux.encolar(p);
                     }
@@ -88,11 +94,7 @@ public class SalaPuerta extends Sala {
         }
         for (Personaje p; !cAux.vacia(); cAux.desencolar()) {
             p = cAux.primero();
-            if (this.p.estaAbierta()) {
-                m.getSalaTrono().nuevoPersonaje(p, true);
-            } else {
-                this.nuevoPersonaje(p, true);
-            }
+            this.nuevoPersonaje(p, true);
         }
     }
 }

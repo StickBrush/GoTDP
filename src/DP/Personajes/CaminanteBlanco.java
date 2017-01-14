@@ -22,7 +22,8 @@ public class CaminanteBlanco extends Defensor {
     private Stack<Character> capturados;
 
     /**
-     * Constructor parametrizado de Caminante Blanco
+     * Constructor parametrizado de Caminante Blanco PRE={ID no se puede
+     * repetir}
      *
      * @param nombre Nombre del Caminante Blanco
      * @param ID Marca identificativa del Caminante Blanco
@@ -61,7 +62,7 @@ public class CaminanteBlanco extends Defensor {
     }
 
     /**
-     * Interacción caminante-sala
+     * Interacción caminante-sala PRE={s!=null}
      *
      * @param s Sala con la que interactuar
      */
@@ -134,27 +135,6 @@ public class CaminanteBlanco extends Defensor {
             x = ruta.primero();
         }
         boolean b = super.mover(i, j);
-        if (x != null) {
-            ruta.encolar(x);
-        }
-        return b;
-    }
-
-    /**
-     * Mueve al personaje como si lo reinsertase
-     *
-     * @param i Coordenada i de la sala en la que está el personaje
-     * @param j Coordenada j de la sala en la que está el personaje
-     * @return True si el personaje se movió, false si no
-     * @throws MovementException El personaje no se pudo mover.
-     */
-    @Override
-    protected boolean reinsertar(int i, int j) throws MovementException {
-        Dir x = null;
-        if (turno <= Mapa.getInstance().getTurno()) {
-            x = ruta.primero();
-        }
-        boolean b = super.reinsertar(i, j);
         if (x != null) {
             ruta.encolar(x);
         }

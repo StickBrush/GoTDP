@@ -35,7 +35,7 @@ public class Sala {
     private Integer Kruskal;
 
     /**
-     * Constructor parametrizado de sala
+     * Constructor parametrizado de sala PRE={ID no se puede repetir}
      *
      * @param ID Identificador de la sala
      */
@@ -58,7 +58,7 @@ public class Sala {
     /**
      * Devuelve la primera llave de la estructura, si existe
      *
-     * @return Primera llave
+     * @return Primera llave, o null si no la hubiese
      */
     public Llave getLlave() {
         Llave aux = null;
@@ -156,7 +156,7 @@ public class Sala {
     }
 
     /**
-     * Simula un turno en esta sala
+     * Simula un turno en esta sala PRE={movidos!=null}
      *
      * @param movidos Personajes que ya se han movido este turno
      */

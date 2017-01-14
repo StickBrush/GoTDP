@@ -11,7 +11,7 @@ import DP.GameOfThrones.WallFollowingEngine;
 public class Targaryen extends Atacante {
 
     /**
-     * Construtor parametrizado de Targaryen
+     * Construtor parametrizado de Targaryen PRE={ID no se puede repetir}
      *
      * @param nombre Nombre del Targaryen
      * @param ID Marca identificativa

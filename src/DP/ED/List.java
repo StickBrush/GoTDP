@@ -70,7 +70,8 @@ public class List<tipoDato> {
     }
 
     /**
-     * Retorna el elemento de la posición pos
+     * Retorna el elemento de la posición pos. pos siempre debe ser menor que el
+     * tamaño de la lista.
      *
      * @param pos Posición del elemento a retornar
      * @return Elemento de la posición pos
@@ -80,7 +81,8 @@ public class List<tipoDato> {
     }
 
     /**
-     * Elimina el dato de la posición pos
+     * Elimina el dato de la posición pos. pos siempre debe ser menor que el
+     * tamaño de la lista.
      *
      * @param pos Dato a eliminar
      */
