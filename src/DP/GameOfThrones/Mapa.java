@@ -386,7 +386,7 @@ public class Mapa {
      * @return Puerta del trono
      */
     public Puerta getPuerta() {
-        return ((SalaPuerta) salas[iPuerta][jPuerta]).getPuerta();
+        return Puerta.getInstance();
     }
 
     /**
@@ -411,7 +411,7 @@ public class Mapa {
      * @return True si la puerta está abierta, false si no
      */
     public boolean puertaAbierta() {
-        return ((SalaPuerta) salas[iPuerta][jPuerta]).getPuerta().estaAbierta();
+        return Puerta.getInstance().estaAbierta();
     }
 
     /**
